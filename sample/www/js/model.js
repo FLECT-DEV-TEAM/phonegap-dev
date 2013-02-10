@@ -189,6 +189,26 @@
         Report : common.extend({
             tableName : "REPORT",
             sfObjectName : "Report__c"
+        }, {
+            resync : function() {
+                setTimeout(function() {
+                    var networkState = navigator.network.connection.type;
+                    if (Connection.UNKNOWN !== networkState) {
+                        var sql = "SELECT * FROM REPORT WHERE sync_status='2'";
+                        model.Report.query(sql, [], 
+                            function(tx, results) {
+                                var list = new collection.Reports;
+                                var len = results.rows.length;
+                                for (var i = 0; i < len; i++) {
+                                    var report = new model.Report(results.rows.item(i));
+                                    report.sync("Report__c");
+                                }
+                            }
+                        );
+                    }
+                    model.Report.resync();
+                }, 5000);
+            }
         }),
 
         Client : common.extend({

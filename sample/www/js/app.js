@@ -42,6 +42,9 @@ var app = {
             model.Client.fetchMaster();
             model.Destination.fetchMaster();
 
+            // Re-sync report to Salesforce.
+            model.Report.resync();
+
             // initialize filesystem.
             window.requestFileSystem(
                 LocalFileSystem.PERSISTENT, 
