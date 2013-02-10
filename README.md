@@ -23,3 +23,6 @@ Sample Application
 --------------------
 
 sample/wwwにサンプルアプリケーションがありますので参考にどうぞ。
+認証にSalesforceのOAuthを利用しています。以下のアカウントでログインができます。
+
+- admin@solsrv.flect.co.jp/nimda4321
