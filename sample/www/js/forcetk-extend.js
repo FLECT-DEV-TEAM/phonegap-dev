@@ -33,7 +33,6 @@ if (forcetk.Client) {
 
         this.setSessionToken(oauthResponse.access_token, null, oauthResponse.instance_url);
         this.setRefreshToken(oauthResponse.refresh_token);
-        alert(callback);
         callback.call(this);
     }
 
