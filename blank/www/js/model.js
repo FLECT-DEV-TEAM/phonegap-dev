@@ -197,6 +197,55 @@
         Yyy : common.extend({
             tableName : "YYY",
             sfObjectName : "Yyy__c"
+        }),
+
+        OAuth : common.extend({
+
+            tableName : "OAUTH",
+
+            authenticate : function(callback) {
+
+                var forcetk = model.forcetk();
+                this.findAll(function(tx, results){
+                    if(results.rows.length > 0) {
+                        var accessToken = results.rows.item(0).accessToken;
+                        var refreshToken = results.rows.item(0).refreshToken;
+                        var instanceUrl = results.rows.item(0).instanceUrl;
+                        forcetk.setSessionToken(accessToken,null,instanceUrl);
+                        forcetk.setRefreshToken(refreshToken);
+                        callback.call(this);
+                    
+                    } else {
+                        window.cb = window.plugins.childBrowser;
+                        cb.onLocationChange = function(loc) {
+                            if (forcetk.isRedirectUri(loc)) {
+                                cb.close();
+                                forcetk.sessionCallback(unescape(loc),
+                                    function() {
+                                        var oauth = new model.OAuth({
+                                            "accessToken" : forcetk.sessionId,
+                                            "refreshToken" : forcetk.refreshToken,
+                                            "instanceUrl" : forcetk.instanceUrl
+                                        });
+                                        oauth.save();
+                                        callback.call(this);
+                                    }
+                                );
+                                
+                            }
+                        }
+                        cb.showWebPage(forcetk.getAuthUrl());
+                    }
+                })
+            }
+
+        }, {
+            config : {
+                loginUrl: "https://login.salesforce.com/",
+                clientId: "xxx", // Your Client ID.
+                redirectUri: "https://login.salesforce.com/services/oauth2/success"
+            },
+
         })
     }
 
