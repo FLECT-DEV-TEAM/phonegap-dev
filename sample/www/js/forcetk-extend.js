@@ -18,7 +18,7 @@ if (forcetk.Client) {
         return uri.lastIndexOf(this.redirectUri, 0) == 0;            
     }
 
-    forcetk.Client.prototype.sessionCallback = function(loc) {
+    forcetk.Client.prototype.sessionCallback = function(loc, callback) {
         var oauthResponse = {};
 
         var fragment = loc.split("#")[1];
@@ -33,6 +33,8 @@ if (forcetk.Client) {
 
         this.setSessionToken(oauthResponse.access_token, null, oauthResponse.instance_url);
         this.setRefreshToken(oauthResponse.refresh_token);
+        alert(callback);
+        callback.call(this);
     }
 
     forcetk.Client.prototype.setSessionToken = function(sessionId, apiVersion, instanceUrl) {
