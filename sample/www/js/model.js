@@ -201,7 +201,7 @@
                                 var len = results.rows.length;
                                 for (var i = 0; i < len; i++) {
                                     var report = new model.Report(results.rows.item(i));
-                                    report.sync("Report__c");
+                                    report.sync();
                                 }
                             }
                         );
@@ -259,7 +259,6 @@
             authenticate : function(callback) {
 
                 var forcetk = model.forcetk();
-                
                 this.findAll(function(tx, results){
                     if(results.rows.length > 0) {
                         var accessToken = results.rows.item(0).accessToken;
