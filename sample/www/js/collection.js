@@ -15,7 +15,7 @@
         Destinations : Backbone.Collection.extend({
             model: model.Destination
         })
-    }
+    };
 
     root.collection = collection;
 

@@ -21,14 +21,14 @@
         },
 
         show : function($obj, options) {
-            app.router._cache.transition.show($obj, options)
+            app.router._cache.transition.show($obj, options);
         },
 
         back : function() {
             return app.router._cache.transition.back();
         }
 
-    })
+    });
 
     var view = {
 
@@ -55,10 +55,10 @@
                         var day = now.getDay();
                         var clazz = "";
                         if (day === 0) {
-                            clazz = "sunday"
+                            clazz = "sunday";
                         }
                         if (day === 6) {
-                            clazz = "saturday"
+                            clazz = "saturday";
                         }
                         calendar.push({
                             "year": year + 1900,
@@ -85,7 +85,7 @@
 
             renderList: function(date) {
                 // clear reports.
-                var report = $('#reports')
+                var report = $('#reports');
                 report.empty();
                 report.css("display","none");
 
@@ -93,10 +93,10 @@
                 var params = [date.year, date.month, date.day];
                 var that = this;
 
-                model.Report.query(sql, params, 
+                model.Report.query(sql, params,
                     function(tx, results){
 
-                        var list = new collection.Reports;
+                        var list = new collection.Reports();
                         var len = results.rows.length;
                         for (var i = 0; i < len; i++) {
                             list.add(new model.Report(results.rows.item(i)));
@@ -167,7 +167,7 @@
                         that.cameraRoll();
                     }
 
-                }
+                };
                 return false;
             },
 
@@ -189,7 +189,7 @@
                 );
             },
 
-            cameraRoll: function() {        
+            cameraRoll: function() {
             }
         }),
 
@@ -310,7 +310,7 @@
                 client.text("お客様を選択する");
                 client.append('<span class="icon">&gt;</span>');
                 $('#content').val("");
-            },
+            }
         }),
 
         ClientView : common.extend({
@@ -428,7 +428,7 @@
                                 picture.save(function() {
                                     return that.back();
                                 });
-                            }, 
+                            },
                             function(error) {
                                 console.log("failure..." + error.code);
                             });
@@ -436,7 +436,7 @@
                 );
             }
         })
-    }
+    };
 
     root.view = view;
 

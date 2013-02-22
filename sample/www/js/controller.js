@@ -17,7 +17,7 @@
                 this._cache.view[name] = new view[name](params);
             }
         }
-    })
+    });
 
     var controller = {
 
@@ -35,14 +35,14 @@
 
             list: function(date) {
                 var that = this;
-                var params = {    
+                var params = {
                     date : (function() {
                         if (date !== undefined) {
                             return {
                                 "year": date.substring(0,4),
                                 "month": date.substring(4,6),
                                 "day": date.substring(6,8)
-                            }            
+                            };
                         }
                     })(),
                     refresh : (function() {
@@ -50,9 +50,9 @@
                             return that._cache.transition.isBack;
                         } else {
                             return true;
-                        }                    
+                        }
                     })()
-                }
+                };
                 this.view("ListView", params);
             },
 
@@ -63,9 +63,9 @@
                             "year": date.substring(0,4),
                             "month": date.substring(4,6),
                             "day": date.substring(6,8)
-                        }
+                        };
                     })()
-                }
+                };
                 this.view("AddView", params);
             },
 
@@ -96,7 +96,7 @@
                 });
             }
         })
-    }
+    };
 
     root.controller = controller;
 

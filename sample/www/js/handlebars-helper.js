@@ -9,7 +9,7 @@ Handlebars.registerHelper('showSyncStatus', function(status) {
 });
 
 Handlebars.registerHelper('picturePaging', function(param) {
-    var html = '<h5 class="muted">'
+    var html = '<h5 class="muted">';
     var page = Number(param.page);
     var pageCount = Number(param.pageCount);
     var reportId = param.reportId;

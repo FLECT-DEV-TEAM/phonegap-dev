@@ -6,7 +6,7 @@ var Transition = function() {
     $(window).bind('hashchange', function() {
         that.history.push(location.hash);
     });
-}
+};
 
 Transition.prototype.show = function($obj, options) {
 
@@ -32,10 +32,10 @@ Transition.prototype.show = function($obj, options) {
         $obj.show();
     } else {
         var from = this.isBack ? "100" : "-100";
-        this._translate($obj, from, "0");   
+        this._translate($obj, from, "0");
     }
     this.isBack = false;
-}
+};
 
 Transition.prototype.back = function() {
     this.isBack = true;
@@ -43,10 +43,10 @@ Transition.prototype.back = function() {
     var priviousUrl = this.history.pop();
     app.router.navigate(priviousUrl, {trigger: true});
     return false;
-}
+};
 
 Transition.prototype._translate = function($obj, from, to) {
     $obj.attr({style: "-webkit-transform:translateX(" + from + "%)"});
     $obj.show();
     $obj.attr({style: "-webkit-transform:translateX(" + to + "%)"});
-}
+};

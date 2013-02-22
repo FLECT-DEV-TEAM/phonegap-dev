@@ -16,8 +16,8 @@ var app = {
             db.transaction(
                 // create table.
                 function(tx) {
-                    tx.executeSql('CREATE TABLE IF NOT EXISTS REPORT(id primary key, year, month, day, start, end, subject, '
-                        + 'visiting, client, content, sync_status, reg_time)');
+                    tx.executeSql('CREATE TABLE IF NOT EXISTS REPORT(id primary key, year, month, day, start, end, subject, ' +
+                     'visiting, client, content, sync_status, reg_time)');
                     tx.executeSql('CREATE TABLE IF NOT EXISTS DESTINATION(sfid primary key, name, address)');
                     tx.executeSql('CREATE TABLE IF NOT EXISTS CLIENT(sfid primary key, name)');
                     tx.executeSql('CREATE TABLE IF NOT EXISTS PICTURE(uri primary key, comment, report_id)');
@@ -47,11 +47,11 @@ var app = {
 
             // initialize filesystem.
             window.requestFileSystem(
-                LocalFileSystem.PERSISTENT, 
-                0, 
+                LocalFileSystem.PERSISTENT,
+                0,
                 function(fileSystem) {
                     app.persistentDirEntry = fileSystem.root;
-                }, 
+                },
                 function(error) {
                     console.log("file system error." + error.code);
                 }
@@ -63,7 +63,7 @@ var app = {
              "report",
                 "レポートの一覧",
                 "",
-                {"onSelect" : 
+                {"onSelect" :
                     function() {
                         $("#list-page").show();
                         $("#add-page").hide();
@@ -75,9 +75,9 @@ var app = {
              "settings",
                 "設定",
                 "",
-                {"onSelect" : 
+                {"onSelect" :
                     function() {
-                        alert("設定")
+                        alert("設定");
                     }
                 }
             );
@@ -86,8 +86,8 @@ var app = {
             window.plugins.nativeControls.selectTabBarItem("report");
 
             // initialize Backbone Controller.
-            app.router = new controller.Router;
-            app.router._cache.transition = new Transition;
+            app.router = new controller.Router();
+            app.router._cache.transition = new Transition();
             Backbone.history.start();
 
             // START APPLICATION!!
@@ -106,7 +106,7 @@ var app = {
             var hour = now.getHours();
             var minute = now.getMinutes();
             var second = now.getSeconds();
-            return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second; 
+            return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
         }
     }
 

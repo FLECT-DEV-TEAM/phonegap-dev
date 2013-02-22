@@ -45,7 +45,7 @@
                 function(err) {
                     alert(err.code);
                     alert(err.message);
-                }, 
+                },
                 callback || function(){}
             );
 
@@ -65,8 +65,8 @@
             var obj = {"Name" : name};
             for (var attribute in attributes) {
                 // temporary workaround...
-                if (attribute !== "sync_status"
-                    && attribute !== "reg_time") {
+                if (attribute !== "sync_status" &&
+                        attribute !== "reg_time") {
                     obj[attribute + "__c"] = this.get(attribute);
                 }
             }
@@ -102,9 +102,9 @@
                                 console.log("update sync_status 2");
                             }, {upsert : true}
                         );
-                        alert(jqXHR.responseText); 
+                        alert(jqXHR.responseText);
                     }
-                );            
+                );
             }
         },
 
@@ -153,10 +153,10 @@
 
         fetch: function(callback, soql) {
             model.forcetk().query(soql, callback, function(request) {
-            });            
+            });
         }
 
-    })
+    });
 
     var model = {
 
@@ -165,10 +165,10 @@
         database : function() {
             if (model._cache.db === undefined) {
                 model._cache.db = window.openDatabase(
-                    "salesreport"
-                    , "1.0"
-                    , "Sales Report"
-                    , 100000);
+                    "salesreport",
+                    "1.0",
+                    "Sales Report",
+                    100000);
             }
             return model._cache.db;
         },
@@ -176,8 +176,8 @@
         forcetk : function() {
             if (model._cache.forcetk === undefined) {
                 var config = model.OAuth.config;
-                model._cache.forcetk
-                    = new forcetk.Client(config.clientId, config.loginUrl);
+                model._cache.forcetk =
+                 new forcetk.Client(config.clientId, config.loginUrl);
                 model._cache.forcetk.setRedirectUri(config.redirectUri);
             }
             return model._cache.forcetk;
@@ -195,9 +195,9 @@
                     var networkState = navigator.network.connection.type;
                     if (Connection.UNKNOWN !== networkState) {
                         var sql = "SELECT * FROM REPORT WHERE sync_status='2'";
-                        model.Report.query(sql, [], 
+                        model.Report.query(sql, [],
                             function(tx, results) {
-                                var list = new collection.Reports;
+                                var list = new collection.Reports();
                                 var len = results.rows.length;
                                 for (var i = 0; i < len; i++) {
                                     var report = new model.Report(results.rows.item(i));
@@ -212,7 +212,7 @@
         }),
 
         Client : common.extend({
-            tableName : "CLIENT",
+            tableName : "CLIENT"
         }, {
             fetchMaster : function() {
                 model.Client.fetch(
@@ -223,11 +223,11 @@
                                 "sfid" : records[i].Id,
                                 "name" : records[i].Name
                             });
-                            client.save(function(){}, {upsert : true});
+                            client.save(null, {upsert : true});
                         }
                     },
                      "SELECT Id, Name FROM Client__c"
-                );              
+                );
             }
         }),
 
@@ -244,9 +244,9 @@
                                 "name" : records[i].Name,
                                 "address" : records[i].Address__c
                             });
-                            destination.save(function(){}, {upsert : true});
+                            destination.save(null, {upsert : true});
                         }
-                    }, 
+                    },
                     "SELECT Id, Name, Address__c FROM Destination__c"
                 );
             }
@@ -286,10 +286,10 @@
                                 );
                                 
                             }
-                        }
+                        };
                         cb.showWebPage(forcetk.getAuthUrl());
                     }
-                })
+                });
             }
 
         }, {
@@ -297,14 +297,14 @@
                 loginUrl: "https://login.salesforce.com/",
                 clientId: "3MVG9QDx8IX8nP5S8IEib7PVRMHBonEGiDGG.7TBMpisUiiuAfASQrKVOkU5RMP5yoWeArkRI5vVN6zKpMse6",
                 redirectUri: "https://login.salesforce.com/services/oauth2/success"
-            },
+            }
 
         }),
 
         Picture : common.extend({
             tableName : "PICTURE"
         })
-    }
+    };
 
     root.model = model;
 
