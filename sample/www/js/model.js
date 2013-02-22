@@ -106,27 +106,6 @@
                     }
                 );
             }
-        },
-
-        findAll: function(callback) {
-            var that = this;
-            model.database().transaction(
-                function(tx) {
-                    tx.executeSql(
-                        'SELECT * FROM ' + that.tableName,
-                        [],
-                        callback,
-                        function(err) {
-                            alert('ERROR:' + err.code);
-                            alert('ERROR:' + err.message);
-                        }
-                    );
-                },
-                function(err) {
-                    alert('ERROR:' + err.code);
-                    alert('ERROR:' + err.message);
-                }
-            );
         }
 
     },{
@@ -259,37 +238,41 @@
             authenticate : function(callback) {
 
                 var forcetk = model.forcetk();
-                this.findAll(function(tx, results){
-                    if(results.rows.length > 0) {
-                        var accessToken = results.rows.item(0).accessToken;
-                        var refreshToken = results.rows.item(0).refreshToken;
-                        var instanceUrl = results.rows.item(0).instanceUrl;
-                        forcetk.setSessionToken(accessToken,null,instanceUrl);
-                        forcetk.setRefreshToken(refreshToken);
-                        callback.call(this);
-                    
-                    } else {
-                        window.cb = window.plugins.childBrowser;
-                        cb.onLocationChange = function(loc) {
-                            if (forcetk.isRedirectUri(loc)) {
-                                cb.close();
-                                forcetk.sessionCallback(unescape(loc),
-                                    function() {
-                                        var oauth = new model.OAuth({
-                                            "accessToken" : forcetk.sessionId,
-                                            "refreshToken" : forcetk.refreshToken,
-                                            "instanceUrl" : forcetk.instanceUrl
-                                        });
-                                        oauth.save();
-                                        callback.call(this);
-                                    }
-                                );
-                                
-                            }
-                        };
-                        cb.showWebPage(forcetk.getAuthUrl());
+                model.OAuth.query(
+                    "SELECT * FROM " + this.tableName,
+                    [],
+                    function(tx, results){
+                        if(results.rows.length > 0) {
+                            var accessToken = results.rows.item(0).accessToken;
+                            var refreshToken = results.rows.item(0).refreshToken;
+                            var instanceUrl = results.rows.item(0).instanceUrl;
+                            forcetk.setSessionToken(accessToken,null,instanceUrl);
+                            forcetk.setRefreshToken(refreshToken);
+                            callback.call(this);
+                        
+                        } else {
+                            window.cb = window.plugins.childBrowser;
+                            cb.onLocationChange = function(loc) {
+                                if (forcetk.isRedirectUri(loc)) {
+                                    cb.close();
+                                    forcetk.sessionCallback(unescape(loc),
+                                        function() {
+                                            var oauth = new model.OAuth({
+                                                "accessToken" : forcetk.sessionId,
+                                                "refreshToken" : forcetk.refreshToken,
+                                                "instanceUrl" : forcetk.instanceUrl
+                                            });
+                                            oauth.save();
+                                            callback.call(this);
+                                        }
+                                    );
+                                    
+                                }
+                            };
+                            cb.showWebPage(forcetk.getAuthUrl());
+                        }
                     }
-                });
+                );
             }
 
         }, {

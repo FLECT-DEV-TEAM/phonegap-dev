@@ -323,24 +323,17 @@
 
             initialize: function() {
                 _.bindAll(this, "render", "renderBack");
-                this.render();
+                this.clients = new collection.Clients();
+                this.clients.bind("addAll", this.render);
+                this.clients.findAll();
             },
 
             render: function() {
-                var that = this;
-                new model.Client().findAll(
-                    function(tx, results){
-                        var list = new collection.Clients();
-                        var len = results.rows.length;
-                        for (var i = 0; i < len; i++) {
-                            list.add(new model.Client(results.rows.item(i)));
-                        }
-                        that.$el
-                            .find('.append')
-                            .append(that.template("#client-template", list.toJSON()));
-                        that.show(that.$el);
-                    }
-                );
+                this.$el
+                    .find('.append')
+                    .append(this.template("#client-template",
+                        this.clients.toJSON()));
+                this.show(this.$el);
             },
 
             renderBack: function(e) {
@@ -361,24 +354,17 @@
 
             initialize: function() {
                 _.bindAll(this, "render", "renderBack");
-                this.render();
+                this.destinations = new collection.Destinations();
+                this.destinations.bind("addAll", this.render);
+                this.destinations.findAll();
             },
 
             render: function() {
-                var that = this;
-                new model.Destination().findAll(
-                    function(tx, results){
-                        var list = new collection.Destinations();
-                        var len = results.rows.length;
-                        for (var i = 0; i < len; i++) {
-                            list.add(new model.Destination(results.rows.item(i)));
-                        }
-                        that.$el
-                            .find('.append')
-                            .append(that.template("#destination-template", list.toJSON()));
-                        that.show(that.$el);
-                    }
-                );
+                this.$el
+                    .find('.append')
+                    .append(this.template("#destination-template",
+                        this.destinations.toJSON()));
+                    this.show(this.$el);
             },
 
             renderBack: function(e) {
