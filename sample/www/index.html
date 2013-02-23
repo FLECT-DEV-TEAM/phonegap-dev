@@ -203,28 +203,23 @@
         <div class="report">
           <div class="span8">
               <div class="hero-unit">
+              {{#if id}}
                 <a href="#report/{{id}}/detail">
                   <h1>{{subject}} : {{visiting}}</h1>
                   <div class="icon"><span>&gt;</span></div>
                   <p>{{start}} - {{end}}</p>
                 </a>
+              {{else}}
+                <a href="#report/{{year}}{{month}}{{day}}/new">
+                  <h1 style="color:#aaa;">あたらしいレポート</h1>
+                  <div class="icon-new"><span>+</span></div>
+                  <p>&nbsp;</p>
+                </a>
+              {{/if}}
               </div>
           </div>
         </div>
         {{/each}}
-    </script>
-    <script id="list-new-template" type="text/x-handlebars-template">
-        <div class="report">
-          <div class="span8">
-            <div class="hero-unit">
-              <a href="#report/{{year}}{{month}}{{day}}/new">
-                <h1 style="color:#aaa;">あたらしいレポート</h1>
-                <div class="icon-new"><span>+</span></div>
-                <p>&nbsp;</p>
-              </a>
-            </div>
-          </div>
-        </div>
     </script>
     <script id="report-detail-template" type="text/x-handlebars-template">
         <li class="nav-header">{{showSyncStatus sync_status}}{{subject}}</li>

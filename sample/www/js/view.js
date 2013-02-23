@@ -95,16 +95,21 @@
 
                 model.Report.query(sql, params,
                     function(tx, results){
-
                         var list = new collection.Reports();
                         var len = results.rows.length;
                         for (var i = 0; i < len; i++) {
                             list.add(new model.Report(results.rows.item(i)));
                         }
-
+                        // new report.
+                        list.add(
+                            new model.Report({
+                                year : date.year,
+                                month : date.month,
+                                day : date.day
+                            })
+                        );
                         var reports = $('#reports');
                         reports.append(that.template("#list-report-template", list.toJSON()));
-                        reports.append(that.template("#list-new-template", date));
                         that.show(reports, {from : "-25", to : "0" });
                     }
                 );
