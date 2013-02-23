@@ -79,6 +79,10 @@
         Destinations : common.extend({
             model: model.Destination,
             tableName : "DESTINATION"
+        }),
+        Pictures : common.extend({
+            model : model.Picture,
+            tableName : "PICTURE"
         })
     };
 

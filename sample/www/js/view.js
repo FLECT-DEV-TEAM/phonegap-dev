@@ -120,38 +120,40 @@
             },
 
             initialize: function(params) {
-                _.bindAll(this, 'render', 'picture', 'back');
                 this.reportId = params.reportId;
-                this.pictures = [];
-                this.render(params.reportId);
+                this.report = new model.Report();
+                this.pictures = new collection.Pictures();
+                
+                _.bindAll(this, 'render', 'picture', 'findPicture');
+                this.report.bind("change", this.findPicture);
+                this.pictures.bind("addAll", this.render);
+                
+                this.findReport();
             },
 
-            render: function(reportId) {
-                var that = this;
-                model.Report.query(
+            findReport : function() {
+                this.report.query(
                     "SELECT * FROM REPORT WHERE id=?",
-                    [reportId],
-                    function(tx, results) {
-                        var report = new model.Report(results.rows.item(0));
-                        model.Picture.query(
-                            "SELECT * FROM PICTURE WHERE report_id=?",
-                            [report.get("id")],
-                            function(tx, results) {
-                                for(var i = 0; i < results.rows.length; i++) {
-                                    that.pictures.push(
-                                        new model.Picture(results.rows.item(i)));
-                                }
-                                if (that.pictures.length > 0) {
-                                    report.set("picture", true);
-                                }
-                                that.$el
-                                    .find('.append')
-                                    .append(that.template("#report-detail-template", report.toJSON()));
-                                that.show(that.$el);
-                            }
-                        );
-                    }
+                    [this.reportId]
                 );
+            },
+
+            findPicture : function () {
+                this.pictures.query(
+                    "SELECT * FROM PICTURE WHERE report_id=?",
+                    [this.report.id]
+                );
+            },
+
+            render: function() {
+                if (this.pictures.size() > 0) {
+                    this.report.set("picture", true);
+                }
+                this.$el
+                    .find('.append')
+                    .append(this.template("#report-detail-template",
+                        this.report.toJSON()));
+                this.show(this.$el);
             },
 
             picture: function() {

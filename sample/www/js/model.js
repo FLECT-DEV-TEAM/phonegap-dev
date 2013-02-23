@@ -1,5 +1,4 @@
 (function() {
-    
     var root = this;
 
     // SalesReport Common Model.
@@ -106,11 +105,38 @@
                     }
                 );
             }
+        },
+
+        query: function(sql, params) {
+            // FIXME sqlが文字列かparamsが配列かをチェックしたほうがいい！
+            var that = this;
+            model.database().transaction(
+                function(tx) {
+                    tx.executeSql(
+                        sql,
+                        params,
+                        function(tx, results) {
+                            if (results.rows.length > 0) {
+                                that.set(results.rows.item(0));
+                            }
+                        },
+                        function(err) {
+                            alert('ERROR:' + err.code);
+                            alert('ERROR:' + err.message);
+                        }
+                    );
+                },
+                function(err) {
+                    alert('ERROR:' + err.code);
+                    alert('ERROR:' + err.message);
+                }
+            );
         }
 
     },{
+
         // class methods.
-        query: function(sql, params, callback) {
+        _query: function(sql, params, callback) {
             model.database().transaction(
                 function(tx) {
                     tx.executeSql(
@@ -174,7 +200,7 @@
                     var networkState = navigator.network.connection.type;
                     if (Connection.UNKNOWN !== networkState) {
                         var sql = "SELECT * FROM REPORT WHERE sync_status='2'";
-                        model.Report.query(sql, [],
+                        model.Report._query(sql, [],
                             function(tx, results) {
                                 var list = new collection.Reports();
                                 var len = results.rows.length;
@@ -238,7 +264,7 @@
             authenticate : function(callback) {
 
                 var forcetk = model.forcetk();
-                model.OAuth.query(
+                model.OAuth._query(
                     "SELECT * FROM " + this.tableName,
                     [],
                     function(tx, results){
