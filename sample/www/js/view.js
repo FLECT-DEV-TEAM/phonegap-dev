@@ -37,7 +37,10 @@
             el: "#list-page",
 
             initialize: function(params) {
-                _.bindAll(this, 'render');
+                _.bindAll(this, 'render', 'renderList');
+                this.reports = new collection.Reports();
+                this.reports.bind("addAll", this.renderList);
+                this.params = params;
                 this.render(params);
             },
 
@@ -79,40 +82,31 @@
                 }
 
                 if (params.date) {
-                    this.renderList(params.date);
+                    // clear reports.
+                    $('#reports')
+                        .empty()
+                        .css("display","none");
+                    this.reports.query(
+                        "SELECT * FROM REPORT WHERE year=? AND month=? AND day=?",
+                        [params.date.year, params.date.month, params.date.day]
+                    );
                 }
             },
 
-            renderList: function(date) {
-                // clear reports.
-                var report = $('#reports');
-                report.empty();
-                report.css("display","none");
-
-                var sql = "SELECT * FROM REPORT WHERE year=? AND month=? AND day=?";
-                var params = [date.year, date.month, date.day];
-                var that = this;
-
-                model.Report.query(sql, params,
-                    function(tx, results){
-                        var list = new collection.Reports();
-                        var len = results.rows.length;
-                        for (var i = 0; i < len; i++) {
-                            list.add(new model.Report(results.rows.item(i)));
-                        }
-                        // new report.
-                        list.add(
-                            new model.Report({
-                                year : date.year,
-                                month : date.month,
-                                day : date.day
-                            })
-                        );
-                        var reports = $('#reports');
-                        reports.append(that.template("#list-report-template", list.toJSON()));
-                        that.show(reports, {from : "-25", to : "0" });
-                    }
+            renderList: function() {
+                // new report.
+                this.reports.add(
+                    new model.Report({
+                        year : this.params.date.year,
+                        month : this.params.date.month,
+                        day : this.params.date.day
+                    })
                 );
+                var el = $('#reports');
+                el.append(
+                    this.template("#list-report-template", this.reports.toJSON())
+                );
+                this.show(el, {from : "-25", to : "0" });
             }
         }),
 
