@@ -39,7 +39,7 @@
             initialize: function(params) {
                 _.bindAll(this, 'render', 'renderList');
                 this.reports = new collection.Reports();
-                this.reports.bind("addAll", this.renderList);
+                this.reports.bind("add:all", this.renderList);
                 this.params = params;
                 this.render(params);
             },
@@ -126,7 +126,7 @@
                 
                 _.bindAll(this, 'render', 'picture', 'findPicture');
                 this.report.bind("change", this.findPicture);
-                this.pictures.bind("addAll", this.render);
+                this.pictures.bind("add:all", this.render);
                 
                 this.findReport();
             },
@@ -325,7 +325,7 @@
             initialize: function() {
                 _.bindAll(this, "render", "renderBack");
                 this.clients = new collection.Clients();
-                this.clients.bind("addAll", this.render);
+                this.clients.bind("add:all", this.render);
                 this.clients.findAll();
             },
 
@@ -356,7 +356,7 @@
             initialize: function() {
                 _.bindAll(this, "render", "renderBack");
                 this.destinations = new collection.Destinations();
-                this.destinations.bind("addAll", this.render);
+                this.destinations.bind("add:all", this.render);
                 this.destinations.findAll();
             },
 

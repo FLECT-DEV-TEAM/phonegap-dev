@@ -18,7 +18,7 @@
                                 models.push(new that.model(results.rows.item(i)));
                             }
                             that.add(models);
-                            that.trigger("addAll");
+                            that.trigger("add:all");
                         },
                         function(err) {
                             alert('ERROR:' + err.code);
@@ -47,7 +47,7 @@
                                 models.push(new that.model(results.rows.item(i)));
                             }
                             that.add(models);
-                            that.trigger("addAll");
+                            that.trigger("add:all");
                         },
                         function(err) {
                             window.alert('ERROR:' + err.code);
