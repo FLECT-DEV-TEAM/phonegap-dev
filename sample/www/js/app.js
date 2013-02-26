@@ -39,8 +39,13 @@ var app = {
         startApp: function() {
 
             // Fetch master from SF and save to SQLite.
-            model.Client.fetchMaster();
-            model.Destination.fetchMaster();
+            new collection.Clients()
+                .fetch("SELECT Id, Name FROM Client__c",
+                    {save : {upsert : true}}
+                );
+            new collection.Destinations()
+                .fetch("SELECT Id, Name, Address__c FROM Destination__c",
+                    {save : {upsert : true}});
 
             // Re-sync report to Salesforce.
             model.Report.resync();

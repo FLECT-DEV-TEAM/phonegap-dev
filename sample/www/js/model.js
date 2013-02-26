@@ -134,7 +134,6 @@
         }
 
     },{
-
         // class methods.
         _query: function(sql, params, callback) {
             model.database().transaction(
@@ -154,13 +153,7 @@
                     alert('ERROR:' + err.message);
                 }
             );
-        },
-
-        fetch: function(callback, soql) {
-            model.forcetk().query(soql, callback, function(request) {
-            });
         }
-
     });
 
     var model = {
@@ -218,43 +211,10 @@
 
         Client : common.extend({
             tableName : "CLIENT"
-        }, {
-            fetchMaster : function() {
-                model.Client.fetch(
-                    function(response) {
-                        var records = response.records;
-                        for(var i = 0; i < records.length; i++) {
-                            var client = new model.Client({
-                                "sfid" : records[i].Id,
-                                "name" : records[i].Name
-                            });
-                            client.save(null, {upsert : true});
-                        }
-                    },
-                     "SELECT Id, Name FROM Client__c"
-                );
-            }
         }),
 
         Destination : common.extend({
             tableName : "DESTINATION"
-        }, {
-            fetchMaster : function() {
-                model.Destination.fetch(
-                    function(response){
-                        var records = response.records;
-                        for(i = 0; i < records.length; i++) {
-                            var destination = new model.Destination({
-                                "sfid" : records[i].Id,
-                                "name" : records[i].Name,
-                                "address" : records[i].Address__c
-                            });
-                            destination.save(null, {upsert : true});
-                        }
-                    },
-                    "SELECT Id, Name, Address__c FROM Destination__c"
-                );
-            }
         }),
 
         OAuth : common.extend({
