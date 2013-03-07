@@ -46,6 +46,9 @@
                     .find('.append')
                     .append(this.template('#top-page-template'));
                 this.show(this.$el);
+                window.plugins.barcodeScanner.scan(
+                    function(result) {alert(JSON.stringify(result));},
+                    function(message) {alert(message);});
             }
         })
     };
