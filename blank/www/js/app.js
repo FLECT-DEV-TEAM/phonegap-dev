@@ -3,7 +3,6 @@ var app = {
     setup: {
 
         initialize: function() {
-            console.log("hogehoge");
             this.bindEvents();
         },
 
@@ -17,8 +16,8 @@ var app = {
 
         startApp: function() {
             // initialize Backbone Controller.
-            app.router = new controller.Router;
-            app.router._cache.transition = new Transition;
+            app.router = new controller.Router();
+            app.router._cache.transition = new Transition();
             Backbone.history.start();
 
             // START APPLICATION!!

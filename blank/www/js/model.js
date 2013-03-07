@@ -45,7 +45,7 @@
                 function(err) {
                     alert(err.code);
                     alert(err.message);
-                }, 
+                },
                 callback || function(){}
             );
 
@@ -65,8 +65,8 @@
             var obj = {"Name" : name};
             for (var attribute in attributes) {
                 // temporary workaround...
-                if (attribute !== "sync_status"
-                    && attribute !== "reg_time") {
+                if (attribute !== "sync_status" &&
+                        attribute !== "reg_time") {
                     obj[attribute + "__c"] = this.get(attribute);
                 }
             }
@@ -102,20 +102,25 @@
                                 console.log("update sync_status 2");
                             }, {upsert : true}
                         );
-                        alert(jqXHR.responseText); 
+                        alert(jqXHR.responseText);
                     }
-                );            
+                );
             }
         },
 
-        findAll: function(callback) {
+        query: function(sql, params) {
+            // FIXME sqlが文字列かparamsが配列かをチェックしたほうがいい！
             var that = this;
             model.database().transaction(
                 function(tx) {
                     tx.executeSql(
-                        'SELECT * FROM ' + that.tableName,
-                        [],
-                        callback,
+                        sql,
+                        params,
+                        function(tx, results) {
+                            if (results.rows.length > 0) {
+                                that.set(results.rows.item(0));
+                            }
+                        },
                         function(err) {
                             alert('ERROR:' + err.code);
                             alert('ERROR:' + err.message);
@@ -131,7 +136,7 @@
 
     },{
         // class methods.
-        query: function(sql, params, callback) {
+        _query: function(sql, params, callback) {
             model.database().transaction(
                 function(tx) {
                     tx.executeSql(
@@ -149,14 +154,8 @@
                     alert('ERROR:' + err.message);
                 }
             );
-        },
-
-        fetch: function(callback, soql) {
-            model.forcetk().query(soql, callback, function(request) {
-            });            
         }
-
-    })
+    });
 
     var model = {
 
@@ -165,10 +164,10 @@
         database : function() {
             if (model._cache.db === undefined) {
                 model._cache.db = window.openDatabase(
-                    "salesreport"
-                    , "1.0"
-                    , "Sales Report"
-                    , 100000);
+                    "salesreport",
+                    "1.0",
+                    "Sales Report",
+                    100000);
             }
             return model._cache.db;
         },
@@ -176,8 +175,8 @@
         forcetk : function() {
             if (model._cache.forcetk === undefined) {
                 var config = model.OAuth.config;
-                model._cache.forcetk
-                    = new forcetk.Client(config.clientId, config.loginUrl);
+                model._cache.forcetk =
+                 new forcetk.Client(config.clientId, config.loginUrl);
                 model._cache.forcetk.setRedirectUri(config.redirectUri);
             }
             return model._cache.forcetk;
@@ -188,10 +187,6 @@
             // instance method.
             tableName : "XXX",
             sfObjectName : "Xxx__c"
-        }, {
-            // class method.
-            fetchMaster : function() {
-            }   
         }),
 
         Yyy : common.extend({
@@ -233,10 +228,10 @@
                                 );
                                 
                             }
-                        }
+                        };
                         cb.showWebPage(forcetk.getAuthUrl());
                     }
-                })
+                });
             }
 
         }, {
@@ -244,10 +239,10 @@
                 loginUrl: "https://login.salesforce.com/",
                 clientId: "xxx", // Your Client ID.
                 redirectUri: "https://login.salesforce.com/services/oauth2/success"
-            },
+            }
 
         })
-    }
+    };
 
     root.model = model;
 

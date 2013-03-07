@@ -22,14 +22,14 @@
         },
 
         show : function($obj, options) {
-            app.router._cache.transition.show($obj, options)
+            app.router._cache.transition.show($obj, options);
         },
 
         back : function() {
             return app.router._cache.transition.back();
         }
 
-    })
+    });
 
     var view = {
 
@@ -38,7 +38,6 @@
             el: "#top-page",
 
             initialize: function() {
-                _.bindAll(this, 'render');
                 this.render();
             },
 
@@ -49,7 +48,7 @@
                 this.show(this.$el);
             }
         })
-    }
+    };
 
     root.view = view;
 
