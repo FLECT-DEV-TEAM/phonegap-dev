@@ -4,7 +4,7 @@
 
     // Application Common View.
     var common = Backbone.View.extend({
-    
+
         _cache : {
             template : {}
         },
@@ -33,22 +33,58 @@
 
     var view = {
 
-        HelloView: common.extend({
+        ScanView: common.extend({
 
             el: "#top-page",
 
-            initialize: function() {
-                this.render();
+            events: {
+                "click button": "next"
             },
 
-            render: function(params) {
-                this.$el
-                    .find('.append')
-                    .append(this.template('#top-page-template'));
-                this.show(this.$el);
+            initialize: function() {
+                alert("init.");
+                this.scan();
+            },
+
+            scan: function() {
+                var self = this;
+
                 window.plugins.barcodeScanner.scan(
-                    function(result) {alert(JSON.stringify(result));},
-                    function(message) {alert(message);});
+                    function(result) {
+                        self.render(result.text);
+                    },
+                    function(message) {
+                        alert(message);
+                    }
+                );
+            },
+
+            render: function(code) {
+
+                var self = this;
+
+                $.ajax({
+                    url: "http://immense-shelf-1535.herokuapp.com/search/" + code,
+                    type: "GET",
+                    dataType: "json"
+                })
+                .done(function(data) {
+                    console.log(data);
+                    self.$el
+                        .find('.append')
+                        .append(self.template('#top-page-template', data));
+
+                    self.show(self.$el);
+                })
+                .fail(function(data) {
+                    alert("データが取得できませんでした");
+                    console.log(data);
+                });
+
+            },
+
+            next: function() {
+                app.router.navigate("scan", {trigger: true});
             }
         })
     };

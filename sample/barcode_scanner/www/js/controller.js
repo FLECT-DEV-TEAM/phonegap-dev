@@ -18,22 +18,22 @@
                 this._cache.view[name] = new view[name](params);
             }
         }
-    })
+    });
 
     var controller = {
 
         Router: common.extend({
-            
+
             routes: {
-                "hello": "hello"
+                "scan": "scan"
             },
 
-            hello: function() {
-                this.view("HelloView");
+            scan: function() {
+                this.view("ScanView");
             }
 
         })
-    }
+    };
 
     root.controller = controller;
 

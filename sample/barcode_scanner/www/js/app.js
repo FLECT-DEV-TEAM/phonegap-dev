@@ -21,7 +21,7 @@ var app = {
             Backbone.history.start();
 
             // START APPLICATION!!
-            app.router.navigate("hello", {trigger: true});
+            app.router.navigate("scan", {trigger: true});
         }
     }
 };

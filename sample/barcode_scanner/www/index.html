@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- css -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
   <link href="css/app.css" rel="stylesheet">
 
   <body screen_capture_injected="true">
@@ -13,11 +14,15 @@
     <div id="top-page" class="page" style="display: none;">
       <div class="append">
       </div>
+      <button type="button" class="btn btn-primary submit">他の商品をスキャン</button>
     </div>
 
     <!-- HTML Template -->
     <script id="top-page-template" type="text/x-handlebars-template">
-        <h1>Hello phonegap-dev blank!</h1>
+        <p><img src="{{image}}" alt="{{title}}"></img></p>
+        <p>商品名：{{title}}</p>
+        <p>単価：{{price}}</p>
+        <p>販売元：{{company}}</p>
     </script>
 
     <!-- libraries. -->
