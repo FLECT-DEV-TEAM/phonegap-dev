@@ -1,5 +1,44 @@
-﻿.page {
-    -webkit-transition:0.5s
+﻿body {
+    font-family: Helvetica;
+}
+
+
+p {
+	font-size: 20px;
+	text-align: center;
+}
+
+h1 {
+	font-size: 20px;
+	text-align: center;
+}
+
+.muted {
+    font-size: 20px;
+    text-align: center;
+}
+
+.header {
+	background-color: #fff5e6;
+	margin-bottom: 20px;
+}
+
+
+.page {
+    -webkit-transition:0.5s;
+}
+
+.controll {
+    padding: 10px 10px;
+}
+
+.navbar {
+    margin-bottom: 0;
+}
+
+
+.navbar-inner {
+	border-radius: 0;
 }
 
 .icon {
@@ -14,4 +53,3 @@
          url('../fonts/websymbols-regular-webfont.ttf') format('truetype'),
          url('../fonts/websymbols-regular-webfont.svg#WebSymbolsRegular') format('svg');
 }
-

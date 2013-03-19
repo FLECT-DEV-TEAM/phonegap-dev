@@ -25,11 +25,16 @@
         Router: common.extend({
 
             routes: {
-                "scan": "scan"
+                "scan": "scan",
+                "product/:id": "product"
             },
 
             scan: function() {
                 this.view("ScanView");
+            },
+
+            product: function(id) {
+                this.view("ProductView", id);
             }
 
         })

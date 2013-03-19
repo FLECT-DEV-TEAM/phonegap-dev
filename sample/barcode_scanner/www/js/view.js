@@ -33,58 +33,66 @@
 
     var view = {
 
-        ScanView: common.extend({
-
+        ProductView: common.extend({
             el: "#top-page",
 
-            events: {
-                "click button": "next"
+            initialize: function(id) {
+                this.request(id);
             },
 
+            request: function(id) {
+                var self = this;
+                console.log(id);
+                $.ajax({
+                    url: "http://immense-shelf-1535.herokuapp.com/search/" + id,
+                    type: "GET",
+                    dataType: "json"
+                })
+                .done(function(data) {
+                    self.render(data);
+                })
+                .fail(function(data) {
+                    alert("データが取得できませんでした");
+                    app.router.navigate("scan", {trigger: true});
+                    console.log(data);
+                });
+
+            },
+
+            render: function(data) {
+                this.$el
+                    .find('.append')
+                    .append(this.template('#top-page-template', data));
+
+                this.show(this.$el);
+            }
+
+        }),
+
+        ScanView: common.extend({
+
+            el: "#scan-page",
+
             initialize: function() {
-                alert("init.");
                 this.scan();
             },
 
             scan: function() {
                 var self = this;
-
                 window.plugins.barcodeScanner.scan(
                     function(result) {
-                        self.render(result.text);
+                        self.render();
+                        app.router.navigate("product/" + result.text,
+                            {trigger: true}
+                        );
                     },
                     function(message) {
                         alert(message);
                     }
                 );
             },
-
-            render: function(code) {
-
-                var self = this;
-
-                $.ajax({
-                    url: "http://immense-shelf-1535.herokuapp.com/search/" + code,
-                    type: "GET",
-                    dataType: "json"
-                })
-                .done(function(data) {
-                    console.log(data);
-                    self.$el
-                        .find('.append')
-                        .append(self.template('#top-page-template', data));
-
-                    self.show(self.$el);
-                })
-                .fail(function(data) {
-                    alert("データが取得できませんでした");
-                    console.log(data);
-                });
-
-            },
-
-            next: function() {
-                app.router.navigate("scan", {trigger: true});
+            render: function() {
+                this.show(this.$el, {effect: false});
             }
         })
     };
