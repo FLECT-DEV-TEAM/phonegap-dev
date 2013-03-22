@@ -37,7 +37,7 @@
             el: "#top-page",
 
             events: {
-                "click a" : "order"
+                "click .btn" : "order"
             },
 
             initialize: function(id) {
