@@ -36,6 +36,10 @@
         ProductView: common.extend({
             el: "#top-page",
 
+            events: {
+                "click a" : "order"
+            },
+
             initialize: function(id) {
                 this.request(id);
             },
@@ -49,6 +53,7 @@
                     dataType: "json"
                 })
                 .done(function(data) {
+                    self.item = data;
                     self.render(data);
                 })
                 .fail(function(data) {
@@ -65,6 +70,32 @@
                     .append(this.template('#top-page-template', data));
 
                 this.show(this.$el);
+            },
+
+            order: function() {
+
+                var slots = [
+                    {data: []}
+                ];
+
+                for (var j = 1; j < 100; j++) {
+                    slots[0].data.push({
+                        text: "数量 " + j + "   :   ￥ " + this.item.price * j,
+                        value: j
+                    });
+                }
+
+                var options = {
+                    style: 'black-opaque',
+                    doneButtonLabel: '決定',
+                    cancelButtonLabel: '中止'
+                };
+
+                window.plugins.pickerView.create(slots, options,
+                    function(selectedValues, buttonIndex) {
+                        console.log(selectedValues);
+                    }
+                );
             }
 
         }),
