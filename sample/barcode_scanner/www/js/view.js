@@ -33,7 +33,7 @@
 
     var view = {
 
-        ProductView: common.extend({
+        ItemView: common.extend({
             el: "#top-page",
 
             events: {
@@ -41,18 +41,27 @@
             },
 
             initialize: function(item) {
-                _.bindAll(this, "render");
+                _.bindAll(this, "requestSuccess");
                 this.item = item;
-                this.item.bind("request:success", this.render);
+                this.item.bind("request:success", this.requestSuccess);
                 this.item.bind("request:failure", this.requestFailure);
                 this.item.request();
             },
 
-            render: function() {
+            requestSuccess: function() {
                 console.log(this.item);
+                this.item.save(
+                    function(){},
+                    {upsert: true}
+                );
+                this.render();
+            },
+
+            render: function() {
                 this.$el
                     .find('.append')
-                    .append(this.template('#top-page-template',this.item.toJSON()));
+                    .append(this.template('#top-page-template',
+                        this.item.toJSON()));
 
                 this.show(this.$el);
             },
@@ -103,7 +112,7 @@
                 window.plugins.barcodeScanner.scan(
                     function(result) {
                         self.render();
-                        app.router.navigate("product/" + result.text,
+                        app.router.navigate("item/" + result.text,
                             {trigger: true}
                         );
                     },

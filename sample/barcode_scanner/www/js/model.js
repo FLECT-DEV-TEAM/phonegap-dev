@@ -1,5 +1,5 @@
 (function() {
-    
+
     var root = this;
 
     // Application Common Model.
@@ -164,9 +164,9 @@
         database : function() {
             if (model._cache.db === undefined) {
                 model._cache.db = window.openDatabase(
-                    "salesreport",
+                    "barcodescanner",
                     "1.0",
-                    "Sales Report",
+                    "Barcode Scanner",
                     100000);
             }
             return model._cache.db;
@@ -193,13 +193,13 @@
                 if (code === "undefined") {
                     throw new Error('code is required ><');
                 }
-                this.code = code;
+                this.set(code);
             },
 
             request: function() {
                 var self = this;
                 $.ajax({
-                    url: "http://immense-shelf-1535.herokuapp.com/search/" + self.code,
+                    url: "http://immense-shelf-1535.herokuapp.com/search/" + self.get("code"),
                     type: "GET",
                     dataType: "json"
                 })

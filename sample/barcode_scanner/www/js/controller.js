@@ -26,15 +26,17 @@
 
             routes: {
                 "scan": "scan",
-                "product/:code": "product"
+                "item/:code": "item"
             },
 
             scan: function() {
                 this.view("ScanView");
             },
 
-            product: function(code) {
-                this.view("ProductView", new model.Item(code));
+            item: function(code) {
+                this.view("ItemView",
+                    new model.Item({code: code})
+                );
             }
 
         })

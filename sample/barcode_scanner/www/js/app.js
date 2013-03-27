@@ -11,7 +11,32 @@ var app = {
         },
 
         onDeviceReady: function() {
-            app.setup.startApp();
+            // initialize database.
+            var db = model.database();
+            // begin transaction.
+            db.transaction(
+                // create table.
+                function(tx) {
+                    tx.executeSql(
+                        'CREATE TABLE IF NOT EXISTS ITEM(' +
+                            'code text primary key, ' +
+                            'title, ' +
+                            'price, ' +
+                            'formattedPrice, ' +
+                            'company, ' +
+                            'image)'
+                    );
+                },
+                // if create on error.
+                function(err) {
+                    alert(err.code);
+                    alert(err.message);
+                },
+                // if create on success.
+                function() {
+                    app.setup.startApp();
+                }
+            );
         },
 
         startApp: function() {
@@ -21,7 +46,7 @@ var app = {
             Backbone.history.start();
 
             // START APPLICATION!!
-            app.router.navigate("product/4902370518986", {trigger: true});
+            app.router.navigate("scan", {trigger: true});
         }
     }
 };
