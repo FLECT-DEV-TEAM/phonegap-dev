@@ -21,7 +21,7 @@ var app = {
             Backbone.history.start();
 
             // START APPLICATION!!
-            app.router.navigate("scan", {trigger: true});
+            app.router.navigate("product/4902370518986", {trigger: true});
         }
     }
 };

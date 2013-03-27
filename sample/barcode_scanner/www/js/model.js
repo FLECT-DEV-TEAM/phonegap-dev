@@ -183,15 +183,39 @@
         },
 
         /****************************** Define Application models. */
-        Xxx : common.extend({
-            // instance method.
-            tableName : "XXX",
-            sfObjectName : "Xxx__c"
-        }),
+        Item : common.extend({
 
-        Yyy : common.extend({
-            tableName : "YYY",
-            sfObjectName : "Yyy__c"
+            tableName : "Item",
+
+            sfObjectName : "Item__c",
+
+            initialize: function(code) {
+                if (code === "undefined") {
+                    throw new Error('code is required ><');
+                }
+                this.code = code;
+            },
+
+            request: function() {
+                var self = this;
+                $.ajax({
+                    url: "http://immense-shelf-1535.herokuapp.com/search/" + self.code,
+                    type: "GET",
+                    dataType: "json"
+                })
+                .done(function(data) {
+                    // binding...
+                    self.set(data);
+                    // trigger success event.
+                    self.trigger("request:success");
+                })
+                .fail(function(data) {
+                    // trigger failure event.
+                    self.trigger("request:failure");
+                });
+
+
+            }
         }),
 
         OAuth : common.extend({
@@ -209,7 +233,7 @@
                         forcetk.setSessionToken(accessToken,null,instanceUrl);
                         forcetk.setRefreshToken(refreshToken);
                         callback.call(this);
-                    
+
                     } else {
                         window.cb = window.plugins.childBrowser;
                         cb.onLocationChange = function(loc) {
@@ -226,7 +250,7 @@
                                         callback.call(this);
                                     }
                                 );
-                                
+
                             }
                         };
                         cb.showWebPage(forcetk.getAuthUrl());

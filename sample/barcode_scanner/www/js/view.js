@@ -40,36 +40,26 @@
                 "click .btn" : "order"
             },
 
-            initialize: function(id) {
-                this.request(id);
+            initialize: function(item) {
+                _.bindAll(this, "render");
+                this.item = item;
+                this.item.bind("request:success", this.render);
+                this.item.bind("request:failure", this.requestFailure);
+                this.item.request();
             },
 
-            request: function(id) {
-                var self = this;
-                console.log(id);
-                $.ajax({
-                    url: "http://immense-shelf-1535.herokuapp.com/search/" + id,
-                    type: "GET",
-                    dataType: "json"
-                })
-                .done(function(data) {
-                    self.item = data;
-                    self.render(data);
-                })
-                .fail(function(data) {
-                    alert("データが取得できませんでした");
-                    app.router.navigate("scan", {trigger: true});
-                    console.log(data);
-                });
-
-            },
-
-            render: function(data) {
+            render: function() {
+                console.log(this.item);
                 this.$el
                     .find('.append')
-                    .append(this.template('#top-page-template', data));
+                    .append(this.template('#top-page-template',this.item.toJSON()));
 
                 this.show(this.$el);
+            },
+
+            requestFailure: function() {
+                alert("データが取得できませんでした");
+                app.router.navigate("scan", {trigger: true});
             },
 
             order: function() {
@@ -80,7 +70,7 @@
 
                 for (var j = 1; j < 100; j++) {
                     slots[0].data.push({
-                        text: "数量 " + j + "   :   ￥ " + this.item.price * j,
+                        text: "数量 " + j + "   :   ￥ " + this.item.get("price") * j,
                         value: j
                     });
                 }
