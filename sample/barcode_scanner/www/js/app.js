@@ -47,13 +47,38 @@ var app = {
         },
 
         startApp: function() {
+
+            // initialize tabbar
+            var tabBar = cordova.require("cordova/plugin/iOSTabBar");
+            tabBar.init();
+            tabBar.create();
+            tabBar.create({selectedImageTintColorRgba: "255,40,0,255"});
+
+            tabBar.createItem(
+                "scan", "商品スキャン", "",{
+                    onSelect: function() {
+                        app.router.navigate("scan", {trigger: true});
+                    }
+                }
+            );
+            tabBar.createItem(
+                "history", "発注履歴", "",{
+                    onSelect: function() {
+                        app.router.navigate("history", {trigger: true});
+                    }
+                }
+            );
+
+            tabBar.show();
+            tabBar.showItems("scan", "history");
+
             // initialize Backbone Controller.
             app.router = new controller.Router();
             app.router._cache.transition = new Transition();
             Backbone.history.start();
 
             // START APPLICATION!!
-            app.router.navigate("item/4902370518986", {trigger: true});
+            tabBar.selectItem("scan");
         }
     }
 };
