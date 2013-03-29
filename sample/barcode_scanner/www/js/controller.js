@@ -26,7 +26,8 @@
 
             routes: {
                 "scan": "scan",
-                "item/:code": "item"
+                "item/:code": "item",
+                "history": "history"
             },
 
             scan: function() {
@@ -40,6 +41,10 @@
                         order: new model.Order({id: UUID.generate(), code: code})
                     }
                 );
+            },
+
+            history: function() {
+                this.view("HistoryView", new collection.Orders());
             }
         })
     };

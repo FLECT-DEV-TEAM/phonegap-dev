@@ -106,13 +106,10 @@
     var collection = {
 
         /************* Define Application collections. */
-        Xxx : common.extend({
-            model: model.Xxx
-        }),
-
-        Yyy : common.extend({
-            model: model.Yyy
+        Orders : common.extend({
+            model: model.Order
         })
+
     };
 
     root.collection = collection;

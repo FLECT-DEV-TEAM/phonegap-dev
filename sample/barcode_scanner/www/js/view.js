@@ -33,6 +33,23 @@
 
     var view = {
 
+        HistoryView: common.extend({
+
+            el: "#history-page",
+
+            initialize: function(orders) {
+                _.bindAll(this, "render");
+                this.orders = orders;
+                this.orders.bind("add:all", this.render);
+                this.orders.query("SELECT * FROM ITEM_ORDER ORDER BY order_date DESC", []);
+            },
+
+            render: function() {
+                console.log(this.orders.toJSON());
+            }
+
+        }),
+
         ItemView: common.extend({
             el: "#top-page",
 
