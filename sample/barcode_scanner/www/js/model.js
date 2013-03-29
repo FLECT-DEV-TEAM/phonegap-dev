@@ -185,7 +185,7 @@
         /****************************** Define Application models. */
         Item : common.extend({
 
-            tableName : "Item",
+            tableName : "ITEM",
 
             sfObjectName : "Item__c",
 
@@ -216,6 +216,11 @@
 
 
             }
+        }),
+
+        Order : common.extend({
+            tableName : "ITEM_ORDER",
+            sfObjectName : "ItemOrder__c"
         }),
 
         OAuth : common.extend({

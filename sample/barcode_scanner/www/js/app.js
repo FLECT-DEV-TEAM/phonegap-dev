@@ -26,6 +26,13 @@ var app = {
                             'company, ' +
                             'image)'
                     );
+                    tx.executeSql(
+                        'CREATE TABLE IF NOT EXISTS ITEM_ORDER(' +
+                            'id text primary key, ' +
+                            'code, ' +
+                            'amount, ' +
+                            'order_date DEFAULT CURRENT_DATE)'
+                    );
                 },
                 // if create on error.
                 function(err) {
@@ -46,7 +53,7 @@ var app = {
             Backbone.history.start();
 
             // START APPLICATION!!
-            app.router.navigate("scan", {trigger: true});
+            app.router.navigate("item/4902370518986", {trigger: true});
         }
     }
 };

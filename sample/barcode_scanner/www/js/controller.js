@@ -34,11 +34,13 @@
             },
 
             item: function(code) {
-                this.view("ItemView",
-                    new model.Item({code: code})
+                this.view(
+                    "ItemView",{
+                        item: new model.Item({code: code}),
+                        order: new model.Order({id: UUID.generate(), code: code})
+                    }
                 );
             }
-
         })
     };
 

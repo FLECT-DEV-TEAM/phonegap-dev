@@ -37,14 +37,16 @@
             el: "#top-page",
 
             events: {
-                "click .btn" : "order"
+                "click .btn" : "renderOrder"
             },
 
-            initialize: function(item) {
-                _.bindAll(this, "requestSuccess");
-                this.item = item;
+            initialize: function(params) {
+                _.bindAll(this, "requestSuccess", "requestOrder");
+                this.item = params.item;
                 this.item.bind("request:success", this.requestSuccess);
                 this.item.bind("request:failure", this.requestFailure);
+                this.order = params.order;
+                this.order.bind("change", this.requestOrder);
                 this.item.request();
             },
 
@@ -71,8 +73,15 @@
                 app.router.navigate("scan", {trigger: true});
             },
 
-            order: function() {
+            requestOrder: function() {
+                console.log(this.order);
+                this.order.save(function() {
+                    alert("発注したよ");
+                });
+            },
 
+            renderOrder: function() {
+                var self = this;
                 var slots = [
                     {data: []}
                 ];
@@ -92,7 +101,7 @@
 
                 window.plugins.pickerView.create(slots, options,
                     function(selectedValues, buttonIndex) {
-                        console.log(selectedValues);
+                        self.order.set("amount", selectedValues["0"]);
                     }
                 );
             }
