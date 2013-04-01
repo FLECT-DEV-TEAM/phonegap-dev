@@ -58,7 +58,7 @@ var app = {
             tabBar.createItem(
                 "scan", "商品スキャン", "",{
                     onSelect: function() {
-                        app.router.navigate("scan", {trigger: true});
+                        app.router.navigate("top", {trigger: true});
                     }
                 }
             );

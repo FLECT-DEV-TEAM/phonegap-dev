@@ -12,6 +12,12 @@
 
     <!-- Page -->
     <div id="top-page" class="page" style="display: none;">
+      <div class="top">
+        <h1>バーコードスキャンデモ</h1>
+        <a class="btn btn-large btn-primary" href="#scan">さっそくスキャンしてみる</a>
+      </div>
+    </div>
+    <div id="item-page" class="page" style="display: none;">
       <div class="navbar navbar-inverse active">
         <span class="label back">
           <a href="#scan">戻る</a>
@@ -41,7 +47,7 @@
     </div>
 
     <!-- HTML Template -->
-    <script id="top-page-template" type="text/x-handlebars-template">
+    <script id="item-page-template" type="text/x-handlebars-template">
       <div class="row-fluid">
         <div class="span12 header">
           <h1>{{title}}</h1>

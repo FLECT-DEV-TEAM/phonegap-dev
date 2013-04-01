@@ -25,9 +25,14 @@
         Router: common.extend({
 
             routes: {
+                "top": "top",
                 "scan": "scan",
                 "item/:code": "item",
                 "history": "history"
+            },
+
+            top: function() {
+                this.view("TopView");
             },
 
             scan: function() {

@@ -13,6 +13,10 @@ h1 {
 	text-align: center;
 }
 
+.top {
+    padding-top: 150px;
+    text-align: center;
+}
 
 .history .amount p {
     font-size: 25px;

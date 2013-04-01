@@ -33,6 +33,19 @@
 
     var view = {
 
+        TopView: common.extend({
+
+            el: "#top-page",
+
+            initialize: function() {
+                this.render();
+            },
+
+            render: function() {
+                this.show(this.$el, {effect: false});
+            }
+        }),
+
         HistoryView: common.extend({
 
             el: "#history-page",
@@ -59,7 +72,7 @@
         }),
 
         ItemView: common.extend({
-            el: "#top-page",
+            el: "#item-page",
 
             events: {
                 "click .btn" : "renderOrder"
@@ -83,7 +96,7 @@
             render: function() {
                 this.$el
                     .find('.append')
-                    .append(this.template('#top-page-template',
+                    .append(this.template('#item-page-template',
                         this.item.toJSON()));
 
                 this.show(this.$el);
@@ -141,10 +154,14 @@
                 var self = this;
                 window.plugins.barcodeScanner.scan(
                     function(result) {
-                        self.render();
-                        app.router.navigate("item/" + result.text,
-                            {trigger: true}
-                        );
+                        if (result.cancelled === true) {
+                            app.router.navigate("top", {trigger: true});
+                        } else {
+                            self.render();
+                            app.router.navigate("item/" + result.text,
+                                {trigger: true}
+                            );
+                        }
                     },
                     function(message) {
                         alert(message);
