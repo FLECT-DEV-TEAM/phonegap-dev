@@ -35,10 +35,11 @@
             },
 
             item: function(code) {
+                var itemId = UUID.generate();
                 this.view(
                     "ItemView",{
-                        item: new model.Item({code: code}),
-                        order: new model.Order({id: UUID.generate(), code: code})
+                        item: new model.Item({id: itemId, code: code}),
+                        order: new model.Order({id: UUID.generate(), item_id: itemId})
                     }
                 );
             },

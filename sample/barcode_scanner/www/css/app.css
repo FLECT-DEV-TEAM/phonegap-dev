@@ -13,6 +13,19 @@ h1 {
 	text-align: center;
 }
 
+
+.history .amount p {
+    font-size: 25px;
+    padding-top: 14px;
+    text-align: center;
+    color: #f66;
+}
+
+.history .title p {
+    font-size: 14px;
+    text-align: left;
+}
+
 .muted {
     font-size: 20px;
     text-align: center;

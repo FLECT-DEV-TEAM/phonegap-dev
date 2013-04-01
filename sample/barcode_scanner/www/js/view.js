@@ -41,10 +41,18 @@
                 _.bindAll(this, "render");
                 this.orders = orders;
                 this.orders.bind("add:all", this.render);
-                this.orders.query("SELECT * FROM ITEM_ORDER ORDER BY order_date DESC", []);
+                this.orders.query(
+                    "SELECT * FROM item_order " +
+                    "INNER JOIN item ON item_order.item_id=item.id " +
+                    "ORDER BY item_order.order_date DESC", []);
             },
 
             render: function() {
+                this.$el
+                    .find('.append')
+                    .append(this.template('#history-page-template',
+                        this.orders.toJSON()));
+                this.show(this.$el);
                 console.log(this.orders.toJSON());
             }
 
@@ -68,11 +76,7 @@
             },
 
             requestSuccess: function() {
-                console.log(this.item);
-                this.item.save(
-                    function(){},
-                    {upsert: true}
-                );
+                this.item.save();
                 this.render();
             },
 
@@ -91,9 +95,9 @@
             },
 
             requestOrder: function() {
-                console.log(this.order);
                 this.order.save(function() {
                     alert("発注したよ");
+                    app.router.navigate("scan", {trigger: true});
                 });
             },
 

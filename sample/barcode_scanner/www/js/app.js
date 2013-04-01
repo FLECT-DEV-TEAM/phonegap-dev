@@ -19,7 +19,8 @@ var app = {
                 function(tx) {
                     tx.executeSql(
                         'CREATE TABLE IF NOT EXISTS ITEM(' +
-                            'code text primary key, ' +
+                            'id text primary key, ' +
+                            'code, ' +
                             'title, ' +
                             'price, ' +
                             'formattedPrice, ' +
@@ -29,7 +30,7 @@ var app = {
                     tx.executeSql(
                         'CREATE TABLE IF NOT EXISTS ITEM_ORDER(' +
                             'id text primary key, ' +
-                            'code, ' +
+                            'item_id, ' +
                             'amount, ' +
                             'order_date DEFAULT CURRENT_DATE)'
                     );
