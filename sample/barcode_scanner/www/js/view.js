@@ -135,7 +135,9 @@
 
                 window.plugins.pickerView.create(slots, options,
                     function(selectedValues, buttonIndex) {
-                        self.order.set("amount", selectedValues["0"]);
+                        if(buttonIndex === 1) {
+                            self.order.set("amount", selectedValues["0"]);
+                        }
                     }
                 );
             }
@@ -157,6 +159,8 @@
                         if (result.cancelled === true) {
                             app.router.navigate("top", {trigger: true});
                         } else {
+                            navigator.notification.vibrate();
+                            navigator.notification.vibrate(2000);
                             self.render();
                             app.router.navigate("item/" + result.text,
                                 {trigger: true}

@@ -1,17 +1,11 @@
 if (forcetk.Client) {
 
+    var PERSISTECE_KEY = "jp.co.flect.oauth";
+
     forcetk.Client.prototype.getAuthUrl = function() {
         return this.loginUrl + "services/oauth2/authorize?display=touch" +
                 "&response_type=token&client_id=" + this.clientId +
                 "&redirect_uri=" + this.redirectUri;
-    };
-
-    forcetk.Client.prototype.setRedirectUri = function(uri) {
-        this.redirectUri = uri;
-    };
-
-    forcetk.Client.prototype.getRedirectUri = function() {
-        return this.redirectUri;
     };
 
     forcetk.Client.prototype.isRedirectUri = function(uri) {
@@ -49,7 +43,55 @@ if (forcetk.Client) {
         } else {
             this.instanceUrl = instanceUrl;
         }
-        
+        this._persist(this.sessionId, this.refreshToken, this.instanceUrl);
+
+
+    };
+
+    forcetk.Client.prototype.authenticate = function(callback) {
+
+        var self = this;
+        var item = window.localStorage.getItem(PERSISTECE_KEY);
+
+        if (item !== null) {
+            var oauth = JSON.parse(item);
+            var accessToken = oauth.accessToken;
+            self.setRefreshToken(oauth.refreshToken);
+            self.setSessionToken(oauth.accessToken,null,oauth.instanceUrl);
+            if (callback) {
+                callback.call(self);
+            }
+
+        } else {
+            var url = self.getAuthUrl();
+            var ref = window.open(url, '_blank');
+            ref.addEventListener('loadstop', function(e) {
+                if (self.isRedirectUri(e.url)) {
+                    ref.close();
+                    self.sessionCallback(unescape(e.url),
+                        function() {
+                            self._persist(self.sessionId,
+                                self.refreshToken,
+                                self.instanceUrl);
+                        }
+                    );
+                }
+            });
+
+        }
+
+    };
+
+    forcetk.Client.prototype._persist = function(sessionId, refreshToken, instanceUrl) {
+        // Persist to local strage.
+        window.localStorage.setItem(
+            PERSISTECE_KEY,
+            JSON.stringify({
+                "accessToken": sessionId,
+                "refreshToken": refreshToken,
+                "instanceUrl": instanceUrl
+            })
+        );
     };
 
 }

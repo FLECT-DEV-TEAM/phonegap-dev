@@ -174,15 +174,20 @@
 
         forcetk : function() {
             if (model._cache.forcetk === undefined) {
-                var config = model.OAuth.config;
+                var config = model.oauthConfig;
                 model._cache.forcetk =
                  new forcetk.Client(config.clientId, config.loginUrl);
-                model._cache.forcetk.setRedirectUri(config.redirectUri);
+                model._cache.forcetk.redirectUri = config.redirectUri;
             }
             return model._cache.forcetk;
         },
 
-        /****************************** Define Application models. */
+        oauthConfig: {
+            loginUrl: "https://login.salesforce.com/",
+            clientId: "3MVG9QDx8IX8nP5S8IEib7PVRMHBonEGiDGG.7TBMpisUiiuAfASQrKVOkU5RMP5yoWeArkRI5vVN6zKpMse6",
+            redirectUri: "https://login.salesforce.com/services/oauth2/success"
+        },
+
         Item : common.extend({
 
             tableName : "ITEM",
@@ -221,56 +226,8 @@
         Order : common.extend({
             tableName : "ITEM_ORDER",
             sfObjectName : "ItemOrder__c"
-        }),
-
-        OAuth : common.extend({
-
-            tableName : "OAUTH",
-
-            authenticate : function(callback) {
-
-                var forcetk = model.forcetk();
-                this.findAll(function(tx, results){
-                    if(results.rows.length > 0) {
-                        var accessToken = results.rows.item(0).accessToken;
-                        var refreshToken = results.rows.item(0).refreshToken;
-                        var instanceUrl = results.rows.item(0).instanceUrl;
-                        forcetk.setSessionToken(accessToken,null,instanceUrl);
-                        forcetk.setRefreshToken(refreshToken);
-                        callback.call(this);
-
-                    } else {
-                        window.cb = window.plugins.childBrowser;
-                        cb.onLocationChange = function(loc) {
-                            if (forcetk.isRedirectUri(loc)) {
-                                cb.close();
-                                forcetk.sessionCallback(unescape(loc),
-                                    function() {
-                                        var oauth = new model.OAuth({
-                                            "accessToken" : forcetk.sessionId,
-                                            "refreshToken" : forcetk.refreshToken,
-                                            "instanceUrl" : forcetk.instanceUrl
-                                        });
-                                        oauth.save();
-                                        callback.call(this);
-                                    }
-                                );
-
-                            }
-                        };
-                        cb.showWebPage(forcetk.getAuthUrl());
-                    }
-                });
-            }
-
-        }, {
-            config : {
-                loginUrl: "https://login.salesforce.com/",
-                clientId: "xxx", // Your Client ID.
-                redirectUri: "https://login.salesforce.com/services/oauth2/success"
-            }
-
         })
+
     };
 
     root.model = model;
