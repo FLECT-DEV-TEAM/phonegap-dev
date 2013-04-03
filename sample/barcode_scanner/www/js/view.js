@@ -37,6 +37,14 @@
 
             el: "#top-page",
 
+            events: {
+                "touchend a" : "test"
+            },
+
+            test: function() {
+                app.router.navigate("scan", {trigger: true});
+            },
+
             initialize: function() {
                 this.render();
             },
@@ -75,7 +83,7 @@
             el: "#item-page",
 
             events: {
-                "click .btn" : "renderOrder"
+                "touchend .btn" : "renderOrder"
             },
 
             initialize: function(params) {
@@ -154,13 +162,13 @@
 
             scan: function() {
                 var self = this;
+                var beep = new Audio("beep.wav");
                 window.plugins.barcodeScanner.scan(
                     function(result) {
                         if (result.cancelled === true) {
                             app.router.navigate("top", {trigger: true});
                         } else {
-                            navigator.notification.vibrate();
-                            navigator.notification.vibrate(2000);
+                            beep.play();
                             self.render();
                             app.router.navigate("item/" + result.text,
                                 {trigger: true}

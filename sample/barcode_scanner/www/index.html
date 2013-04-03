@@ -14,7 +14,7 @@
     <div id="top-page" class="page" style="display: none;">
       <div class="top">
         <h1>バーコードスキャンデモ</h1>
-        <a class="btn btn-large btn-primary" href="#scan">さっそくスキャンしてみる</a>
+        <a class="btn btn-large btn-primary" href="#">さっそくスキャンしてみる</a>
       </div>
     </div>
     <div id="item-page" class="page" style="display: none;">
@@ -32,7 +32,7 @@
       </div>
     </div>
     <div id="scan-page" class="page" style="display: none;">
-      <p style="padding-top: 220px;">読み込み中...</p>
+      <p style="padding-top: 200px;">読み込み中...<span class="icon" id="loader">0</span><script type="text/javascript">var loaderSymbols = ["0", "1", "2", "3", "4", "5", "6", "7"], loaderRate = 100, loaderIndex = 0, loader= function() { document.getElementById("loader").innerHTML = loaderSymbols[loaderIndex]; loaderIndex = loaderIndex  < loaderSymbols.length - 1 ? loaderIndex + 1 : 0; setTimeout(loader, loaderRate); }; loader(); </script></p>
     </div>
     <div id="history-page" class="page" style="display: none;">
       <div class="navbar navbar-inverse active" style="padding-bottom: 10px;">
