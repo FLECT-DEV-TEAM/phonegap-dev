@@ -4,6 +4,8 @@
 データ操作を行う機能はここに集約されます。
 各モデルは`Backbone.Model`を拡張したプロトタイプ`common`を継承し、基本的なデータ操作機能をアプリケーションに提供します。
 
+https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/model.js
+
 ```javascript
 // モデルのプロトタイプです
 var common = Backbone.Model.extend({
