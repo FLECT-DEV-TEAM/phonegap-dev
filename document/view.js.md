@@ -5,7 +5,7 @@
 * モデルおよびコレクションの変更を監視してUIに反映
 * UIのイベントハンドリング
 
-各ビューは`Backbone.view`を拡張したプロトタイプ`common`を継承します。
+各ビューは`Backbone.View`を拡張したプロトタイプ定義を継承します。
 
 https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/view.js
 
