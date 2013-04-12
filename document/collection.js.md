@@ -13,7 +13,7 @@ https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/collecti
 ```javascript
 // collection.js
 
-// コレクションのプロトタイプです
+// プロトタイプ定義
 var common = Backbone.Collection.extend({
 
     fetch : function(soql, options) {
@@ -29,7 +29,7 @@ var common = Backbone.Collection.extend({
     }
 });
 
-// アプリケーションのコレクションです
+// 各コレクション定義
 var collection = {
 
     Calendars : common.extend({
@@ -54,19 +54,7 @@ var collection = {
 };
 ```
 
-## Usage
-
-### model
-
-このコレクションが内包するモデルを指定します。
-
-***
-
-### tableName
-
-RDBテーブル名を指定します。指定されていない場合は`findAll`が利用できません。
-
-***
+## プロトタイプ定義
 
 ###  query(sql, params)
 
@@ -118,7 +106,7 @@ render : function() {
 
 置換パラメータ。配列で渡す。
 
-***
+---------------------------------------------------------
 
 ### findAll()
 
@@ -156,7 +144,7 @@ render: function() {
 },
 ```
 
-***
+---------------------------------------------------------
 
 ### fetch(soql, options)
 
@@ -197,3 +185,20 @@ clients.fetch(
 | attributes            | (モデルにはバインドされない) |
 | Id                    | sfid                  |
 | Xxx_c (カスタムフィールド)  | xxx                   |
+
+---------------------------------------------------------
+
+## 各コレクション定義
+
+### model
+
+このコレクションが内包するモデルを指定します。
+
+---------------------------------------------------------
+
+### tableName
+
+RDBテーブル名を指定します。指定されていない場合は`findAll`が利用できません。
+
+---------------------------------------------------------
+

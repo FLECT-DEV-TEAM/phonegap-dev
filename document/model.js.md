@@ -7,7 +7,9 @@
 https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/model.js
 
 ```javascript
-// モデルのプロトタイプです
+// model.js
+
+// プロトタイプ定義
 var common = Backbone.Model.extend({
 
 	initialize: function(obj) {
@@ -27,7 +29,7 @@ var common = Backbone.Model.extend({
 	}
 })
 
-// アプリケーションモデルです
+// 各モデル定義
 var model = {
 
 	Calendar : common.extend({
@@ -52,23 +54,7 @@ var model = {
 }
 ```
 
-## Usage
-
-### tableName
-
-RDBテーブル名。
-
-* 指定されていないモデルは`save`できません。
-
-***
-
-### sfObjectName
-
-Salesforceオブジェクト名。
-
-* 指定されていないモデルは`sync`できません。
-
-***
+## プロトタイプ定義
 
 ### initialize(attributes)
 
@@ -90,7 +76,7 @@ var report = new model.Report({
 
 モデルの属性。プロパティ名はRDBのカラムと同じ名前にします。
 
-***
+---------------------------------------------------------
 
 ### query(sql, params)
 
@@ -142,7 +128,7 @@ render : function() {
 
 置換パラメータ。配列で渡す。
 
-***
+---------------------------------------------------------
 
 ### save(callback, options)
 
@@ -171,7 +157,7 @@ RDBに保存成功した時のコールバック。省略するとコールバ�
 
 	trueにするとアップサート処理となります。未指定、falseはインサート処理です。
 
-***
+---------------------------------------------------------
 
 ### sync(success, failure)
 
@@ -202,3 +188,22 @@ report.sync();
 
 SFにリクエストするときには、フィールド名は`***__c`の形式に自動的に変換されます。
 たとえば上記例であれば`year`は`year__c`というフィールド名で更新リクエストされます。
+
+## 各モデル定義
+
+### tableName
+
+RDBテーブル名。
+
+* 指定されていないモデルは`save`できません。
+
+---------------------------------------------------------
+
+### sfObjectName
+
+Salesforceオブジェクト名。
+
+* 指定されていないモデルは`sync`できません。
+
+---------------------------------------------------------
+
