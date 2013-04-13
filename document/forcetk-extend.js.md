@@ -45,7 +45,7 @@ PhoneGapのAPIである[InAppBrowser](http://docs.phonegap.com/en/2.6.0/cordova_
 
 ### authenticate(callback)
 
-Salesforceが提供するOAuthを利用して認証処理を行います。
+Salesforceが提供するOAuthを利用して認証処理を行います。基本的にアプケーションを初期化時に`app.js`が呼び出します。
 
 ```javascript
 //app.js
@@ -129,9 +129,9 @@ SalesforceとのAPI通信の際に _アクセストークン_ の有効期限が
 
 つまり、一度 _認証済_ になったら _リフレッシュトークン_ を無効化されない限り(そういう操作するひとはたぶんあまりいない) ずっと _認証済_ です。
 
-### `authenticate()`解説
+### `authenticate(callback)`解説
 
-上記をふまえて`authenticate()`が何をやっているのか。
+上記をふまえて`authenticate(callback)`が何をやっているのか。
 
 ```javascript
     forcetk.Client.prototype.authenticate = function(callback) {
@@ -148,7 +148,6 @@ SalesforceとのAPI通信の際に _アクセストークン_ の有効期限が
             var oauth = JSON.parse(item);
 
             // 「認証情報」を自分自身にセット
-            // 永続化はsetSessionTokenのなかで行われる
             var accessToken = oauth.accessToken;
             self.setRefreshToken(oauth.refreshToken);
             self.setSessionToken(oauth.accessToken,null,oauth.instanceUrl);
@@ -168,6 +167,7 @@ SalesforceとのAPI通信の際に _アクセストークン_ の有効期限が
                     ref.close();
                     // 「認証情報」を自分自身にセット
                     self._sessionCallback(unescape(e.url),
+                        // 永続化
                         function() {
                             self._persist(self.sessionId,
                                 self.refreshToken,
