@@ -15,7 +15,7 @@ MVCによって、実装のパターンと責務を明確にし、保守性と�
 * ViewはModelを生成し、Modelの状態をイベント監視します。
 * Modelの状態が変わったらイベント発火するのでViewはModelから取り出したデータをDOMに反映します。
 
-(画像)
+<img src="https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/oss/backbone.img01.png?raw=true" width="614" height="460">
 
 ## Backboneの拡張
 
