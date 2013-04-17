@@ -4,7 +4,7 @@ phonegap-devで使用しているJavaScriptライブラリの一覧です。
 
 ## 構成
 
-<img src="https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/oss/libraries.img01.png?raw=true" width="768" height="570">
+<img src="https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/libraries.img01.png?raw=true" width="768" height="570">
 
 # ライブラリ一覧
 

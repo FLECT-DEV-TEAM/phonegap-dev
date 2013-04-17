@@ -1,8 +1,8 @@
-# webfont_icon.md
+# Webフォントアイコン
 
 Webフォントを利用して文字をアイコンとして利用する方法です。
 
-<img src="https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/tips/webfont_icon.img01.png?raw=true">
+<img src="https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/tips/webfont_icon_img01.png?raw=true">
 
 ## Webフォントを使うメリット
 
