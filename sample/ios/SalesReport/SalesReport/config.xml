@@ -58,6 +58,7 @@
         <plugin name="InAppBrowser" value="CDVInAppBrowser" />
         <!-- Added -->
         <plugin name="ChildBrowserCommand" value="ChildBrowserCommand" />
+        <plugin name="NativeControls" value="NativeControls" />
     </plugins>
 
     <access origin="*" />

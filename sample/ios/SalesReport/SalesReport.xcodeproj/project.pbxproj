@@ -44,6 +44,7 @@
 		B78D69E5174513B900804F36 /* ChildBrowserCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = B78D69E1174513B900804F36 /* ChildBrowserCommand.m */; };
 		B78D69E6174513B900804F36 /* ChildBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B78D69E3174513B900804F36 /* ChildBrowserViewController.m */; };
 		B78D69E7174513B900804F36 /* ChildBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B78D69E4174513B900804F36 /* ChildBrowserViewController.xib */; };
+		B78D6A0517465AA700804F36 /* NativeControls.m in Sources */ = {isa = PBXBuildFile; fileRef = B78D6A0417465AA700804F36 /* NativeControls.m */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		F840E1F1165FE0F500CFE078 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = F840E1F0165FE0F500CFE078 /* config.xml */; };
 /* End PBXBuildFile section */
@@ -111,6 +112,8 @@
 		B78D69E2174513B900804F36 /* ChildBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildBrowserViewController.h; sourceTree = "<group>"; };
 		B78D69E3174513B900804F36 /* ChildBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildBrowserViewController.m; sourceTree = "<group>"; };
 		B78D69E4174513B900804F36 /* ChildBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChildBrowserViewController.xib; sourceTree = "<group>"; };
+		B78D6A0317465AA700804F36 /* NativeControls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeControls.h; sourceTree = "<group>"; };
+		B78D6A0417465AA700804F36 /* NativeControls.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NativeControls.m; sourceTree = "<group>"; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = SalesReport/config.xml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -254,6 +257,8 @@
 		307C750510C5A3420062BCA9 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				B78D6A0317465AA700804F36 /* NativeControls.h */,
+				B78D6A0417465AA700804F36 /* NativeControls.m */,
 				B78D69E0174513B900804F36 /* ChildBrowserCommand.h */,
 				B78D69E1174513B900804F36 /* ChildBrowserCommand.m */,
 				B78D69E2174513B900804F36 /* ChildBrowserViewController.h */,
@@ -428,6 +433,7 @@
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				B78D69E5174513B900804F36 /* ChildBrowserCommand.m in Sources */,
 				B78D69E6174513B900804F36 /* ChildBrowserViewController.m in Sources */,
+				B78D6A0517465AA700804F36 /* NativeControls.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
