@@ -125,7 +125,8 @@
                 this.pictures = new collection.Pictures();
                 
                 _.bindAll(this, 'render', 'picture', 'findPicture');
-                this.report.bind("change", this.findPicture);
+                // 複数回findPictureが呼び出されるのを防ぐためにid属性の変更だけをイベント監視する
+                this.report.bind("change:id", this.findPicture);
                 this.pictures.bind("add:all", this.render);
                 
                 this.findReport();
