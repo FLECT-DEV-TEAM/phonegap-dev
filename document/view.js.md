@@ -1,11 +1,19 @@
 # view.js
 
-`view.js`はMVCのビューを表現します。主な役割は以下となります。
+`view.js`はMVCのビューおよびコントローラを表現します。
 
-* モデルおよびコレクションの変更を監視してUIに反映
-* UIのイベントハンドリング
+コントローラとしての役割
+
+* UIイベントおよびモデル変更によるイベントのハンドリング
+
+ビューとしての役割
+
+* DOMツリーを構築しUIを提供する
+
+`view.js`なのにコントローラ？と思われるかもしれませんが、`Backbone.View`がコントローラとビュー役割を担うことになっているので、`view.js`もそれに準ずることにします。
 
 各ビューは`Backbone.View`を拡張したプロトタイプ定義を継承します。
+コントローラの役割を担当する _コントローラメソッド_ と ビューの役割を担当する _ビューメソッド_ とに大別されます。
 
 https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/view.js
 
@@ -75,7 +83,7 @@ var view = {
 
 ### template(selector, params)
 
-`Handlerbars`のテンプレートをコンパイルしてDOMに追加するHTMLを生成します。
+`Handlerbars`のテンプレートをコンパイルしてDOMに追加するHTMLを生成するビューメソッドです。
 
 ```javascript
 this.$el
@@ -103,9 +111,9 @@ this.$el
 
 ---------------------------------------------------------
 
-### show($obj, options)
+### show($obj, options) 
 
-ページを表示状態にします。現在表示されているページは自動的に非表示になります。実処理は`transition.js`の`show($obj, options)`が処理します。
+ページを表示状態にするビューメソッドです。現在表示されているページは自動的に非表示になります。実処理は`transition.js`の`show($obj, options)`が処理します。
 
 ```javascript
 // DOMにデータを追加
@@ -136,7 +144,7 @@ this.show($el);
 
 ### back()
 
-前のページを表示状態にします。一つ前のURLにハッシュチェンジします。実処理は`transition.js`の`back()`が処理します。
+前のページを表示状態にするビューメソッドです。一つ前のURLにハッシュチェンジします。実処理は`transition.js`の`back()`が処理します。
 
 ## 各ビュー定義
 
@@ -161,7 +169,7 @@ el: "#client-page"
 
 ### $el
 
-`el`エレメントに対応するjQueryオブジェクトのキャッシュです。UIに対する操作は`$el`を使いましょう。
+`el`エレメントに対応するjQueryオブジェクトのキャッシュです。_ビューメソッド_ からUI構築のため利用されます。
 
 ---------------------------------------------------------
 
@@ -189,22 +197,20 @@ renderBack: function(e) {
 
 ### initialize
 
-Viewの初期化を行います。
+Viewの初期化を行います。_コントローラメソッド_ として扱います。
 
-* コントローラからモデル/コレクションを受け取る
-* イベントをバインドしてView内の関数に紐付ける
-* ビューの初期化に必要なモデル/コレクションに対する操作
+* モデル/コレクションが発行するイベントをView内の _ビューメソッド_ にひもづける定義
+* View初期処理として必要なモデル/コレクションに対する操作
 
 ```javascript
 initialize: function(clients) {
 	
-	// コントローラーからコレクションを受け取る
     this.clients = clients;
 
-    // renderのコンテキスト「this」を「Backbone.View」に拘束する
+    // renderのコンテキスト「this」を「Backbone.View」に束縛する
     _.bindAll(this, "render", "renderBack");
 
-    // コレクションが発火するイベントをバインドしてView内の関数に紐付ける
+    // コレクションが発行するイベントをビューメソッドに紐付ける
     this.clients.bind("add:all", this.render);
 
     // ビューの初期化に必要なコレクションに対する操作
@@ -214,10 +220,10 @@ initialize: function(clients) {
 
 #### initializeは誰が呼び出す？
 
-コントローラの`view`から呼び出されます。
+ルータの`view`メソッドが呼び出します。
 
 ```javascript
-// controller.js
+// router.js
 Router: common.extend({
 
      // ルーティング定義
@@ -242,7 +248,7 @@ Router: common.extend({
 
 ### render
 
-ページのレンダリング処理を書くところです。
+ページのレンダリング処理を記述する _ビューメソッド_ です。
 
 * jQuery.appendを利用してDOMにモデル/コレクションを反映する
 * プロトタイプ定義の`show`を呼び出してページを表示状態にする
@@ -251,7 +257,7 @@ Router: common.extend({
 
 ### renderBack
 
-前のページに戻るときの処理を書くところです。
+前のページに戻るときの処理を記述する _ビューメソッド_ です。
 
 ```javascript
 renderBack: function(e) {
