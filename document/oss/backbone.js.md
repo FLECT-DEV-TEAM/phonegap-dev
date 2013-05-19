@@ -9,11 +9,15 @@ MVCによって、実装のパターンと責務を明確にし、保守性と�
 
 ## Backboneを利用したMVCパターン
 
-`Backbone.js`の一般的な使い方である、View-Modelオブザーバパターンを利用します。
+`Backbone.js`の一般的な使い方である、イベントを利用したオブザーバパターンを採用します。
 
-* ControllerはViewを生成します。
-* ViewはModelを生成し、Modelの状態をイベント監視します。
-* Modelの状態が変わったらイベント発火するのでViewはModelから取り出したデータをDOMに反映します。
+* UI上のイベントが発生するとRouter経由、もしくは直接Controllerが呼び出されます
+* ControllerはModelを生成してイベントをバインドした後Modelを操作します。
+* Controllerのモデル操作によりModelの状態が変更されるとViewに変更が通知されます。
+* 変更通知を受けたViewはModelから取り出したデータをDOMに反映します。
+
+ViewとModelはイベントによる結びつきにとどめ直接操作しないようにします。
+これによりModelがViewに依存しない作りになりビジネスロジックのテストや再利用が行いやすくなります。
 
 <img src="https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/oss/backbone.img01.png?raw=true" width="614" height="460">
 
@@ -21,15 +25,15 @@ MVCによって、実装のパターンと責務を明確にし、保守性と�
 
 `Backbone.js`を拡張してPhoneGapアプリに適したライブラリを用意しています。
 
-### Controller拡張
+### Backbone.Router拡張
 
-* [controller.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/controller.js.md)
+* [router.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/router.js.md)
 
-### Model拡張
+### Backbone.Model拡張
 
 * [model.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/model.js.md)
 * [collection.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/collection.js.md)
 
-### View拡張
+### Backbone.View拡張
 
 * [view.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/view.js.md)

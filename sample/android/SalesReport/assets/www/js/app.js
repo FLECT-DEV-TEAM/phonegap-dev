@@ -63,7 +63,7 @@ var app = {
             );
             
             // initialize Backbone Controller.
-            app.router = new controller.Router();
+            app.router = new router.Router();
             app.router._cache.transition = new Transition();
             Backbone.history.start();
 

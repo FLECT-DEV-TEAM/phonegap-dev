@@ -1,14 +1,12 @@
-# controller.js
+# router.js
 
-`controller.js`は、MVCのコントローラを表現します。URLに応じたルーティング処理を行い、モデル/コレクションを初期化して適切なビューに処理を委譲します。
-コントローラは`Backbone.Router`を拡張したプロトタイプ定義を継承します。
+`router.js`は、URLに応じたルーティング処理を行い、モデル/コレクションを初期化して適切なコントローラを呼び出します。
+`Backbone.Router`を拡張したプロトタイプ定義を継承します。ルータを表現するオブジェクトは役割上からシングルトンにします。
 
-なおアプリケーションのコントローラ定義はただ一つであり、なおかつシングルトンになります。
-
-https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/controller.js
+https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/router.js
 
 ```javascript
-// controller.js
+// router.js
 
 // プロトタイプ定義
 var common = Backbone.Router.extend({
@@ -22,8 +20,8 @@ var common = Backbone.Router.extend({
     }
 })
 
-// コントローラ定義
-var controller = {
+// ルータ定義
+var router = {
 
     Router: common.extend({
 
@@ -66,11 +64,11 @@ var controller = {
 
 ### _cache
 
-ビューとトランジションのシングルトンインスタンスを格納するキャッシュです。controller.jsの外から直接触ってはいけません。
+ビューとトランジションのシングルトンインスタンスを格納するキャッシュです。router.jsの外から直接触ってはいけません。
 
 ### view(name, params)
 
-ビューを呼び出します。内部でビューに定義されている`initialize()`が呼び出されます。これによってビューに実装した描画処理が行われます。
+Backbone.Viewを継承したコントローラ/ビューコンポーネントを呼び出します。Backbone.Viewのプロトタイプ定義である`initialize()`が呼び出されます。これによって`initialize()'に記述されたコントローラ処理が実行されます。
 
 ```javascript
 detail: function(id) {
@@ -107,7 +105,7 @@ var view = {
 viewのinitializeに渡すパラメータです。通常はモデルまたはコレクションのインスタンスを渡します。
 
 
-## コントローラ定義
+## ルーティング定義
 
 ### routes
 

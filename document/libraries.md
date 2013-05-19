@@ -14,7 +14,7 @@ PhoneGapアプリで利用するOSSライブラリです。
 
 |ライブラリ|バージョン|役割|備考|
 |:----|:------|:------|:------|
-|[jQuery](http://jquery.com/)|1.8.2|DOM操作|2.0がstableになったらバージョンアップする|
+|[jQuery](http://jquery.com/)|2.0.0|DOM操作||
 |[handlebars.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/oss/handlebars.js.md)|1.0.rc1|テンプレートエンジン||
 |[backbone.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/oss/backbone.js.md)|0.9.2|MVCライブラリ|underscore.jsに依存|
 |[underscore.js](http://underscorejs.org/)|1.4.2|ユーティリティ||
@@ -30,8 +30,8 @@ PhoneGapアプリ開発に合わせたOSSライブラリの拡張や、オリジ
 |:----|:------|:------|
 |[model.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/model.js.md)|MVCのモデル|Backbone.Model拡張|
 |[collection.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/collection.js.md)|MVCのモデル|Backbone.Collection拡張|
-|[view.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/view.js.md)|MVCのビュー|Backbone.View拡張|
-|[controller.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/controller.js.md)|MVCのコントローラ|Backbone.Router拡張|
+|[view.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/view.js.md)|MVCのビュー/コントローラ|Backbone.View拡張|
+|[router.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/router.js.md)|コントローラのルーティング|Backbone.Router拡張|
 |[handlebars-helper.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/handlebars-helper.js.md)|Handlerbarsファンクション||
 |[forcetk-extend.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/forcetk-extend.js.md)|OAuth認証|forcetkの拡張|
 |[transition.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/transition.js.md)|ページ遷移管理||
