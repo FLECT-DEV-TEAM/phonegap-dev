@@ -19,7 +19,7 @@
         }
     });
 
-    var controller = {
+    var router = {
 
         Router: common.extend({
             routes: {
@@ -98,6 +98,6 @@
         })
     };
 
-    root.controller = controller;
+    root.router = router;
 
 }).call(window);

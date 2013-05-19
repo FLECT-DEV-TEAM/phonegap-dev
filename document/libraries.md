@@ -31,7 +31,7 @@ PhoneGapアプリ開発に合わせたOSSライブラリの拡張や、オリジ
 |[model.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/model.js.md)|MVCのモデル|Backbone.Model拡張|
 |[collection.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/collection.js.md)|MVCのモデル|Backbone.Collection拡張|
 |[view.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/view.js.md)|MVCのビュー/コントローラ|Backbone.View拡張|
-|[router.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/controller.js.md)|コントローラのルーティング|Backbone.Router拡張|
+|[router.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/router.js.md)|コントローラのルーティング|Backbone.Router拡張|
 |[handlebars-helper.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/handlebars-helper.js.md)|Handlerbarsファンクション||
 |[forcetk-extend.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/forcetk-extend.js.md)|OAuth認証|forcetkの拡張|
 |[transition.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/transition.js.md)|ページ遷移管理||

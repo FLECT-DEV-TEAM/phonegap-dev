@@ -18,7 +18,7 @@
 
 ## 初期化
 
-アプリケーションの初期化を行う`app.js`の中で`Transition`を初期化します。初期化した`Transition`のインスタンスは`controller.Router()`の中にシングルトンインスタンスとしてキャッシュします。
+アプリケーションの初期化を行う`app.js`の中で`Transition`を初期化します。初期化した`Transition`のインスタンスは`router.Router()`の中にシングルトンインスタンスとしてキャッシュします。
 
 https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/app.js
 
@@ -34,7 +34,7 @@ var app = {
         startApp: function() {
 
             // コントローラの初期化
-            app.router = new controller.Router();
+            app.router = new router.Router();
 
             // トランジションを初期化してコントローラの中にキャッシュ
             app.router._cache.transition = new Transition();

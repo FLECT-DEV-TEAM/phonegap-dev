@@ -105,7 +105,7 @@ startApp: function() {
     ....
 
     // Backboneのコントローラを初期化
-    app.router = new controller.Router;
+    app.router = new router.Router;
 
     // トランジションを初期化
     app.router._cache.transition = new Transition;
@@ -120,11 +120,11 @@ startApp: function() {
 
 `#report`にURLがハッシュチェンジします。
 
-`controller.js`定義に従って最初のルーティング処理が
+`router.js`定義に従って最初のルーティング処理が
 行われ、アプリケーションは一番最初の画面を表示するでしょう。
 
 ```javascript
-// controller.js
+// router.js
 Router: common.extend({
 
      // ルーティング定義
