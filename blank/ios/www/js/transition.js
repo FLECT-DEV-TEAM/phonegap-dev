@@ -1,6 +1,6 @@
 define(['jquery', 'router'], function($, router) {
 
-    var Transition = function() {
+    Transition = function() {
         var that = this;
         this.history = [];
         this.isBack = false;
@@ -51,5 +51,6 @@ define(['jquery', 'router'], function($, router) {
         $obj.attr({style: "-webkit-transform:translateX(" + to + "%)"});
     };
 
-    return Transition;
+    return new Transition();
+
 });

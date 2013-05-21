@@ -1,4 +1,4 @@
-define(['backbone', 'jquery', 'handlebars', 'app'], function(Backbone, $, Handlebars) {
+define(['backbone', 'jquery', 'handlebars', 'transition'], function(Backbone, $, Handlebars, transition) {
 
     // Application Common View.
     var common = Backbone.View.extend({
@@ -20,13 +20,11 @@ define(['backbone', 'jquery', 'handlebars', 'app'], function(Backbone, $, Handle
         },
 
         show : function($obj, options) {
-            var app = require('app');
-            app.router._cache.transition.show($obj, options);
+            transition.show($obj, options);
         },
 
         back : function() {
-            var app = require('app');
-            return app.router._cache.transition.back();
+            return transition.back();
         }
 
     });

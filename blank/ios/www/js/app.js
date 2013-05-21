@@ -1,4 +1,4 @@
-define(['router', 'backbone', 'transition'], function(router, Backbone, Transition) {
+define(['router', 'backbone'], function(router, Backbone) {
 
     var app = {
 
@@ -9,14 +9,8 @@ define(['router', 'backbone', 'transition'], function(router, Backbone, Transiti
             },
 
             startApp: function() {
-
-                // initialize Backbone Router.
-                app.router = new router.Router();
-                app.router._cache.transition = new Transition();
                 Backbone.history.start();
-
-                // START APPLICATION!!
-                app.router.navigate("hello", {trigger: true});
+                router.navigate("hello", {trigger: true});
             }
         }
     };

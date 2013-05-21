@@ -1,28 +1,23 @@
-define(['transition', 'backbone', 'view'], function(Transition, Backbone, view) {
+define(['backbone', 'view'], function(Backbone, view) {
 
     // Application Common Router.
     var common = Backbone.Router.extend({
 
         _cache : {
-            view : {},
-            transition : {}
-        },
-
-        initialize: function() {
-            this._cache.transition = new Transition();
+            view : {}
         },
 
         view: function(name, params) {
-            var cache = this._cache.view[name];
-            if (cache) {
-                cache.initialize(params);
+            var cached = this._cache.view[name];
+            if (cached) {
+                cached.initialize(params);
             } else {
                 this._cache.view[name] = new view[name](params);
             }
         }
     });
 
-    var router = {
+    router = {
 
         Router: common.extend({
 
@@ -36,7 +31,6 @@ define(['transition', 'backbone', 'view'], function(Transition, Backbone, view) 
 
         })
     };
-
-    return router;
+    return new router.Router();
 
 });
