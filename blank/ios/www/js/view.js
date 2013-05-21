@@ -1,10 +1,8 @@
-(function() {
-
-    var root = this;
+define(['backbone', 'jquery', 'handlebars', 'app'], function(Backbone, $, Handlebars) {
 
     // Application Common View.
     var common = Backbone.View.extend({
-    
+
         _cache : {
             template : {}
         },
@@ -22,10 +20,12 @@
         },
 
         show : function($obj, options) {
+            var app = require('app');
             app.router._cache.transition.show($obj, options);
         },
 
         back : function() {
+            var app = require('app');
             return app.router._cache.transition.back();
         }
 
@@ -50,6 +50,6 @@
         })
     };
 
-    root.view = view;
+    return view;
 
-}).call(window);
+});

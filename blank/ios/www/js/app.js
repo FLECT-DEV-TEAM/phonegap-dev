@@ -1,27 +1,26 @@
-var app = {
+define(['router', 'backbone', 'transition'], function(router, Backbone, Transition) {
 
-    setup: {
+    var app = {
 
-        initialize: function() {
-            this.bindEvents();
-        },
+        setup: {
 
-        bindEvents: function() {
-            document.addEventListener('deviceready', this.onDeviceReady, false);
-        },
+            onDeviceReady: function() {
+                app.setup.startApp();
+            },
 
-        onDeviceReady: function() {
-            app.setup.startApp();
-        },
+            startApp: function() {
 
-        startApp: function() {
-            // initialize Backbone Controller.
-            app.router = new router.Router();
-            app.router._cache.transition = new Transition();
-            Backbone.history.start();
+                // initialize Backbone Router.
+                app.router = new router.Router();
+                app.router._cache.transition = new Transition();
+                Backbone.history.start();
 
-            // START APPLICATION!!
-            app.router.navigate("hello", {trigger: true});
+                // START APPLICATION!!
+                app.router.navigate("hello", {trigger: true});
+            }
         }
-    }
-};
+    };
+
+    return app;
+
+});
