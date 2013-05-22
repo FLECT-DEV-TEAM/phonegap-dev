@@ -1,40 +1,36 @@
-(function() {
-
-    var root = this;
+define(['backbone', 'view/HelloView'], function(Backbone, HelloView) {
 
     // Application Common Router.
     var common = Backbone.Router.extend({
 
         _cache : {
-            view : {},
-            transition : {}
+            view : {}
         },
 
-        view: function(name, params) {
-            var cache = this._cache.view[name];
-            if (cache) {
-                cache.initialize(params);
+        view: function(viewInstance, params) {
+            var cached = this._cache.view.viewInstance;
+            if (cached) {
+                cached.initialize(params);
             } else {
-                this._cache.view[name] = new view[name](params);
+                this._cache.view.viewInstance = new viewInstance(params);
             }
         }
-    })
+    });
 
-    var router = {
+    router = {
 
         Router: common.extend({
-            
+
             routes: {
                 "hello": "hello"
             },
 
             hello: function() {
-                this.view("HelloView");
+                this.view(HelloView);
             }
 
         })
-    }
+    };
+    return new router.Router();
 
-    root.router = router;
-
-}).call(window);
+});

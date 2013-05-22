@@ -1,15 +1,13 @@
-(function() {
+define(['forcetk-extend', 'model/CommonModel'], function(forcetk, CommonModel) {
 
-    var root = this;
-
-    var common = Backbone.Collection.extend({
+    return Backbone.Collection.extend({
 
         fetch: function(soql, options) {
             var that = this;
             var i, len;
-            model.forcetk().query(
+            forcetk.query(
                 soql,
-                function(response){
+                function(response) {
                     var records = response.records;
                     len = records.length;
                     var models = [];
@@ -45,7 +43,7 @@
 
         query: function(sql, params) {
             var that = this;
-            model.database().transaction(
+            CommonModel._database().transaction(
                 function(tx) {
                     tx.executeSql(
                         sql,
@@ -74,7 +72,7 @@
 
         findAll : function() {
             var that = this;
-            root.model.database().transaction(
+            CommonModel._database().transaction(
                 function(tx) {
                     tx.executeSql(
                         'SELECT * FROM ' + that.tableName,
@@ -103,18 +101,4 @@
 
     });
 
-    var collection = {
-
-        /************* Define Application collections. */
-        Xxx : common.extend({
-            model: model.Xxx
-        }),
-
-        Yyy : common.extend({
-            model: model.Yyy
-        })
-    };
-
-    root.collection = collection;
-
-}).call(window);
+});
