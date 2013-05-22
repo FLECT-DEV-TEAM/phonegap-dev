@@ -32,8 +32,6 @@ requirejs.config({
     }
 });
 
-require( [ 'app'], function(app) {
-
-    document.addEventListener('deviceready', app.setup.onDeviceReady, false);
-
+require( ['init'], function(init) {
+    document.addEventListener('deviceready', init.onDeviceReady, false);
 });

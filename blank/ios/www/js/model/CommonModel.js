@@ -1,7 +1,7 @@
 // Application Common Model.
-define(['forcetk-extend'], function(forcetk) {
+define(['backbone', 'forcetk-extend'], function(Backbone, forcetk) {
 
-    return Backbone.Model.extend({
+    var CommonModel = Backbone.Model.extend({
 
         // instance methods.
         initialize: function(obj) {
@@ -9,6 +9,7 @@ define(['forcetk-extend'], function(forcetk) {
                 this.set(obj);
             }
         },
+
 
         save: function(callback, options) {
             if (this.tableName === undefined) {
@@ -35,7 +36,7 @@ define(['forcetk-extend'], function(forcetk) {
                 insertSql = "INSERT OR REPLACE INTO ";
             }
 
-            _database().transaction(
+             CommonModel._database().transaction(
                 function(tx) {
                     tx.executeSql(insertSql + tableName + '('+ columns +') ' +
                         'VALUES (' + preparedStatement + ')', param);
@@ -109,7 +110,7 @@ define(['forcetk-extend'], function(forcetk) {
         query: function(sql, params) {
             // FIXME sqlが文字列かparamsが配列かをチェックしたほうがいい！
             var that = this;
-            _database().transaction(
+            CommonModel._database().transaction(
                 function(tx) {
                     tx.executeSql(
                         sql,
@@ -144,7 +145,7 @@ define(['forcetk-extend'], function(forcetk) {
         },
 
         _query: function(sql, params, callback) {
-            _database().transaction(
+            CommonModel._database().transaction(
                 function(tx) {
                     tx.executeSql(
                         sql,
@@ -163,4 +164,6 @@ define(['forcetk-extend'], function(forcetk) {
             );
         }
     });
+
+    return CommonModel;
 });

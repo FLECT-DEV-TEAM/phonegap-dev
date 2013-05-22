@@ -1,4 +1,6 @@
-define(['view/CommonView'], function(CommonView) {
+define(['view/CommonView'],
+
+function(CommonView) {
 
     return CommonView.extend({
 
