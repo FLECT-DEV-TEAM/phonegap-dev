@@ -24,6 +24,10 @@ requirejs.config({
         "backbone": {
             deps: ["jquery", "underscore"],
             exports: "Backbone"
+        },
+        "forcetk": {
+            deps: ["jquery"],
+            exports: "forcetk"
         }
     }
 });

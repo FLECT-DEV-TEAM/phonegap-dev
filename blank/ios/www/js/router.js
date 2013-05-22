@@ -1,4 +1,4 @@
-define(['backbone', 'view'], function(Backbone, view) {
+define(['backbone', 'view/HelloView'], function(Backbone, HelloView) {
 
     // Application Common Router.
     var common = Backbone.Router.extend({
@@ -7,12 +7,12 @@ define(['backbone', 'view'], function(Backbone, view) {
             view : {}
         },
 
-        view: function(name, params) {
-            var cached = this._cache.view[name];
+        view: function(viewInstance, params) {
+            var cached = this._cache.view.viewInstance;
             if (cached) {
                 cached.initialize(params);
             } else {
-                this._cache.view[name] = new view[name](params);
+                this._cache.view.viewInstance = new viewInstance(params);
             }
         }
     });
@@ -26,7 +26,7 @@ define(['backbone', 'view'], function(Backbone, view) {
             },
 
             hello: function() {
-                this.view("HelloView");
+                this.view(HelloView);
             }
 
         })

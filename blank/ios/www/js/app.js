@@ -1,4 +1,4 @@
-define(['router', 'backbone'], function(router, Backbone) {
+define(['router', 'backbone', 'model/CommonModel'], function(router, Backbone, CommonModel) {
 
     var app = {
 

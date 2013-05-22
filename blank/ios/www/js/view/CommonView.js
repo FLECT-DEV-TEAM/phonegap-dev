@@ -1,7 +1,7 @@
+// Application Common View.
 define(['backbone', 'jquery', 'handlebars', 'transition'], function(Backbone, $, Handlebars, transition) {
 
-    // Application Common View.
-    var common = Backbone.View.extend({
+    return Backbone.View.extend({
 
         _cache : {
             template : {}
@@ -28,26 +28,5 @@ define(['backbone', 'jquery', 'handlebars', 'transition'], function(Backbone, $,
         }
 
     });
-
-    var view = {
-
-        HelloView: common.extend({
-
-            el: "#top-page",
-
-            initialize: function() {
-                this.render();
-            },
-
-            render: function(params) {
-                this.$el
-                    .find('.append')
-                    .append(this.template('#top-page-template'));
-                this.show(this.$el);
-            }
-        })
-    };
-
-    return view;
 
 });

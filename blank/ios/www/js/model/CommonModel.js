@@ -1,9 +1,7 @@
-(function() {
+// Application Common Model.
+define(['forcetk-extend'], function(forcetk) {
 
-    var root = this;
-
-    // Application Common Model.
-    var common = Backbone.Model.extend({
+    return Backbone.Model.extend({
 
         // instance methods.
         initialize: function(obj) {
@@ -37,7 +35,7 @@
                 insertSql = "INSERT OR REPLACE INTO ";
             }
 
-            model.database().transaction(
+            _database().transaction(
                 function(tx) {
                     tx.executeSql(insertSql + tableName + '('+ columns +') ' +
                         'VALUES (' + preparedStatement + ')', param);
@@ -80,7 +78,7 @@
                         console.log("update sync_status 2");
                     }, {upsert : true});
             } else {
-                model.forcetk().create(
+                forcetk.create(
                     this.sfObjectName,
                     obj,
                     success || function() {
@@ -111,7 +109,7 @@
         query: function(sql, params) {
             // FIXME sqlが文字列かparamsが配列かをチェックしたほうがいい！
             var that = this;
-            model.database().transaction(
+            _database().transaction(
                 function(tx) {
                     tx.executeSql(
                         sql,
@@ -135,9 +133,18 @@
         }
 
     },{
-        // class methods.
+
+        _database : function() {
+            // TODO キャッシュ
+            return window.openDatabase(
+                "hello",
+                "1.0",
+                "Hello",
+                100000);
+        },
+
         _query: function(sql, params, callback) {
-            model.database().transaction(
+            _database().transaction(
                 function(tx) {
                     tx.executeSql(
                         sql,
@@ -156,52 +163,4 @@
             );
         }
     });
-
-    var model = {
-
-        _cache : {},
-
-        database : function() {
-            if (model._cache.db === undefined) {
-                model._cache.db = window.openDatabase(
-                    "salesreport",
-                    "1.0",
-                    "Sales Report",
-                    100000);
-            }
-            return model._cache.db;
-        },
-
-        forcetk : function() {
-            if (model._cache.forcetk === undefined) {
-                var config = model.oauthConfig;
-                model._cache.forcetk =
-                 new forcetk.Client(config.clientId, config.loginUrl);
-                model._cache.forcetk.redirectUri = config.redirectUri;
-            }
-            return model._cache.forcetk;
-        },
-
-        oauthConfig: {
-            loginUrl: "https://login.salesforce.com/",
-            clientId: "xxx", //YOUR CLIENT ID 
-            redirectUri: "https://login.salesforce.com/services/oauth2/success"
-        },
-
-        /****************************** Define Application models. */
-        Xxx : common.extend({
-            // instance method.
-            tableName : "XXX",
-            sfObjectName : "Xxx__c"
-        }),
-
-        Yyy : common.extend({
-            tableName : "YYY",
-            sfObjectName : "Yyy__c"
-        })
-
-    };
-
-    root.model = model;
-
-}).call(window);
+});
