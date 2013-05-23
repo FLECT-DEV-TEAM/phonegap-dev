@@ -28,9 +28,9 @@ PhoneGapアプリ開発に合わせたOSSライブラリの拡張や、オリジ
 
 |ライブラリ|役割|備考|
 |:----|:------|:------|
-|[CommonModel.jsおよび各モデル](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/common-model.js.md)|MVCのモデルの共通処理|Backbone.Model拡張|
-|[CommonCollection.jsおよび各コレクション](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/common-collection.js.md)|MVCのモデルの共通処理|Backbone.Collection拡張|
-|[CommonView.jsおよび各ビュー/コントローラ](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/common-view.js.md)|MVCのビュー/コントローラの共通処理|Backbone.View拡張|
+|[CommonModel.js / 各Model.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/common-model.js.md)|MVCのモデル|Backbone.Model拡張|
+|[CommonCollection.js / 各Collection.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/common-collection.js.md)|MVCのモデル|Backbone.Collection拡張|
+|[CommonView.js / 各View.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/common-view.js.md)|MVCのビュー/コントローラ|Backbone.View拡張|
 |[router.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/router.js.md)|コントローラへのルーティング|Backbone.Router拡張|
 |[handlebars-helper.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/handlebars-helper.js.md)|Handlerbarsファンクション||
 |[forcetk-extend.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/forcetk-extend.js.md)|OAuth認証|forcetkの拡張|
