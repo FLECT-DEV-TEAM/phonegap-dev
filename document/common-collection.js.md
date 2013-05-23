@@ -1,22 +1,19 @@
-# collection.js
+# CommonCollection.jsおよび各コレクションの実装
 
-`collection.js`は、モデルの集合をコレクションとして表現します。
+コレクションは特定のモデルを複数内包したものです。MVCではモデルを担当します。
+
+`CommonCollection.js`はコレクションの共通処理を実装したモジュールです。各コレクションは`CommonCollection`を継承します。
 
 ## コレクションとは？
 
-コレクションは特定のモデルを複数内包したものです。
-
 たとえば、「レポート」というモデルがあったとき、一覧画面に表示するリストは「複数のレポート」の集合になるはずです。これをレポートのコレクションとして表現します。コレクションはモデルと同じくデータ操作を行う機能を持ち、対応づけられたモデルの集合に操作の結果がバインドされます。
 
-各コレクションは`Backbone.Collection`を拡張したプロトタイプ定義を継承します。
+https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/ios/www/js/model/CommonCollection.js
 
-https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/collection.js
+CommonCollection.js
 
 ```javascript
-// collection.js
-
-// プロトタイプ定義
-var common = Backbone.Collection.extend({
+var CommonCollection = Backbone.Collection.extend({
 
     fetch : function(soql, options) {
         ....
@@ -30,33 +27,26 @@ var common = Backbone.Collection.extend({
         ....
     }
 });
-
-// 各コレクション定義
-var collection = {
-
-    Calendars : common.extend({
-        model: model.Calendar
-    }),
-    Reports : common.extend({
-        model: model.Report,
-        tableName : "REPORT"
-    }),
-    Clients : common.extend({
-        model : model.Client,
-        tableName : "CLIENT"
-    }),
-    Destinations : common.extend({
-        model: model.Destination,
-        tableName : "DESTINATION"
-    }),
-    Pictures : common.extend({
-        model : model.Picture,
-        tableName : "PICTURE"
-    })
-};
 ```
 
-## プロトタイプ定義
+各コレクション定義の例
+
+https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/ios/www/js/model/CommonCollection.js
+
+HelloCollection.js
+
+```
+define(['model/CommonCollection', 'model/HelloModel'], function(CommonCollection, HelloModel) {
+
+    return CommonCollection.extend({
+        model: HelloModel,
+        tableName: 'HELLO'
+    });
+
+});
+```
+
+## CommonCollection定義
 
 ###  query(sql, params)
 

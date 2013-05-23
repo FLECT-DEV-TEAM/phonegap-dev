@@ -1,27 +1,23 @@
-# view.js
+# CommonView.jsおよび各ビュー/コントローラの実装
 
-`view.js`はMVCのビューおよびコントローラを表現します。
+`CommonView.js`はMVCのビューおよびコントローラの共通処理を実装したモジュールです。各ビュー/コントローラは`CommonView`を継承して実装します。
 
-コントローラとしての役割
+* コントローラとしての役割
+ * UIイベントおよびモデル変更によるイベントのハンドリング
 
-* UIイベントおよびモデル変更によるイベントのハンドリング
+* ビューとしての役割
+ * DOMツリーを構築しUIを提供する
 
-ビューとしての役割
+`CommonView.js`なのにコントローラ？と思われるかもしれませんが、`Backbone.View`がコントローラとビュー役割を担うことになっているので、それに準ずることにします。
 
-* DOMツリーを構築しUIを提供する
+実装はコントローラの役割を担当する _コントローラメソッド_ と ビューの役割を担当する _ビューメソッド_ とに大別されます。
 
-`view.js`なのにコントローラ？と思われるかもしれませんが、`Backbone.View`がコントローラとビュー役割を担うことになっているので、`view.js`もそれに準ずることにします。
+CommonView.js
 
-各ビューは`Backbone.View`を拡張したプロトタイプ定義を継承します。
-コントローラの役割を担当する _コントローラメソッド_ と ビューの役割を担当する _ビューメソッド_ とに大別されます。
-
-https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/view.js
+https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/ios/www/js/view/CommonView.js
 
 ``` javascript
-// view.js
-
-// プロトタイプ定義
-var common = Backbone.View.extend({
+var CommonView = Backbone.View.extend({
 
 	_cache : {
 		template : {}
@@ -32,19 +28,22 @@ var common = Backbone.View.extend({
 	},
 
 	show : function($obj, options) {
-		app.router._cache.transition.show($obj, options)
+             ...
 	},
 
 	back : function() {
-		return app.router._cache.transition.back();
+             ...
 	}
 
 })
+```
 
-// 各ビュー定義
-var view = {
+各ビュー/コントローラ定義の例
 
-    ClientView : common.extend({
+```javascript
+define(['view/CommonView'], function(CommonView) {
+
+    return CommonView.extend({
 
         el: "#client-page",
 
@@ -79,7 +78,7 @@ var view = {
 }
 ```
 
-## プロトタイプ定義
+## CommonView定義
 
 ### template(selector, params)
 

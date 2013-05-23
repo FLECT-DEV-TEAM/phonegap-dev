@@ -1,66 +1,61 @@
-# model.js
+# CommonModel.jsおよび各モデルの実装
 
-`model.js`はMVCのモデルを表現します。データ操作を行う機能はここに集約されます。各モデルは`Backbone.Model`を拡張したプロトタイプ定義を継承します。
+`CommonModel.js`はMVCのモデルの共通処理を実装したモジュールです。各モデルは`CommonModel`を継承したモデルを実装します。
 
-https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/model.js
+https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/ios/www/js/model/CommonModel.js
+
+CommonModel.js
 
 ```javascript
-// model.js
 
-// プロトタイプ定義
-var common = Backbone.Model.extend({
+var CommonModel = Backbone.Model.extend({
 
-	initialize: function(obj) {
-		...
-	},
+    initialize: function(obj) {
+      ...
+    },
 
-	save: function(callback, options) {
-		...
-	},
+    save: function(callback, options) {
+      ...
+    },
 
-	sync: function(success, failure) {
-		...
-	},
+    sync: function(success, failure) {
+      ...
+    },
 
-	query: function(sql, params) {
-		...
-	}
+    query: function(sql, params) {
+      ...
+    }
 })
-
-// 各モデル定義
-var model = {
-
-	Calendar : common.extend({
-	}),
-
-	Report : common.extend({
-		tableName : "REPORT",
-		sfObjectName : "Report__c"
-	}),
-
-	Client : common.extend({
-		tableName : "CLIENT",
-	}),
-
-	Destination : common.extend({
-		tableName : "DESTINATION"
-	}),
-
-	Picture : common.extend({
-		tableName : "PICTURE"
-	})
-}
 ```
 
-## プロトタイプ定義
+各モデル定義の例
+
+https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/ios/www/js/model/HelloModel.js
+
+HelloModel.js
+
+```javascript
+define(['model/CommonModel'], function(CommonModel) {
+
+    return CommonModel.extend({
+        tableName : "HELLO",
+        sfObjectName : "Hello__c"
+    }, {
+        ddl: "CREATE TABLE IF NOT EXISTS HELLO(id primary key, name)"
+    });
+
+});
+```
+
+## CommonModel定義
 
 ### initialize(attributes)
 
-`new model.XXX`すると呼び出される関数です。
+`new `すると呼び出される関数です。
 `attributes`で初期化します。
 
 ```javascript
-var report = new model.Report({
+var report = new Report({
 	"id" : UUID.generate(),
 	"year" : date.year,
 	"month" : date.month,
@@ -205,3 +200,8 @@ Salesforceオブジェクト名。
 
 ---------------------------------------------------------
 
+### ddl
+
+RDBのDDL。
+
+---------------------------------------------------------

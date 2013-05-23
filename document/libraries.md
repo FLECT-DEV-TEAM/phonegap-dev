@@ -28,14 +28,15 @@ PhoneGapアプリ開発に合わせたOSSライブラリの拡張や、オリジ
 
 |ライブラリ|役割|備考|
 |:----|:------|:------|
-|[model.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/model.js.md)|MVCのモデル|Backbone.Model拡張|
-|[collection.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/collection.js.md)|MVCのモデル|Backbone.Collection拡張|
-|[view.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/view.js.md)|MVCのビュー/コントローラ|Backbone.View拡張|
-|[router.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/router.js.md)|コントローラのルーティング|Backbone.Router拡張|
+|[CommonModel.jsおよび各モデル](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/common-model.js.md)|MVCのモデルの共通処理|Backbone.Model拡張|
+|[CommonCollection.jsおよび各コレクション](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/common-collection.js.md)|MVCのモデルの共通処理|Backbone.Collection拡張|
+|[CommonView.jsおよび各ビュー/コントローラ](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/common-view.js.md)|MVCのビュー/コントローラの共通処理|Backbone.View拡張|
+|[router.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/router.js.md)|コントローラへのルーティング|Backbone.Router拡張|
 |[handlebars-helper.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/handlebars-helper.js.md)|Handlerbarsファンクション||
 |[forcetk-extend.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/forcetk-extend.js.md)|OAuth認証|forcetkの拡張|
 |[transition.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/transition.js.md)|ページ遷移管理||
-|[app.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/app.js.md)|アプリケーションメイン||
+|[init.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/init.js.md)|アプリケーション初期化||
+|[main.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/main.js.md)|アプリケーションメイン|RequireJSのdata-main|
 
 ## PhoneGapプラグイン
 
