@@ -28,6 +28,9 @@ requirejs.config({
         "forcetk": {
             deps: ["jquery"],
             exports: "forcetk"
+        },
+        "uuid": {
+            exports: "UUID"
         }
     }
 });

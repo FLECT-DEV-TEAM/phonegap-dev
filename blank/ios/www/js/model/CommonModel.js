@@ -1,5 +1,5 @@
 // Application Common Model.
-define(['backbone', 'forcetk-extend'], function(Backbone, forcetk) {
+define(['backbone', 'forcetk-extend', 'uuid'], function(Backbone, forcetk, UUID) {
 
     var CommonModel = Backbone.Model.extend({
 
@@ -7,9 +7,12 @@ define(['backbone', 'forcetk-extend'], function(Backbone, forcetk) {
         initialize: function(obj) {
             if(obj) {
                 this.set(obj);
+            } else {
+                this.set({
+                    id: UUID.generate()
+                });
             }
         },
-
 
         save: function(callback, options) {
             if (this.tableName === undefined) {
