@@ -52,6 +52,9 @@ define(['forcetk'], function(forcetk) {
                                 self._persist(self.sessionId,
                                     self.refreshToken,
                                     self.instanceUrl);
+                                if(callback) {
+                                    callback.call(self);
+                                }
                             }
                         );
                     }
