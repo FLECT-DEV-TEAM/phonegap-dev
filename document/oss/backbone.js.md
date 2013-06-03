@@ -31,12 +31,12 @@ ViewとModelはイベントによる結びつきにとどめ直接操作しな�
 
 ### Backbone.Model拡張
 
-* [model.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/model.js.md)
+* [model.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/common-model.js.md)
 
 ### Backbone.Collection拡張
 
-* [collection.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/collection.js.md)
+* [collection.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/common-collection.js.md)
 
 ### Backbone.View拡張
 
-* [view.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/view.js.md)
+* [view.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/common-view.js.md)
