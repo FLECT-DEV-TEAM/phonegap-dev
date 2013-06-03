@@ -41,4 +41,6 @@ xcuserdata
 profile
 *.moved-aside
 IOS/www/
- 
+
+# cordova.js
+cordova.js
