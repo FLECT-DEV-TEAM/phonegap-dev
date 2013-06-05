@@ -3,9 +3,11 @@ define(['backbone', 'forcetk-extend', 'uuid'], function(Backbone, forcetk, UUID)
 
     var CommonModel = Backbone.Model.extend({
 
-        // instance methods.
         initialize: function(obj) {
             if(obj) {
+                if (obj.id === undefined) {
+                    obj.id = UUID.generate();
+                }
                 this.set(obj);
             } else {
                 this.set({
