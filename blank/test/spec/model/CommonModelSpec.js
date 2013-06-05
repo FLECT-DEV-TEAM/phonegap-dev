@@ -4,7 +4,7 @@ define(['model/CommonModel'], function(CommonModel) {
 
     it("オブジェクトを引数に指定せずに初期化した場合はUUIDでIDが発番される", function() {
       var commonModel = new CommonModel();
-      expect(commonModel).not.toBeUndefined();
+      expect(commonModel.id).not.toBeUndefined();
     });
 
   });
