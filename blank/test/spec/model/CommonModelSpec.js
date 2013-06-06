@@ -1,4 +1,4 @@
-define(['model/CommonModel'], function(CommonModel) {
+define(['model/CommonModel', 'db'], function(CommonModel, db) {
 
   return describe("CommonModel", function() {
 
@@ -53,7 +53,7 @@ define(['model/CommonModel'], function(CommonModel) {
     });
 
     // TEST FOR CommonModel#save()
-    describe("データベースへの保存", function() {
+    describe("データベースへの保存 異常系", function() {
 
       it("モデルにtableNameが指定されていない場合はエラーが送出される", function() {
         var model = new CommonModel();
@@ -63,6 +63,38 @@ define(['model/CommonModel'], function(CommonModel) {
         } catch (e) {
           expect(e).not.toBeUndefined();
         }
+      });
+
+    });
+
+    describe("データベースへの保存 正常系", function() {
+
+
+      beforeEach(function() {
+        var initialized = false;
+        db.getConn().transaction(
+          function(tx) {
+            tx.executeSql("CREATE TABLE IF NOT EXISTS HELLO(id primary key, name)");
+          },
+          function(err) {
+            throw new Error("データベースの初期化に失敗しました。");
+          },
+          function() {
+              initialized = true;
+          }
+        );
+        waitsFor(function() {
+          return initialized;
+        }, "データベースの初期化", 5000);
+        runs(function() {
+          // NOP
+        });
+      });
+
+      it("dummy", function() {
+        var model = new CommonModel();
+        model.tableName = "HELLO";
+        model.save();
       });
 
     });
