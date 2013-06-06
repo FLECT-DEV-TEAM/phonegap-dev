@@ -1,9 +1,10 @@
 // Application Common Model.
-define(['backbone', 'forcetk-extend', 'uuid'], function(Backbone, forcetk, UUID) {
+define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk, UUID, db) {
 
     var CommonModel = Backbone.Model.extend({
 
         initialize: function(obj) {
+            db.getConn();
             if(obj) {
                 if (obj.id === undefined) {
                     obj.id = UUID.generate();
@@ -18,8 +19,7 @@ define(['backbone', 'forcetk-extend', 'uuid'], function(Backbone, forcetk, UUID)
 
         save: function(callback, options) {
             if (this.tableName === undefined) {
-                alert("tableName is not defined.");
-                return;
+                throw new Error("tableName is not defined.");
             }
             var param = [];
             var attributes = this.attributes;
@@ -41,14 +41,15 @@ define(['backbone', 'forcetk-extend', 'uuid'], function(Backbone, forcetk, UUID)
                 insertSql = "INSERT OR REPLACE INTO ";
             }
 
-             CommonModel._database().transaction(
+             db.getConn().transaction(
                 function(tx) {
                     tx.executeSql(insertSql + tableName + '('+ columns +') ' +
                         'VALUES (' + preparedStatement + ')', param);
                 },
                 function(err) {
-                    alert(err.code);
-                    alert(err.message);
+                    throw new Error({
+                        code: err.code,
+                        message: err.message});
                 },
                 callback || function(){}
             );
@@ -115,7 +116,7 @@ define(['backbone', 'forcetk-extend', 'uuid'], function(Backbone, forcetk, UUID)
         query: function(sql, params) {
             // FIXME sqlが文字列かparamsが配列かをチェックしたほうがいい！
             var that = this;
-            CommonModel._database().transaction(
+            db.getConn().transaction(
                 function(tx) {
                     tx.executeSql(
                         sql,
@@ -140,17 +141,8 @@ define(['backbone', 'forcetk-extend', 'uuid'], function(Backbone, forcetk, UUID)
 
     },{
 
-        _database : function() {
-            // TODO キャッシュ
-            return window.openDatabase(
-                "hello",
-                "1.0",
-                "Hello",
-                100000);
-        },
-
         _query: function(sql, params, callback) {
-            CommonModel._database().transaction(
+            db.getConn().transaction(
                 function(tx) {
                     tx.executeSql(
                         sql,
