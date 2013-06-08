@@ -40,7 +40,7 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
 
             // テーブル名が設定されていない場合は保存できない
             if (this.tableName === undefined) {
-                throw new Error("tableName is not defined.");
+                throw new Error("モデルにtableNameが設定されていません。");
             }
             // 成功時のコールバックが設定されていない場合は空ファンクション
             if (callback === undefined) {
@@ -72,14 +72,12 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
              db.getConn().transaction(
                 // SQL発行
                 function(tx) {
-                    tx.executeSql(insertSql + tableName + '('+ columns +') ' +
-                        'VALUES (' + preparedStatement + ')', param);
+                    var sql = insertSql + tableName + '('+ columns +') ' + 'VALUES (' + preparedStatement + ')';
+                    tx.executeSql(sql, param);
                 },
                 // 実行に失敗
                 function(err) {
-                    throw new Error({
-                        code: err.code,
-                        message: err.message});
+                    throw new Error("ErrorCode:[" + err.code + "] " + err.message);
                 },
                 // 実行に成功
                 callback()
@@ -91,22 +89,42 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
             }
         },
 
+        /** 
+         * Salesforceに同期します。
+         *         
+         * @param {Function} success  同期成功時に呼び出されるコールバック(option)
+         * @param {Function} failure  同期失敗時に呼び出されるコールバック(option)
+         * @throws {Error} Salesforceのオブジェクト名が設定されていない場合
+         * @throws {Error} Salesforceのレコード名(Name)が設定されていない場合
+         * @throws {Error} Salesforceのレコード名(Name)に設定する値が取得できなかった場合
+         */
         sync: function(success, failure) {
+
+            // SFオブジェクト名が設定されていない場合はsyncできない
             if(this.sfObjectName === undefined) {
-                alert("sfObjectName is not defined.");
-                return;
+                throw new Error("モデルにsfObjectNameが設定されていません。");
             }
-            var attributes = this.attributes;
-            // FIXME!!
-            var name = this.get("subject") || this.get("id");
+            // SFレコード名が設定されていない場合はsyncできない
+            if(this.sfRecordName === undefined) {
+                throw new Error("モデルにsfRecordNameが設定されていません。");
+            }
+
+            // 必ずNameが必要な前提で一旦よしとする
+            // 問題が出たら対応する
+            var name = this.get(this.sfRecordName);
+            if (name === undefined) {
+                throw new Error("レコード名を取得することができませんでした。");
+            }
             var obj = {"Name" : name};
+
+            var attributes = this.attributes;
             for (var attribute in attributes) {
-                // temporary workaround...
-                if (attribute !== "sync_status" &&
-                        attribute !== "reg_time") {
+                // 同期ステータスを表すsync_statusはSFには同期しない
+                if (attribute !== "sync_status") {
                     obj[attribute + "__c"] = this.get(attribute);
                 }
             }
+
             // check network.
             var networkState = navigator.network.connection.type;
             var that = this;
@@ -139,7 +157,7 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
                                 console.log("update sync_status 2");
                             }, {upsert : true}
                         );
-                        alert(jqXHR.responseText);
+                        console.log(jqXHR.responseText);
                     }
                 );
             }

@@ -66,11 +66,8 @@ define(['model/CommonModel', 'db'], function(CommonModel, db) {
 
     });
 
+    // TEST FOR CommonModel#save()
     describe("データベースへの保存 正常系", function() {
-
-      // モデルの初期化
-      var model = new CommonModel();
-      model.tableName = "HELLO";
 
       beforeEach(function() {
         var initialized = false;
@@ -94,6 +91,8 @@ define(['model/CommonModel', 'db'], function(CommonModel, db) {
       });
 
       it("保存に成功する", function() {
+        var model = new CommonModel();
+        model.tableName = "HELLO";
         model.save();
         expect(true).toBeTruthy();
       });
@@ -108,6 +107,8 @@ define(['model/CommonModel', 'db'], function(CommonModel, db) {
         // コールバックが実行されたかSpyに監視させる
         spyOn(obj, 'callback');
 
+        var model = new CommonModel();
+        model.tableName = "HELLO";
         model.save(obj.callback);
         expect(obj.callback).toHaveBeenCalled();
       });
@@ -122,12 +123,49 @@ define(['model/CommonModel', 'db'], function(CommonModel, db) {
         // コールバックが実行されたかSpyに監視させる
         spyOn(obj, 'callback');
 
+        var model = new CommonModel();
+        model.tableName = "HELLO";
         // UPSERTオプション
         var option = {upsert: true};
         model.save(obj.callback, option);
         expect(obj.callback).toHaveBeenCalled();
       });
+    });
 
+    // TEST FOR CommonModel#sync()
+    describe("Salesforceへの同期 異常系", function() {
+      it("Salesforceのオブジェクト名が設定されていない場合はエラーが送出される", function() {
+        var model = new CommonModel();
+        model.sfObjectName = undefined;
+        model.sfRecordName = "name";
+        try {
+          model.sync();
+        } catch (e) {
+          expect(e).not.toBeUndefined();
+        }
+      });
+
+      it("Salesforceのレコード名(API上のName)に対応する属性が設定されていない場合はエラーが送出される", function() {
+        var model = new CommonModel();
+        model.sfObjectName = "Hello_c";
+        model.sfRecordName = undefined;
+        try {
+          model.sync();
+        } catch (e) {
+          expect(e).not.toBeUndefined();
+        }
+      });
+
+      it("Salesforceのレコード名(API上のName)に設定する値が取得できない場合はエラーが送出される", function() {
+        var model = new CommonModel();
+        model.sfObjectName = undefined;
+        model.sfRecordName = "name";
+        try {
+          model.sync();
+        } catch (e) {
+          expect(e).not.toBeUndefined();
+        }
+      });
     });
   });
 });
