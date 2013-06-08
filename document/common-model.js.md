@@ -39,7 +39,8 @@ define(['model/CommonModel'], function(CommonModel) {
 
     return CommonModel.extend({
         tableName : "HELLO",
-        sfObjectName : "Hello__c"
+        sfObjectName : "Hello__c",
+        sfRecordName : "name"
     }, {
         ddl: "CREATE TABLE IF NOT EXISTS HELLO(id primary key, name)"
     });
@@ -196,6 +197,15 @@ RDBテーブル名。
 
 Salesforceオブジェクト名。
 
+* 指定されていないモデルは`sync`できません。
+
+---------------------------------------------------------
+
+### sfRecordName
+
+Salesforceのレコード名。API上`Name`で扱われる属性。
+
+* `Name`の値として設定したいモデル属性名を文字列で指定します。
 * 指定されていないモデルは`sync`できません。
 
 ---------------------------------------------------------

@@ -1,14 +1,24 @@
-// Application Common Model.
-define(['backbone', 'forcetk-extend', 'uuid'], function(Backbone, forcetk, UUID) {
+define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk, UUID, db) {
 
+    /** 
+    * Backbone.Modelを拡張した共通モデルです。
+    * 
+    * @class CommonModel
+    */
     var CommonModel = Backbone.Model.extend({
 
-        initialize: function(obj) {
-            if(obj) {
-                if (obj.id === undefined) {
-                    obj.id = UUID.generate();
+        /** 
+         * 初期化をします。
+         *         
+         * @param {Object} attributes 初期値として設定するモデル属性(option)
+         */
+        initialize: function(attributes) {
+            if(attributes) {
+                if (attributes.id === undefined) {
+                    // id属性がない場合は自動発番
+                    attributes.id = UUID.generate();
                 }
-                this.set(obj);
+                this.set(attributes);
             } else {
                 this.set({
                     id: UUID.generate()
@@ -16,11 +26,27 @@ define(['backbone', 'forcetk-extend', 'uuid'], function(Backbone, forcetk, UUID)
             }
         },
 
+        /** 
+         * データベースに保存します。
+         *         
+         * @param {Function} callback  保存成功時に呼び出されるコールバック(option)
+         * @param {Object} options
+         *                 upsert:true UPSERT処理を実行
+         *                 sync   :true 保存成功後にSalesforceへの同期処理を実行
+         * @throws {Error} テーブル名が設定されていない場合
+         * @throws {Error} SQL発行時に保存に失敗した場合
+         */
         save: function(callback, options) {
+
+            // テーブル名が設定されていない場合は保存できない
             if (this.tableName === undefined) {
-                alert("tableName is not defined.");
-                return;
+                throw new Error("モデルにtableNameが設定されていません。");
             }
+            // 成功時のコールバックが設定されていない場合は空ファンクション
+            if (callback === undefined) {
+                callback = function(){};
+            }
+
             var param = [];
             var attributes = this.attributes;
             var tableName = this.tableName;
@@ -37,43 +63,68 @@ define(['backbone', 'forcetk-extend', 'uuid'], function(Backbone, forcetk, UUID)
             preparedStatement = preparedStatement.substr(0, preparedStatement.length - 1);
 
             var insertSql = "INSERT INTO ";
+
+            // upsertオプション
             if (options && options.upsert) {
                 insertSql = "INSERT OR REPLACE INTO ";
             }
 
-             CommonModel._database().transaction(
+             db.getConn().transaction(
+                // SQL発行
                 function(tx) {
-                    tx.executeSql(insertSql + tableName + '('+ columns +') ' +
-                        'VALUES (' + preparedStatement + ')', param);
+                    var sql = insertSql + tableName + '('+ columns +') ' + 'VALUES (' + preparedStatement + ')';
+                    tx.executeSql(sql, param);
                 },
+                // 実行に失敗
                 function(err) {
-                    alert(err.code);
-                    alert(err.message);
+                    throw new Error("ErrorCode:[" + err.code + "] " + err.message);
                 },
-                callback || function(){}
+                // 実行に成功
+                callback()
             );
 
+            // syncオプション
             if (options && options.sync) {
                 this.sync();
             }
         },
 
+        /** 
+         * Salesforceに同期します。
+         *         
+         * @param {Function} success  同期成功時に呼び出されるコールバック(option)
+         * @param {Function} failure  同期失敗時に呼び出されるコールバック(option)
+         * @throws {Error} Salesforceのオブジェクト名が設定されていない場合
+         * @throws {Error} Salesforceのレコード名(Name)が設定されていない場合
+         * @throws {Error} Salesforceのレコード名(Name)に設定する値が取得できなかった場合
+         */
         sync: function(success, failure) {
+
+            // SFオブジェクト名が設定されていない場合はsyncできない
             if(this.sfObjectName === undefined) {
-                alert("sfObjectName is not defined.");
-                return;
+                throw new Error("モデルにsfObjectNameが設定されていません。");
             }
-            var attributes = this.attributes;
-            // FIXME!!
-            var name = this.get("subject") || this.get("id");
+            // SFレコード名が設定されていない場合はsyncできない
+            if(this.sfRecordName === undefined) {
+                throw new Error("モデルにsfRecordNameが設定されていません。");
+            }
+
+            // 必ずNameが必要な前提で一旦よしとする
+            // 問題が出たら対応する
+            var name = this.get(this.sfRecordName);
+            if (name === undefined) {
+                throw new Error("レコード名を取得することができませんでした。");
+            }
             var obj = {"Name" : name};
+
+            var attributes = this.attributes;
             for (var attribute in attributes) {
-                // temporary workaround...
-                if (attribute !== "sync_status" &&
-                        attribute !== "reg_time") {
+                // 同期ステータスを表すsync_statusはSFには同期しない
+                if (attribute !== "sync_status") {
                     obj[attribute + "__c"] = this.get(attribute);
                 }
             }
+
             // check network.
             var networkState = navigator.network.connection.type;
             var that = this;
@@ -106,7 +157,7 @@ define(['backbone', 'forcetk-extend', 'uuid'], function(Backbone, forcetk, UUID)
                                 console.log("update sync_status 2");
                             }, {upsert : true}
                         );
-                        alert(jqXHR.responseText);
+                        console.log(jqXHR.responseText);
                     }
                 );
             }
@@ -115,7 +166,7 @@ define(['backbone', 'forcetk-extend', 'uuid'], function(Backbone, forcetk, UUID)
         query: function(sql, params) {
             // FIXME sqlが文字列かparamsが配列かをチェックしたほうがいい！
             var that = this;
-            CommonModel._database().transaction(
+            db.getConn().transaction(
                 function(tx) {
                     tx.executeSql(
                         sql,
@@ -140,17 +191,8 @@ define(['backbone', 'forcetk-extend', 'uuid'], function(Backbone, forcetk, UUID)
 
     },{
 
-        _database : function() {
-            // TODO キャッシュ
-            return window.openDatabase(
-                "hello",
-                "1.0",
-                "Hello",
-                100000);
-        },
-
         _query: function(sql, params, callback) {
-            CommonModel._database().transaction(
+            db.getConn().transaction(
                 function(tx) {
                     tx.executeSql(
                         sql,

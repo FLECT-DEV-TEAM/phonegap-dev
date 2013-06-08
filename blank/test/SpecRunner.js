@@ -15,6 +15,7 @@ require.config({
 
     // 共通ライブラリ
     'forcetk-extend': '../www/js/forcetk-extend',
+    'db': '../www/js/db',
 
     // モデル
     model: '../www/js/model/',
@@ -63,6 +64,7 @@ require(['jquery', 'jasmine-html'], function($, jasmine){
 
   var specs = [];
   specs.push('spec/model/CommonModelSpec');
+  specs.push('spec/dbSpec');
 
   $(function(){
     require(specs, function(){
