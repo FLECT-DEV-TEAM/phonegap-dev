@@ -1,15 +1,24 @@
-// Application Common Model.
 define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk, UUID, db) {
 
+    /** 
+    * Backbone.Modelを拡張した共通モデルです。
+    * 
+    * @class CommonModel
+    */
     var CommonModel = Backbone.Model.extend({
 
-        initialize: function(obj) {
-            db.getConn();
-            if(obj) {
-                if (obj.id === undefined) {
-                    obj.id = UUID.generate();
+        /** 
+         * 初期化をします。
+         *         
+         * @param {Object} attributes 初期値として設定するモデル属性(option)
+         */
+        initialize: function(attributes) {
+            if(attributes) {
+                if (attributes.id === undefined) {
+                    // id属性がない場合は自動発番
+                    attributes.id = UUID.generate();
                 }
-                this.set(obj);
+                this.set(attributes);
             } else {
                 this.set({
                     id: UUID.generate()
@@ -17,10 +26,27 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
             }
         },
 
+        /** 
+         * データベースに保存します。
+         *         
+         * @param {Function} callback  保存成功時に呼び出されるコールバック(option)
+         * @param {Object} options
+         *                 upsert:true UPSERT処理を実行
+         *                 sync   :true 保存成功後にSalesforceへの同期処理を実行
+         * @throws {Error} テーブル名が設定されていない場合
+         * @throws {Error} SQL発行時に保存に失敗した場合
+         */
         save: function(callback, options) {
+
+            // テーブル名が設定されていない場合は保存できない
             if (this.tableName === undefined) {
                 throw new Error("tableName is not defined.");
             }
+            // 成功時のコールバックが設定されていない場合は空ファンクション
+            if (callback === undefined) {
+                callback = function(){};
+            }
+
             var param = [];
             var attributes = this.attributes;
             var tableName = this.tableName;
@@ -37,23 +63,29 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
             preparedStatement = preparedStatement.substr(0, preparedStatement.length - 1);
 
             var insertSql = "INSERT INTO ";
+
+            // upsertオプション
             if (options && options.upsert) {
                 insertSql = "INSERT OR REPLACE INTO ";
             }
 
              db.getConn().transaction(
+                // SQL発行
                 function(tx) {
                     tx.executeSql(insertSql + tableName + '('+ columns +') ' +
                         'VALUES (' + preparedStatement + ')', param);
                 },
+                // 実行に失敗
                 function(err) {
                     throw new Error({
                         code: err.code,
                         message: err.message});
                 },
-                callback || function(){}
+                // 実行に成功
+                callback()
             );
 
+            // syncオプション
             if (options && options.sync) {
                 this.sync();
             }

@@ -1,13 +1,12 @@
 define(['model/CommonModel', 'db'], function(CommonModel, db) {
 
-  return describe("CommonModel", function() {
+  return describe("CommonModel.jsのテスト", function() {
 
     // TEST FOR CommonModel#initialize()
     describe("引数なしで初期化", function() {
       it("idが自動発番される", function() {
         var model = new CommonModel();
         var generatedId = model.id;
-        console.log(model.id);
         expect(generatedId).not.toBeUndefined();
       });
 
@@ -69,6 +68,9 @@ define(['model/CommonModel', 'db'], function(CommonModel, db) {
 
     describe("データベースへの保存 正常系", function() {
 
+      // モデルの初期化
+      var model = new CommonModel();
+      model.tableName = "HELLO";
 
       beforeEach(function() {
         var initialized = false;
@@ -91,10 +93,39 @@ define(['model/CommonModel', 'db'], function(CommonModel, db) {
         });
       });
 
-      it("dummy", function() {
-        var model = new CommonModel();
-        model.tableName = "HELLO";
+      it("保存に成功する", function() {
         model.save();
+        expect(true).toBeTruthy();
+      });
+
+      it("保存に成功したときにコールバックを実行する", function() {
+
+        // コールバック用のオブジェクト
+        var O = function() {};
+        O.prototype.callback = function() {};
+        var obj = new O();
+
+        // コールバックが実行されたかSpyに監視させる
+        spyOn(obj, 'callback');
+
+        model.save(obj.callback);
+        expect(obj.callback).toHaveBeenCalled();
+      });
+
+      it("UPSERT保存に成功する", function() {
+
+        // コールバック用のオブジェクト
+        var O = function() {};
+        O.prototype.callback = function() {};
+        var obj = new O();
+
+        // コールバックが実行されたかSpyに監視させる
+        spyOn(obj, 'callback');
+
+        // UPSERTオプション
+        var option = {upsert: true};
+        model.save(obj.callback, option);
+        expect(obj.callback).toHaveBeenCalled();
       });
 
     });
