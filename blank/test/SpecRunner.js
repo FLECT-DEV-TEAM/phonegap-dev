@@ -2,11 +2,14 @@ require.config({
   urlArgs: Math.random(),
   paths: {
 
-    // Jasmineのライブラリ
+    // Jasmine
     jasmine: 'lib/jasmine',
     'jasmine-html': 'lib/jasmine-html',
 
-    // OSSライブラリ
+    // sinon
+    sinon: 'lib/sinon',
+
+    // oss libraries
     jquery: '../www/js/lib/jquery-2.0.0',
     underscore: '../www/js/lib/underscore',
     backbone: '../www/js/lib/backbone',
@@ -45,6 +48,9 @@ require.config({
     'jasmine-html': {
       deps: ['jasmine'],
       exports: 'jasmine'
+    },
+    sinon: {
+      exports: 'sinon'
     }
   }
 });
