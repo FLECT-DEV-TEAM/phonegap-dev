@@ -1,6 +1,37 @@
-define(['model/CommonModel', 'db'], function(CommonModel, db) {
+define(['model/CommonModel', 'db', 'sinon', 'forcetk-extend'], function(CommonModel, db, sinon, forcetk) {
 
   return describe("CommonModel.jsのテスト", function() {
+
+    var server;
+
+    beforeEach(function() {
+      var initialized = false;
+      db.getConn().transaction(
+        function(tx) {
+          tx.executeSql("CREATE TABLE IF NOT EXISTS HELLO(id primary key, name, sync_status)");
+        },
+        function(err) {
+          throw new Error("データベースの初期化に失敗しました。");
+        },
+        function() {
+            initialized = true;
+        }
+      );
+      waitsFor(function() {
+        return initialized;
+      }, "データベースの初期化", 5000);
+      runs(function() {
+        // ネットワーク関連の設定
+        navigator.network = {};
+        navigator.network.connection = {};
+        Connection = {};
+        Connection.UNKNOWN = "offline";
+        // Salesforceのダミーサーバー
+        server = sinon.fakeServer.create();
+        // forcetkの初期化
+        forcetk.setSessionToken("dummySessionId", null, "/dummyInstanceURL");
+      });
+    });
 
     // TEST FOR CommonModel#initialize()
     describe("引数なしで初期化", function() {
@@ -69,29 +100,8 @@ define(['model/CommonModel', 'db'], function(CommonModel, db) {
     // TEST FOR CommonModel#save()
     describe("データベースへの保存 正常系", function() {
 
-      beforeEach(function() {
-        var initialized = false;
-        db.getConn().transaction(
-          function(tx) {
-            tx.executeSql("CREATE TABLE IF NOT EXISTS HELLO(id primary key, name)");
-          },
-          function(err) {
-            throw new Error("データベースの初期化に失敗しました。");
-          },
-          function() {
-              initialized = true;
-          }
-        );
-        waitsFor(function() {
-          return initialized;
-        }, "データベースの初期化", 5000);
-        runs(function() {
-          // NOP
-        });
-      });
-
       it("保存に成功する", function() {
-        var model = new CommonModel();
+        var model = new CommonModel({name: "name01"});
         model.tableName = "HELLO";
         model.save();
         expect(true).toBeTruthy();
@@ -99,36 +109,24 @@ define(['model/CommonModel', 'db'], function(CommonModel, db) {
 
       it("保存に成功したときにコールバックを実行する", function() {
 
-        // コールバック用のオブジェクト
-        var O = function() {};
-        O.prototype.callback = function() {};
-        var obj = new O();
-
-        // コールバックが実行されたかSpyに監視させる
-        spyOn(obj, 'callback');
-
-        var model = new CommonModel();
+        var model = new CommonModel({name: "name02"});
         model.tableName = "HELLO";
-        model.save(obj.callback);
-        expect(obj.callback).toHaveBeenCalled();
+        var callback = sinon.spy();
+        model.save(callback);
+        expect(callback.calledOnce).toBeTruthy();
       });
 
       it("UPSERT保存に成功する", function() {
 
-        // コールバック用のオブジェクト
-        var O = function() {};
-        O.prototype.callback = function() {};
-        var obj = new O();
-
-        // コールバックが実行されたかSpyに監視させる
-        spyOn(obj, 'callback');
-
-        var model = new CommonModel();
+        var model = new CommonModel({name: "name03"});
         model.tableName = "HELLO";
+
         // UPSERTオプション
         var option = {upsert: true};
-        model.save(obj.callback, option);
-        expect(obj.callback).toHaveBeenCalled();
+
+        var callback = sinon.spy();
+        model.save(callback, option);
+        expect(callback.calledOnce).toBeTruthy();
       });
     });
 
@@ -165,6 +163,54 @@ define(['model/CommonModel', 'db'], function(CommonModel, db) {
         } catch (e) {
           expect(e).not.toBeUndefined();
         }
+      });
+    });
+
+    // TEST FOR CommonModel#sync()
+    describe("Salesforceへの同期 正常系", function() {
+      it("ネットワークがオフラインの場合はfailureコールバックが呼び出される", function() {
+
+        // オフライン
+        navigator.network.connection.type = "offline";
+
+        var model = new CommonModel({name: "name04"});
+        model.tableName = "HELLO";
+        model.sfObjectName = "Hello__c";
+        model.sfRecordName = "name";
+
+        var success = sinon.spy();
+        var failure = sinon.spy();
+        model.sync(success, failure);
+
+        expect(success.calledOnce).toBeFalsy();
+        expect(failure.calledOnce).toBeTruthy();
+
+      });
+
+      it("ネットワークがオンラインで同期に成功した場合はsuccessコールバックが呼び出される", function() {
+
+        // オンライン
+        navigator.network.connection.type = "online";
+
+        var model = new CommonModel({name: "name05"});
+        model.tableName = "HELLO";
+        model.sfObjectName = "Hello__c";
+        model.sfRecordName = "name";
+
+        var success = sinon.spy();
+        var failure = sinon.spy();
+        model.sync(success, failure);
+
+        console.log(server.requests);
+        server.respondWith(
+          "POST",
+          "/dummyInstanceURL/services/data/v24.0/sobjects/Hello__c/",
+          [200, { "Content-Type": "application/json" }, '{}']);
+        server.respond();
+
+        expect(success.calledOnce).toBeTruthy();
+        expect(failure.calledOnce).toBeFalsy();
+
       });
     });
   });

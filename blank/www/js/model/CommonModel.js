@@ -73,6 +73,7 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
                 // SQL発行
                 function(tx) {
                     var sql = insertSql + tableName + '('+ columns +') ' + 'VALUES (' + preparedStatement + ')';
+                    console.log("[SQL]" + sql + "[Params]"+ param);
                     tx.executeSql(sql, param);
                 },
                 // 実行に失敗
@@ -119,26 +120,32 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
 
             var attributes = this.attributes;
             for (var attribute in attributes) {
-                // 同期ステータスを表すsync_statusはSFには同期しない
-                if (attribute !== "sync_status") {
+                // sync_statusとNameとして指定した属性は除外する
+                if (attribute !== "sync_status"  &&
+                    attribute !== this.sfRecordName) {
                     obj[attribute + "__c"] = this.get(attribute);
                 }
             }
 
-            // check network.
-            var networkState = navigator.network.connection.type;
             var that = this;
-            if (Connection.UNKNOWN === networkState) {
+            // ネットワークがオフラインの場合は同期しない
+            if ( _isOffline() ) {
+                // 同期ステータスを"2"(非同期)にしてデータベースを更新
                 that.set({"sync_status":"2"});
                 that.save(
                     function() {
                         console.log("update sync_status 2");
-                    }, {upsert : true});
+                    }, {upsert : true}
+                );
+                if (failure !== undefined) {
+                    failure();
+                }
+            // ネットワークがオンラインの場合のみ同期処理を行う
             } else {
                 forcetk.create(
                     this.sfObjectName,
                     obj,
-                    success || function() {
+                    function() {
                         console.log("success sync:" + obj);
                         // update sync_status (it means already sync to salesforce).
                         that.set({"sync_status":"1"});
@@ -147,6 +154,9 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
                                 console.log("update sync_status 1");
                             }, {upsert : true}
                         );
+                        if( success !== undefined ) {
+                            success();
+                        }
                     },
                     failure || function(jqXHR) {
                         console.log("failure sync:" + obj);
@@ -160,6 +170,18 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
                         console.log(jqXHR.responseText);
                     }
                 );
+            }
+
+            function _isOffline() {
+                if (navigator.network === undefined ||
+                      navigator.network.connection === undefined) {
+                    return true;
+                }
+                var networkState = navigator.network.connection.type;
+                if (Connection === undefined) {
+                    return true;
+                }
+                return Connection.UNKNOWN === networkState;
             }
         },
 
