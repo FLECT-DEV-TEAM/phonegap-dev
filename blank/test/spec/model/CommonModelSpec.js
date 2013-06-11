@@ -168,31 +168,43 @@ define(['model/CommonModel', 'db', 'sinon', 'forcetk-extend'], function(CommonMo
 
     // TEST FOR CommonModel#sync()
     describe("Salesforceへの同期 正常系", function() {
-      it("ネットワークがオフラインの場合はfailureコールバックが呼び出される", function() {
+      it("ネットワークがオフラインの場合はfailureコールバックが呼び出され、同期ステータスが2になる", function() {
 
         // オフライン
         navigator.network.connection.type = "offline";
 
         var model = new CommonModel({name: "name04"});
+        var generatedId = model.id;
         model.tableName = "HELLO";
         model.sfObjectName = "Hello__c";
         model.sfRecordName = "name";
 
         var success = sinon.spy();
         var failure = sinon.spy();
+
         model.sync(success, failure);
 
         expect(success.calledOnce).toBeFalsy();
         expect(failure.calledOnce).toBeTruthy();
 
+        model.clear({silent:true});
+
+        model.bind("change", function() {
+          expect(model.id).toEqual(generatedId);
+          expect(model.get("name")).toEqual("name04");
+          expect(model.get("sync_status")).toEqual("2");
+        });
+        model.query("SELECT * FROM HELLO WHERE id = ?", [generatedId]);
+
       });
 
-      it("ネットワークがオンラインで同期に成功した場合はsuccessコールバックが呼び出される", function() {
+      it("ネットワークがオンラインで同期に成功した場合はsuccessコールバックが呼び出され、同期ステータスが1になる", function() {
 
         // オンライン
         navigator.network.connection.type = "online";
 
         var model = new CommonModel({name: "name05"});
+        var generatedId = model.id;
         model.tableName = "HELLO";
         model.sfObjectName = "Hello__c";
         model.sfRecordName = "name";
@@ -211,6 +223,50 @@ define(['model/CommonModel', 'db', 'sinon', 'forcetk-extend'], function(CommonMo
         expect(success.calledOnce).toBeTruthy();
         expect(failure.calledOnce).toBeFalsy();
 
+        model.clear({silent:true});
+
+        model.bind("change", function() {
+          expect(model.id).toEqual(generatedId);
+          expect(model.get("name")).toEqual("name05");
+          expect(model.get("sync_status")).toEqual("1");
+        });
+        model.query("SELECT * FROM HELLO WHERE id = ?", [generatedId]);
+
+      });
+
+      it("ネットワークがオンラインで同期に失敗した場合はfailureコールバックが呼び出され、同期ステータスが2になる", function() {
+
+        // オンライン
+        navigator.network.connection.type = "online";
+
+        var model = new CommonModel({name: "name06"});
+        var generatedId = model.id;
+        model.tableName = "HELLO";
+        model.sfObjectName = "Hello__c";
+        model.sfRecordName = "name";
+
+        var success = sinon.spy();
+        var failure = sinon.spy();
+        model.sync(success, failure);
+
+        console.log(server.requests);
+        server.respondWith(
+          "POST",
+          "/dummyInstanceURL/services/data/v24.0/sobjects/Hello__c/",
+          [403, { "Content-Type": "application/json" }, '{}']);
+        server.respond();
+
+        expect(success.calledOnce).toBeFalsy();
+        expect(failure.calledOnce).toBeTruthy();
+
+        model.clear({silent:true});
+
+        model.bind("change", function() {
+          expect(model.id).toEqual(generatedId);
+          expect(model.get("name")).toEqual("name06");
+          expect(model.get("sync_status")).toEqual("1");
+        });
+        model.query("SELECT * FROM HELLO WHERE id = ?", [generatedId]);
       });
     });
   });

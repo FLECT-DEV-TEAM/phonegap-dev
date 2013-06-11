@@ -158,7 +158,7 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
                             success();
                         }
                     },
-                    failure || function(jqXHR) {
+                    function(jqXHR) {
                         console.log("failure sync:" + obj);
                         // update sync_status (it means has not yet sync to salesforce).
                         that.set({"sync_status":"2"});
@@ -168,6 +168,9 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
                             }, {upsert : true}
                         );
                         console.log(jqXHR.responseText);
+                        if (failure !== undefined) {
+                            failure();
+                        }
                     }
                 );
             }
