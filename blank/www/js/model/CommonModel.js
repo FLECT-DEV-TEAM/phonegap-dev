@@ -43,7 +43,7 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
                 throw new Error("モデルにtableNameが設定されていません。");
             }
             // 成功時のコールバックが設定されていない場合は空ファンクション
-            if (callback === undefined) {
+            if (callback === undefined || callback === null) {
                 callback = function(){};
             }
 
@@ -132,41 +132,28 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
             if ( _isOffline() ) {
                 // 同期ステータスを"2"(非同期)にしてデータベースを更新
                 that.set({"sync_status":"2"});
-                that.save(
-                    function() {
-                        console.log("update sync_status 2");
-                    }, {upsert : true}
-                );
+                that.save(null, {upsert : true});
                 if (failure !== undefined) {
                     failure();
                 }
             // ネットワークがオンラインの場合のみ同期処理を行う
             } else {
+                console.log("[SYNC]" + this.sfObjectName + "[DATA]" + JSON.stringify(obj));
                 forcetk.create(
                     this.sfObjectName,
                     obj,
                     function() {
-                        console.log("success sync:" + obj);
                         // update sync_status (it means already sync to salesforce).
                         that.set({"sync_status":"1"});
-                        that.save(
-                            function() {
-                                console.log("update sync_status 1");
-                            }, {upsert : true}
-                        );
+                        that.save(null, {upsert : true});
                         if( success !== undefined ) {
                             success();
                         }
                     },
                     function(jqXHR) {
-                        console.log("failure sync:" + obj);
                         // update sync_status (it means has not yet sync to salesforce).
                         that.set({"sync_status":"2"});
-                        that.save(
-                            function() {
-                                console.log("update sync_status 2");
-                            }, {upsert : true}
-                        );
+                        that.save(null, {upsert : true});
                         console.log(jqXHR.responseText);
                         if (failure !== undefined) {
                             failure();
@@ -188,28 +175,44 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
             }
         },
 
+        /** 
+         * データベースを検索をします。
+         * 検索結果はモデルにバインドされ、changeイベントが発生します。
+         * 2件以上検索結果があった場合は最初の1件をモデルにバインドします。
+         * 検索結果が0件だった場合はnotfoundイベントが発生します。
+         *         
+         * @param {String} sql SQL
+         * @param {Array} params パラメータ (option)
+         * @throws {Error} パラメータが配列ではない場合
+         * @throws {Error} SQL発行時にエラーが発生した場合
+         * @throws {Error} トランザクション取得時にエラーが発生した場合
+         */
         query: function(sql, params) {
+            if ( params && !(params instanceof Array)) {
+                throw new Error("paramsは配列である必要があります。");
+            }
             // FIXME sqlが文字列かparamsが配列かをチェックしたほうがいい！
             var that = this;
             db.getConn().transaction(
                 function(tx) {
+                    console.log("[SQL]" + sql + "[Params]"+ params);
                     tx.executeSql(
                         sql,
                         params,
                         function(tx, results) {
                             if (results.rows.length > 0) {
                                 that.set(results.rows.item(0));
+                            } else {
+                                that.trigger("notfound");
                             }
                         },
                         function(err) {
-                            alert('ERROR:' + err.code);
-                            alert('ERROR:' + err.message);
+                            throw new Error("ErrorCode:[" + err.code + "] " + err.message);
                         }
                     );
                 },
                 function(err) {
-                    alert('ERROR:' + err.code);
-                    alert('ERROR:' + err.message);
+                    throw new Error("ErrorCode:[" + err.code + "] " + err.message);
                 }
             );
         }
@@ -224,14 +227,12 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
                         params,
                         callback,
                         function(err) {
-                            alert('ERROR:' + err.code);
-                            alert('ERROR:' + err.message);
+                            throw new Error("ErrorCode:[" + err.code + "] " + err.message);
                         }
                     );
                 },
                 function(err) {
-                    alert('ERROR:' + err.code);
-                    alert('ERROR:' + err.message);
+                    throw new Error("ErrorCode:[" + err.code + "] " + err.message);
                 }
             );
         }

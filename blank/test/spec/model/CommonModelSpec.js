@@ -8,7 +8,8 @@ define(['model/CommonModel', 'db', 'sinon', 'forcetk-extend'], function(CommonMo
       var initialized = false;
       db.getConn().transaction(
         function(tx) {
-          tx.executeSql("CREATE TABLE IF NOT EXISTS HELLO(id primary key, name, sync_status)");
+          tx.executeSql("DROP TABLE HELLO");
+          tx.executeSql("CREATE TABLE HELLO(id primary key, name, sync_status)");
         },
         function(err) {
           throw new Error("データベースの初期化に失敗しました。");
@@ -253,7 +254,7 @@ define(['model/CommonModel', 'db', 'sinon', 'forcetk-extend'], function(CommonMo
         server.respondWith(
           "POST",
           "/dummyInstanceURL/services/data/v24.0/sobjects/Hello__c/",
-          [403, { "Content-Type": "application/json" }, '{}']);
+          [403, { "Content-Type": "application/json" }, '{"error": "forbidden"}']);
         server.respond();
 
         expect(success.calledOnce).toBeFalsy();
@@ -264,10 +265,107 @@ define(['model/CommonModel', 'db', 'sinon', 'forcetk-extend'], function(CommonMo
         model.bind("change", function() {
           expect(model.id).toEqual(generatedId);
           expect(model.get("name")).toEqual("name06");
-          expect(model.get("sync_status")).toEqual("1");
+          expect(model.get("sync_status")).toEqual("2");
         });
         model.query("SELECT * FROM HELLO WHERE id = ?", [generatedId]);
       });
+    });
+
+    // TEST FOR CommonModel#query()
+    describe("データベースへの検索 異常系", function() {
+      it("パラメータが配列ではない", function() {
+        var model = new CommonModel();
+        try {
+          model.query("SELECT * FROM HELLO", "invalid param");
+        } catch(e) {
+          expect(e).not.toBeUndefined();
+        }
+      });
+    });
+
+    // TEST FOR CommonModel#query()
+    describe("データベースへの検索 正常系", function() {
+      var model;
+      var generatedId;
+      beforeEach(function() {
+        model = new CommonModel({name : "name07"});
+        generatedId = model.id;
+        model.tableName = "HELLO";
+        model.save();
+      });
+
+      it("全件検索でレコードが取得できた場合はchangeイベントが発生してmodelに最初の1件の値がバインドされる", function() {
+        var calledCallback = false;
+
+        model.clear({silent : true});
+        expect(model.id).toBeUndefined();
+        expect(model.get("name")).toBeUndefined();
+
+        model.bind("change", function(){
+          calledCallback = true;
+        });
+
+        model.query("SELECT * FROM HELLO");
+
+        waitsFor(function() {
+          return calledCallback;
+        }, "", 5000);
+
+        runs(function() {
+          expect(calledCallback).toBeTruthy();
+          expect(model.id).toEqual(generatedId);
+          expect(model.get("name")).toEqual("name07");
+        });
+      });
+
+      it("1件に絞り込んだ検索でレコードが取得できた場合はchangeイベントが発生してmodelに値がバインドされる", function() {
+        var calledCallback = false;
+
+        model.clear({silent : true});
+        expect(model.id).toBeUndefined();
+        expect(model.get("name")).toBeUndefined();
+
+        model.bind("change", function(){
+          calledCallback = true;
+        });
+
+        model.query("SELECT * FROM HELLO WHERE id = ?", [generatedId]);
+
+        waitsFor(function() {
+          return calledCallback;
+        }, "", 5000);
+
+        runs(function() {
+          expect(calledCallback).toBeTruthy();
+          expect(model.id).toEqual(generatedId);
+          expect(model.get("name")).toEqual("name07");
+        });
+      });
+
+      it("レコードが取得できなかった場合はnotfoundイベントが発生する", function() {
+        var calledCallback = false;
+
+        model.clear({silent : true});
+        expect(model.id).toBeUndefined();
+        expect(model.get("name")).toBeUndefined();
+
+        model.bind("notfound", function(){
+          calledCallback = true;
+        });
+
+        model.query("SELECT * FROM HELLO WHERE id = ?", ["NOEXIST"]);
+
+        waitsFor(function() {
+          return calledCallback;
+        }, "", 5000);
+
+        runs(function() {
+          expect(calledCallback).toBeTruthy();
+          expect(model.id).toBeUndefined();
+          expect(model.get("name")).toBeUndefined();
+        });
+      });
+
     });
   });
 });
