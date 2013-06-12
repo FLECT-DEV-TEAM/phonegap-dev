@@ -8,7 +8,7 @@ define(['model/CommonModel', 'db', 'sinon', 'forcetk-extend'], function(CommonMo
       var initialized = false;
       db.getConn().transaction(
         function(tx) {
-          tx.executeSql("DROP TABLE HELLO");
+          tx.executeSql("DROP TABLE IF EXISTS HELLO");
           tx.executeSql("CREATE TABLE HELLO(id primary key, name, sync_status)");
         },
         function(err) {
