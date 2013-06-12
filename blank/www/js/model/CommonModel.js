@@ -191,7 +191,6 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
             if ( params && !(params instanceof Array)) {
                 throw new Error("paramsは配列である必要があります。");
             }
-            // FIXME sqlが文字列かparamsが配列かをチェックしたほうがいい！
             var that = this;
             db.getConn().transaction(
                 function(tx) {
