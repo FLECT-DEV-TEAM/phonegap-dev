@@ -58,7 +58,7 @@ define(['forcetk-extend', 'model/CommonModel', 'db'], function(forcetk, CommonMo
                     }
                 },
                 function(request) {
-                    that.trigger("fail");
+                    that.trigger("failure");
                 }
             );
         },

@@ -40,12 +40,12 @@ var app = {
 
             // Fetch master from SF and save to SQLite.
             new collection.Clients()
-                .fetch("SELECT Id, Name FROM Client__c",
+                .fetch("SELECT Id, Name FROM Client__c where Name='a'",
                     {save : {upsert : true}}
                 );
-            new collection.Destinations()
-                .fetch("SELECT Id, Name, Address__c FROM Destination__c",
-                    {save : {upsert : true}});
+//            new collection.Destinations()
+//                .fetch("SELECT Id, Name, Address__c FROM Destination__c",
+//                    {save : {upsert : true}});
 
             // Re-sync report to Salesforce.
             model.Report.resync();

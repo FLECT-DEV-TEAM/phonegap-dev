@@ -3213,7 +3213,7 @@ sinon.xhr = { XMLHttpRequest: this.XMLHttpRequest };
             this.url = url;
             this.async = typeof async == "boolean" ? async : true;
             this.username = username;
-            this.password = password;
+            this.password = password;            
             this.responseText = null;
             this.responseXML = null;
             this.requestHeaders = {};
