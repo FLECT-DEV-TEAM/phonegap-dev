@@ -69,8 +69,9 @@ require(['jquery', 'jasmine-html'], function($, jasmine){
   };
 
   var specs = [];
-  specs.push('spec/model/CommonModelSpec');
   specs.push('spec/dbSpec');
+  specs.push('spec/model/CommonModelSpec');
+  specs.push('spec/model/CommonCollectionSpec');
 
   $(function(){
     require(specs, function(){

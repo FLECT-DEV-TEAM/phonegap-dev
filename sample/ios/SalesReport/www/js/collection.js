@@ -7,9 +7,11 @@
         fetch: function(soql, options) {
             var that = this;
             var i, len;
+                                            console.log(soql);
             model.forcetk().query(
                 soql,
                 function(response){
+                                  console.log(response);
                     var records = response.records;
                     len = records.length;
                     var models = [];
