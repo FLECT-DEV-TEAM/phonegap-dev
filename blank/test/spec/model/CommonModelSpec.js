@@ -59,6 +59,11 @@ define(['model/CommonModel', 'db', 'sinon', 'forcetk-extend'], function(CommonMo
         expect(generatedId).toMatch(/[a-z0-9¥-]/);
       });
 
+      it("noIdをtrueにするとIDは自動発番されない", function() {
+        var model = new CommonModel(null, {noId: true});
+        expect(model.id).toBeUndefined();
+      });
+
     });
 
     // TEST FOR CommonModel#initialize(obj)
@@ -73,6 +78,12 @@ define(['model/CommonModel', 'db', 'sinon', 'forcetk-extend'], function(CommonMo
         var model = new CommonModel({name: 'test01'});
         var generatedId = model.id;
         expect(generatedId).not.toBeUndefined();
+      });
+
+      it("noIdをtrueにするとIDは自動発番されない", function() {
+        var model = new CommonModel({name: 'test01'}, {noId: true});
+        var generatedId = model.id;
+        expect(generatedId).toBeUndefined();
       });
 
       it("引数のオブジェクトのプロパティにidがあればidは自動発番されない", function() {

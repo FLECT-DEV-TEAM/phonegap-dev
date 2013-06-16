@@ -35,18 +35,23 @@ define(['forcetk-extend', 'model/CommonModel', 'db'], function(forcetk, CommonMo
                     }
                     var models = [];
                     for(i = 0; i < len; i++) {
-                        var tempModel = {};
+                        var modelAttr = {};
+                        var model = new that.model(null, {noId: true});
                         for (var attr in records[i]) {
                             if (attr === "attributes") {
                                 continue;
                             } else if (attr === "Id") {
-                                tempModel["sfid"] = records[i][attr];
+                                modelAttr["sfid"] = records[i][attr];
+                            } else if (attr === "lid__c") {
+                                modelAttr["id"] = records[i][attr];
+                            } else if (attr === "Name") {
+                                modelAttr[that.sfRecordName] = records[i][attr];
                             } else {
                                 var renamed = attr.replace("__c", "");
-                                tempModel[renamed] = records[i][attr];
+                                modelAttr[renamed] = records[i][attr];
                             }
                         }
-                        models.push(new that.model(tempModel));
+                        models.push(model.set(modelAttr));
                     }
                     that.add(models);
                     that.trigger("add:all");

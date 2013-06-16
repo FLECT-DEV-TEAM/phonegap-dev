@@ -40,6 +40,7 @@ define(['model/CommonCollection', 'db', 'sinon', 'forcetk-extend'], function(Com
         var calledCallback = false;
 
         var collection = new CommonCollection();
+        collection.sfRecordName = "name";
         collection.bind("add:all", function() {
           calledCallback = true;
         });
@@ -53,10 +54,10 @@ define(['model/CommonCollection', 'db', 'sinon', 'forcetk-extend'], function(Com
           '{' +
             '"records":' +
             '[' +
-              '{"Id": "001","Name": "name001", ' +
+              '{"Id": "001","Name": "name001", "lid__c" : "LOCAL001",' +
                 '"attributes": { "type": "Hello", "url": "/services/data/v24.0/sobjects/Hello__c/001"}'+
               '},'+
-              '{"Id": "002","Name": "name002",' +
+              '{"Id": "002","Name": "name002","lid__c" : "LOCAL002",' +
               '"attributes": {"type": "Hello","url": "/services/data/v24.0/sobjects/Hello__c/002"}'+
               '}]' +
             '}'
@@ -72,13 +73,13 @@ define(['model/CommonCollection', 'db', 'sinon', 'forcetk-extend'], function(Com
           expect(collection.length).toEqual(2);
 
           var model1 = collection.at(0);
-          expect(model1.id).toEqual("TODO"); // idに対応するSFの属性を決めなければいけない
-          expect(model1.get("name")).toEqual("TODO"); // Nameに対応する属性でセットしなければいけない
+          expect(model1.id).toEqual("LOCAL001");
+          expect(model1.get("name")).toEqual("name001");
           expect(model1.get("sfid")).toEqual("001");
 
           var model2 = collection.at(1);
-          expect(model2.id).toEqual("TODO"); // idに対応するSFの属性を決めなければいけない
-          expect(model2.get("name")).toEqual("TODO"); // Nameに対応する属性でセットしなければいけない
+          expect(model2.id).toEqual("LOCAL002");
+          expect(model2.get("name")).toEqual("name002");
           expect(model2.get("sfid")).toEqual("002");
         });
       });

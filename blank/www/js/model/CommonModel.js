@@ -11,18 +11,28 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
          * 初期化をします。
          *         
          * @param {Object} attributes 初期値として設定するモデル属性(option)
+         * @param {Object} options
+         *                              noId: true IDを自動発番しない
          */
-        initialize: function(attributes) {
+        initialize: function(attributes, options) {
+            var generateId = true;
+            if (options !== undefined) {
+                if (options.noId === true) {
+                    generateId = false;
+                }
+            }
             if(attributes) {
-                if (attributes.id === undefined) {
+                if (attributes.id === undefined && generateId) {
                     // id属性がない場合は自動発番
                     attributes.id = UUID.generate();
                 }
                 this.set(attributes);
             } else {
-                this.set({
-                    id: UUID.generate()
-                });
+                if (generateId) {
+                    this.set({
+                        id: UUID.generate()
+                    });
+                }
             }
         },
 
@@ -123,7 +133,11 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
                 // sync_statusとNameとして指定した属性は除外する
                 if (attribute !== "sync_status"  &&
                     attribute !== this.sfRecordName) {
-                    obj[attribute + "__c"] = this.get(attribute);
+                    if (attribute === "id") {
+                        obj["lid__c"] = this.get("id");
+                    } else {
+                        obj[attribute + "__c"] = this.get(attribute);
+                    }
                 }
             }
 

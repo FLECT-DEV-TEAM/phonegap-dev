@@ -50,14 +50,13 @@ define(['model/CommonModel'], function(CommonModel) {
 
 ## CommonModel定義
 
-### initialize(attributes)
+### initialize(attributes, options)
 
 `new `すると呼び出される関数です。
 `attributes`で初期化します。
 
 ```javascript
 var report = new Report({
-	"id" : UUID.generate(),
 	"year" : date.year,
 	"month" : date.month,
 	"day" : date.day,
@@ -66,9 +65,20 @@ var report = new Report({
 });
 ```
 
+上記の例のように`id`属性を指定しない場合は自動的にID(UUIDv4)が発番されます。
+(ただし`options`でnoIdをfalseにした場合は例外)
+
 #### `attributes`
 
 モデルの属性。プロパティ名はRDBのカラムと同じ名前にします。
+
+#### `options`
+
+この関数のオプション動作をオブジェクトで指定します。
+
+* `noId`
+
+    trueにするとIDの自動発番は行われません。
 
 ---------------------------------------------------------
 
@@ -181,8 +191,11 @@ report.sync();
 
 #### フィールド名の変換について
 
-SFにリクエストするときには、フィールド名は`***__c`の形式に自動的に変換されます。
-たとえば上記例であれば`year`は`year__c`というフィールド名で更新リクエストされます。
+SFにリクエストするときにフィールド名が変換されてSFにリクエストされます。
+
+* `Model#id`は`lid__c`(Local ID)に変換されます
+* `Model#sfRecordName`に指定されている属性が`Name`に変換されます
+* その他は`***__c`の形式に変換されます
 
 ## 各モデル定義
 
