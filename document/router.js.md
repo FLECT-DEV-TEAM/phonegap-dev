@@ -15,7 +15,7 @@ var common = Backbone.Router.extend({
         ...
     },
 
-    view: function(name, params) {
+    view: function(viewObject, viewName, params) {
         ...
     }
 })
@@ -37,22 +37,16 @@ var router = {
 
         // ルーティング設定にもとづき呼び出される関数
         detail: function(id) {
-            this.view("DetailView", {
-                report : new model.Report({
-                    id: id
-                })
-            });
+            this.view(DetailView, "DetailView", id);
         },
 
         comment: function(reportId, imageUri) {
-            this.view("CommentView", {
-            	comment: new model.Comment({
-                    id: UUID.generate(),
+            this.view(CommentView, "CommentView", {
                     reportId: reportId,
                     imageUri: imageUri
-                })
-            });
-        }
+                }
+            );
+        },
 
         ...
 
@@ -66,23 +60,19 @@ var router = {
 
 ビューとトランジションのシングルトンインスタンスを格納するキャッシュです。router.jsの外から直接触ってはいけません。
 
-### view(name, params)
+### view(viewObject, viewName, params)
 
 Backbone.Viewを継承したコントローラ/ビューコンポーネントを呼び出します。Backbone.Viewのプロトタイプ定義である`initialize()`が呼び出されます。これによって`initialize()'に記述されたコントローラ処理が実行されます。
 
 ```javascript
 detail: function(id) {
-    this.view("DetailView", {
-        report : new model.Report({
-            id: id
-        })
-    });
+    this.view(DetailView, "DetailView", id);
 }
 ```
 
-#### `name`
+#### `viewObject`
 
-呼び出すビューのプロパティ名です。上記例のように`DetailView`を指定した場合はview.jsの`DetailView#initialize`が呼び出されます。
+呼び出すビューオブジェクトです。上記例の場合はview.jsの`DetailView#initialize`が呼び出されます。
 
 ```javascript
 // view.js
@@ -95,15 +85,18 @@ var view = {
     DetailView : common.extend({
 
         // これが呼び出される
-        initialize: function(report) {
+        initialize: function(id) {
             ・・・
         },
 ```
 
+#### `viewName`
+
+アプリケーション内で一意となるようなビューの名前を文字列で指定します。ルーター内にビューはキャッシュされますがそのときのキーになります。特になければオブジェクト変数名と同じにしておけば良いです。
+
 #### `params`
 
-viewのinitializeに渡すパラメータです。通常はモデルまたはコレクションのインスタンスを渡します。
-
+viewのinitializeに渡すパラメータです。
 
 ## ルーティング定義
 

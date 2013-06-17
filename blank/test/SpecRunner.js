@@ -15,13 +15,19 @@ require.config({
     backbone: '../www/js/lib/backbone',
     uuid: '../www/js/lib/UUID',
     forcetk: '../www/js/lib/forcetk',
+    handlebars: '../www/js/lib/handlebars',
 
     // 共通ライブラリ
     'forcetk-extend': '../www/js/forcetk-extend',
     'db': '../www/js/db',
+    'router': '../www/js/router',
+    'transition': '../www/js/transition',
 
     // モデル
     model: '../www/js/model/',
+
+    // ビュー
+    view: '../www/js/view/',
 
     // テストモジュール
     spec: 'spec'
@@ -41,6 +47,9 @@ require.config({
     },
     uuid: {
        exports: "UUID"
+    },
+    handlebars: {
+       exports: "Handlebars"
     },
     jasmine: {
       exports: 'jasmine'
@@ -70,6 +79,7 @@ require(['jquery', 'jasmine-html'], function($, jasmine){
 
   var specs = [];
   specs.push('spec/dbSpec');
+  specs.push('spec/routerSpec');
   specs.push('spec/model/CommonModelSpec');
   specs.push('spec/model/CommonCollectionSpec');
 
