@@ -59,6 +59,6 @@ routes: {
 
 hello: function() {
     // 最初の画面表示！
-    this.view(HelloView);
+    this.view(HelloView, "HelloView");
 }
 ```
