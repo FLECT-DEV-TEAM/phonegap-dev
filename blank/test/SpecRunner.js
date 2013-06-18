@@ -80,6 +80,7 @@ require(['jquery', 'jasmine-html'], function($, jasmine){
   var specs = [];
   specs.push('spec/dbSpec');
   specs.push('spec/routerSpec');
+  specs.push('spec/view/CommonViewSpec');
   specs.push('spec/model/CommonModelSpec');
   specs.push('spec/model/CommonCollectionSpec');
 

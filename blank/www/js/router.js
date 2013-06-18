@@ -1,7 +1,7 @@
 define(['backbone', 'view/HelloView'], function(Backbone, HelloView) {
 
     /** 
-    * Backbone.Routerを拡張した共通モデルです。
+    * Backbone.Routerを拡張した共通ルータです。
     * 
     * @class CommonRouter
     */
