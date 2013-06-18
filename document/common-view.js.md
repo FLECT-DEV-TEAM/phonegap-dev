@@ -14,7 +14,7 @@
 
 CommonView.js
 
-https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/ios/www/js/view/CommonView.js
+https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/view/CommonView.js
 
 ``` javascript
 var CommonView = Backbone.View.extend({

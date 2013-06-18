@@ -2,7 +2,7 @@
 
 `CommonModel.js`はMVCのモデルの共通処理を実装したモジュールです。各モデルは`CommonModel`を継承したモデルを実装します。
 
-https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/ios/www/js/model/CommonModel.js
+https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/model/CommonModel.js
 
 CommonModel.js
 
@@ -30,7 +30,7 @@ var CommonModel = Backbone.Model.extend({
 
 各モデル定義の例
 
-https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/ios/www/js/model/HelloModel.js
+https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/model/HelloModel.js
 
 HelloModel.js
 

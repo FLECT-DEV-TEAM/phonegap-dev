@@ -16,38 +16,11 @@
 
 `transiton.js` _の関数は基本的には開発者がアプリから直接よびだすことはありません。_ viewにプロトタイプ定義されている`show`、`back`経由で呼び出される想定です。
 
-## 初期化
-
-アプリケーションの初期化を行う`app.js`の中で`Transition`を初期化します。初期化した`Transition`のインスタンスは`router.Router()`の中にシングルトンインスタンスとしてキャッシュします。
-
-https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/app.js
-
-```javascript
-// app.js
-
-var app = {
-
-    setup: {
-
-        ...
-
-        startApp: function() {
-
-            // コントローラの初期化
-            app.router = new router.Router();
-
-            // トランジションを初期化してコントローラの中にキャッシュ
-            app.router._cache.transition = new Transition();
-        }
-    }
-};
-```
-
 ## 関数定義
 
 ### show($obj, options)
 
-画面遷移をするための処理を行います。`view.js`の`show($obj, options)`経由で呼び出されます。
+画面遷移をするための処理を行います。
 
 * 次に表示させる画面を表示状態にします
 * 前画面を非表示状態にします
@@ -56,7 +29,7 @@ var app = {
 
 ### back()
 
-前の画面に戻るための処理を行います。`view.js`の`render()`経由で呼び出されます。
+前の画面に戻るための処理を行います。
 
 * 履歴に残っている一つ前の画面のURLハッシュに変更します
 * ハッシュが変わることにより`Backbone`のルータが一つ前の画面を再表示します

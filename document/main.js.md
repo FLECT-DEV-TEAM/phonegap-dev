@@ -4,7 +4,7 @@
 
 ## コード
 
-https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/ios/www/js/main.js
+https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/main.js
 
 ```javascript
 requirejs.config({

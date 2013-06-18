@@ -4,7 +4,7 @@
 
 ## コード
 
-https://github.com/FLECT-DEV-TEAM/phonegap-dev/tree/master/blank/ios/www/js
+https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/init.js
 
 ```javascript
 onDeviceReady: function() {

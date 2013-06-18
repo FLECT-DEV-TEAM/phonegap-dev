@@ -8,7 +8,7 @@
 
 たとえば、「レポート」というモデルがあったとき、一覧画面に表示するリストは「複数のレポート」の集合になるはずです。これをレポートのコレクションとして表現します。コレクションはモデルと同じくデータ操作を行う機能を持ち、対応づけられたモデルの集合に操作の結果がバインドされます。
 
-https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/ios/www/js/model/CommonCollection.js
+https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/model/CommonCollection.js
 
 CommonCollection.js
 
@@ -31,7 +31,7 @@ var CommonCollection = Backbone.Collection.extend({
 
 各コレクション定義の例
 
-https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/ios/www/js/model/CommonCollection.js
+https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/model/CommonCollection.js
 
 HelloCollection.js
 
