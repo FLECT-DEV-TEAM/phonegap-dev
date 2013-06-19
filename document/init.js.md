@@ -17,6 +17,13 @@ _createTable: function() {
 },
 
 _startApp: function() {
+    // 画面遷移機能をjQueryプラグイン化する
+    var slider = new PageSlider($("#container"));
+    $.fn.extend( {
+        slide: function() {
+            slider.slidePage(this);
+        }
+    });
     Backbone.history.start();
     router.navigate("hello", {trigger: true});
 }
