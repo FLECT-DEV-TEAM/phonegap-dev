@@ -1,6 +1,6 @@
-define(['router', 'backbone', 'model/CommonModel', 'model/HelloModel', 'db'],
+define(['router', 'backbone', 'model/CommonModel', 'model/HelloModel', 'db', 'pageslider', 'jquery'],
 
-function(router, Backbone, CommonModel, HelloModel, db) {
+function(router, Backbone, CommonModel, HelloModel, db, PageSlider, $) {
 
     var init = {
 
@@ -26,6 +26,12 @@ function(router, Backbone, CommonModel, HelloModel, db) {
         },
 
         _startApp: function() {
+            var slider = new PageSlider($("#container"));
+            $.fn.extend( {
+                slide: function() {
+                    slider.slidePage(this);
+                }
+            });
             Backbone.history.start();
             router.navigate("hello", {trigger: true});
         }

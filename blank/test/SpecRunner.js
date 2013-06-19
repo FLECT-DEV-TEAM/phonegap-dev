@@ -16,6 +16,7 @@ require.config({
     uuid: '../www/js/lib/UUID',
     forcetk: '../www/js/lib/forcetk',
     handlebars: '../www/js/lib/handlebars',
+    pageslider: '../www/js/lib/pageslider',
 
     // 共通ライブラリ
     'forcetk-extend': '../www/js/forcetk-extend',
@@ -51,6 +52,11 @@ require.config({
     handlebars: {
        exports: "Handlebars"
     },
+    "pageslider": {
+       deps: ["jquery"],
+       exports: "PageSlider"
+    },
+
     jasmine: {
       exports: 'jasmine'
     },

@@ -1,10 +1,17 @@
-define(['router', 'view/HelloView', 'view/CommonView'], function(router, HelloView, CommonView) {
+define(['router', 'view/HelloView', 'view/CommonView', 'pageslider'], function(router, HelloView, CommonView, PageSlider) {
 
     return describe("router.jsのテスト", function() {
 
         describe("CommonRouterのviewのテスト", function() {
 
             var handlebarsStub;
+
+            var slider = new PageSlider($("<div></div>"));
+            $.fn.extend( {
+                slide: function() {
+                    slider.slidePage(this);
+                }
+            });
 
             beforeEach(function() {
                 handlebarsStub = sinon.stub(Handlebars, "compile");
@@ -33,6 +40,7 @@ define(['router', 'view/HelloView', 'view/CommonView'], function(router, HelloVi
             });
 
             it("キャッシュにViewインスタンスがない場合はViewを新たに初期化してキャッシュに格納する", function() {
+
                 var cache = router._cache.view.Hello;
                 expect(cache).toBeUndefined();
 
