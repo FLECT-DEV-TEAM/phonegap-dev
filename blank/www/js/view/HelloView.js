@@ -1,6 +1,6 @@
-define(['view/CommonView'],
+define(['view/CommonView', 'jquery'],
 
-function(CommonView) {
+function(CommonView, $) {
 
     return CommonView.extend({
 
@@ -11,10 +11,7 @@ function(CommonView) {
         },
 
         render: function(params) {
-            this.$el
-                .find('.append')
-                .append(this.template('#top-page-template'));
-            this.show(this.$el);
+            $(this.template('#top-page-template')).slide();
         }
     });
 

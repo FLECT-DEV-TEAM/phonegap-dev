@@ -8,7 +8,8 @@ requirejs.config({
         underscore: 'lib/underscore',
         backbone: 'lib/backbone',
         forcetk: 'lib/forcetk',
-        uuid: 'lib/UUID'
+        uuid: 'lib/UUID',
+        pageslider: 'lib/pageslider'
     },
 
     shim: {
@@ -31,6 +32,10 @@ requirejs.config({
         },
         "uuid": {
             exports: "UUID"
+        },
+        "pageslider": {
+            deps: ["jquery"],
+            exports: "PageSlider"
         }
     }
 });

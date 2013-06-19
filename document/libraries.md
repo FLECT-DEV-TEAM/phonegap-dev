@@ -20,6 +20,7 @@ PhoneGapアプリで利用するOSSライブラリです。
 |[underscore.js](http://underscorejs.org/)|1.4.2|ユーティリティ||
 |[forcetk.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/oss/forcetk.js.md)|-|SalesforceAPIクライアント|jQueryに依存|
 |[UUID.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/oss/UUID.js.md)|3.2|BackboneモデルのID生成||
+|[pageslider.js](https://github.com/ccoenraets/PageSlider)|-|ページ遷移管理||
 |[cordova.js](http://phonegap.com/)|2.5.0|PhoneGap基本機能||
 
 ## FlectPhoneGapライブラリ
@@ -34,7 +35,6 @@ PhoneGapアプリ開発に合わせたOSSライブラリの拡張や、オリジ
 |[router.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/router.js.md)|コントローラへのルーティング|Backbone.Router拡張|
 |[handlebars-helper.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/handlebars-helper.js.md)|Handlerbarsファンクション||
 |[forcetk-extend.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/forcetk-extend.js.md)|OAuth認証|forcetkの拡張|
-|[transition.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/transition.js.md)|ページ遷移管理||
 |[init.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/init.js.md)|アプリケーション初期化||
 |[main.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/main.js.md)|アプリケーションメイン|RequireJSのdata-main|
 

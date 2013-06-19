@@ -1,5 +1,5 @@
 // Application Common View.
-define(['backbone', 'jquery', 'handlebars', 'transition'], function(Backbone, $, Handlebars, transition) {
+define(['backbone', 'jquery', 'handlebars'], function(Backbone, $, Handlebars) {
 
     /** 
     * Backbone.Viewを拡張した共通ビューです。
@@ -32,16 +32,7 @@ define(['backbone', 'jquery', 'handlebars', 'transition'], function(Backbone, $,
                 this._cache.template[selector] = template;
                 return template(params);
             }
-        },
-
-        show : function($obj, options) {
-            transition.show($obj, options);
-        },
-
-        back : function() {
-            return transition.back();
         }
-
     });
 
 });
