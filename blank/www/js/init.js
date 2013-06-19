@@ -1,6 +1,6 @@
-define(['router', 'backbone', 'model/CommonModel', 'model/HelloModel'],
+define(['router', 'backbone', 'model/CommonModel', 'model/HelloModel', 'db'],
 
-function(router, Backbone, CommonModel, HelloModel) {
+function(router, Backbone, CommonModel, HelloModel, db) {
 
     var init = {
 
@@ -9,8 +9,7 @@ function(router, Backbone, CommonModel, HelloModel) {
         },
 
         _createTable: function() {
-            var db = CommonModel._database();
-            db.transaction(
+            db.getConn().transaction(
                 // create table.
                 function(tx) {
                     tx.executeSql(HelloModel.ddl);
