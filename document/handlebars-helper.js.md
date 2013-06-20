@@ -18,8 +18,6 @@ Handlebarsには _ヘルパー_ という機能があります。テンプレー
 * ページング処理が必要
 * 現在のページ数によってヘッダ部分のHTMLの出しわけが必要
 
-https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/sample/ios/SalesReport/www/js/handlebars-helper.js
-
 ```javascript
 Handlebars.registerHelper('picturePaging', function(param) {
 
