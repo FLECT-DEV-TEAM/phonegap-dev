@@ -29,8 +29,8 @@ Salesforceに対して以下の処理を行うことができます。
 | 更新 | update()/upsert() | - | - |
 | 削除 | del() | - | - |
 
-実装の詳細は`CommonModel.js`と`CommonCollection.js`を参照してください。
+実装の詳細は`model.js`と`collection.js`を参照してください。
 
-* [CommonModel.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/common-model.js.md)
-* [CommonCollection.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/common-collection.js.md)
+* [model.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/model.js.md)
+* [collection.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/collection.js.md)
 

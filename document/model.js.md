@@ -1,8 +1,8 @@
-# CommonModel.jsおよび各モデルの実装
+# model.jsおよび各モデルの実装
 
-`CommonModel.js`はMVCのモデルの共通処理を実装したモジュールです。各モデルは`CommonModel`を継承したモデルを実装します。
+`model.js`はMVCのモデルの共通処理を実装したモジュールです。各モデルは`CommonModel`を継承したモデルを実装します。
 
-https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/model/CommonModel.js
+https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/model.js
 
 CommonModel.js
 
@@ -30,12 +30,12 @@ var CommonModel = Backbone.Model.extend({
 
 各モデル定義の例
 
-https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/model/HelloModel.js
+https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/model/hello-model.js
 
-HelloModel.js
+hello-model.js
 
 ```javascript
-define(['model/CommonModel'], function(CommonModel) {
+define(['model'], function(CommonModel) {
 
     return CommonModel.extend({
         tableName : "HELLO",

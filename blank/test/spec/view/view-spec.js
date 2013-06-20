@@ -1,6 +1,6 @@
-define(['view/CommonView'], function(CommonView) {
+define(['view'], function(CommonView) {
 
-    return describe("CommonView.jsのテスト", function() {
+    return describe("view.jsのテスト", function() {
 
         describe("CommonView#templateのテスト", function() {
 

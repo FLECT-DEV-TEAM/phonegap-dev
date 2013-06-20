@@ -1,6 +1,6 @@
-define(['router', 'backbone', 'model/CommonModel', 'model/HelloModel', 'db', 'pageslider', 'jquery'],
+define(['router', 'backbone', 'model/hello-model', 'db', 'pageslider', 'jquery'],
 
-function(router, Backbone, CommonModel, HelloModel, db, PageSlider, $) {
+function(router, Backbone, HelloModel, db, PageSlider, $) {
 
     var init = {
 

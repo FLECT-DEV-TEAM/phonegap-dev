@@ -1,4 +1,4 @@
-define(['forcetk-extend', 'model/CommonModel', 'db'], function(forcetk, CommonModel, db) {
+define(['forcetk-extend', 'model', 'db'], function(forcetk, CommonModel, db) {
 
     /** 
     * Backbone.Collectionを拡張した共通モデルです。

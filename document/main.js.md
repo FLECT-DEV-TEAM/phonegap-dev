@@ -17,7 +17,7 @@ requirejs.config({
         underscore: 'lib/underscore',
         backbone: 'lib/backbone',
         forcetk: 'lib/forcetk',
-        UUID: 'lib/UUID'
+        uuid: 'lib/uuid'
     },
 
     shim: {

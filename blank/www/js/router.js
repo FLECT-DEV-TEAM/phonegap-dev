@@ -1,4 +1,4 @@
-define(['backbone', 'view/HelloView'], function(Backbone, HelloView) {
+define(['backbone', 'view/hello-view'], function(Backbone, HelloView) {
 
     /** 
     * Backbone.Routerを拡張した共通ルータです。

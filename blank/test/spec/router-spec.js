@@ -1,4 +1,4 @@
-define(['router', 'view/HelloView', 'view/CommonView', 'pageslider'], function(router, HelloView, CommonView, PageSlider) {
+define(['router', 'view/hello-view', 'view', 'pageslider'], function(router, HelloView, CommonView, PageSlider) {
 
     return describe("router.jsのテスト", function() {
 
