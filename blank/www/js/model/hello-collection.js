@@ -1,4 +1,4 @@
-define(['model/CommonCollection', 'model/HelloModel'], function(CommonCollection, HelloModel) {
+define(['collection', 'model/hello-model'], function(CommonCollection, HelloModel) {
 
     return CommonCollection.extend({
         model: HelloModel,

@@ -1,4 +1,4 @@
-define(['view/CommonView', 'jquery'],
+define(['view', 'jquery'],
 
 function(CommonView, $) {
 

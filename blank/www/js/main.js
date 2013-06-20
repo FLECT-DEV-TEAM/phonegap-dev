@@ -8,7 +8,7 @@ requirejs.config({
         underscore: 'lib/underscore',
         backbone: 'lib/backbone',
         forcetk: 'lib/forcetk',
-        uuid: 'lib/UUID',
+        uuid: 'lib/uuid',
         pageslider: 'lib/pageslider'
     },
 

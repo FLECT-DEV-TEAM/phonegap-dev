@@ -1,6 +1,6 @@
-define(['model/CommonModel', 'db', 'sinon', 'forcetk-extend'], function(CommonModel, db, sinon, forcetk) {
+define(['model', 'db', 'sinon', 'forcetk-extend'], function(CommonModel, db, sinon, forcetk) {
 
-  return describe("CommonModel.jsのテスト", function() {
+  return describe("model.jsのテスト", function() {
 
     var server;
 

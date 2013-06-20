@@ -3,68 +3,64 @@ require.config({
   paths: {
 
     // Jasmine
-    jasmine: 'lib/jasmine',
+    'jasmine': 'lib/jasmine',
     'jasmine-html': 'lib/jasmine-html',
 
     // sinon
-    sinon: 'lib/sinon',
+    'sinon': 'lib/sinon',
 
     // oss libraries
-    jquery: '../www/js/lib/jquery-2.0.0',
-    underscore: '../www/js/lib/underscore',
-    backbone: '../www/js/lib/backbone',
-    uuid: '../www/js/lib/UUID',
-    forcetk: '../www/js/lib/forcetk',
-    handlebars: '../www/js/lib/handlebars',
-    pageslider: '../www/js/lib/pageslider',
+    'jquery': '../www/js/lib/jquery-2.0.0',
+    'underscore': '../www/js/lib/underscore',
+    'backbone': '../www/js/lib/backbone',
+    'uuid': '../www/js/lib/uuid',
+    'forcetk': '../www/js/lib/forcetk',
+    'handlebars': '../www/js/lib/handlebars',
+    'pageslider': '../www/js/lib/pageslider',
 
     // 共通ライブラリ
     'forcetk-extend': '../www/js/forcetk-extend',
     'db': '../www/js/db',
     'router': '../www/js/router',
     'transition': '../www/js/transition',
+    'model': '../www/js/model',
+    'view': '../www/js/view',
+    'collection': '../www/js/collection',
 
-    // モデル
-    model: '../www/js/model/',
-
-    // ビュー
-    view: '../www/js/view/',
-
-    // テストモジュール
-    spec: 'spec'
+    'spec': 'spec'
 
   },
   shim: {
-    underscore: {
+    'underscore': {
       exports: "_"
     },
-    backbone: {
+    'backbone': {
       deps: ['underscore', 'jquery'],
       exports: 'Backbone'
     },
-    forcetk: {
+    'forcetk': {
       deps: ["jquery"],
       exports: "forcetk"
     },
-    uuid: {
+    'uuid': {
        exports: "UUID"
     },
-    handlebars: {
+    'handlebars': {
        exports: "Handlebars"
     },
-    "pageslider": {
+    'pageslider': {
        deps: ["jquery"],
        exports: "PageSlider"
     },
 
-    jasmine: {
+    'jasmine': {
       exports: 'jasmine'
     },
     'jasmine-html': {
       deps: ['jasmine'],
       exports: 'jasmine'
     },
-    sinon: {
+    'sinon': {
       exports: 'sinon'
     }
   }
@@ -84,11 +80,11 @@ require(['jquery', 'jasmine-html'], function($, jasmine){
   };
 
   var specs = [];
-  specs.push('spec/dbSpec');
-  specs.push('spec/routerSpec');
-  specs.push('spec/view/CommonViewSpec');
-  specs.push('spec/model/CommonModelSpec');
-  specs.push('spec/model/CommonCollectionSpec');
+  specs.push('spec/db-spec');
+  specs.push('spec/router-spec');
+  specs.push('spec/view/view-spec');
+  specs.push('spec/model/model-spec');
+  specs.push('spec/model/collection-spec');
 
   $(function(){
     require(specs, function(){

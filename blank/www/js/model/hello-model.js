@@ -1,4 +1,4 @@
-define(['model/CommonModel'], function(CommonModel) {
+define(['model'], function(CommonModel) {
 
     return CommonModel.extend({
         tableName : "HELLO",

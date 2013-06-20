@@ -19,7 +19,7 @@ PhoneGapアプリで利用するOSSライブラリです。
 |[backbone.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/oss/backbone.js.md)|0.9.2|MVCライブラリ|underscore.jsに依存|
 |[underscore.js](http://underscorejs.org/)|1.4.2|ユーティリティ||
 |[forcetk.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/oss/forcetk.js.md)|-|SalesforceAPIクライアント|jQueryに依存|
-|[UUID.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/oss/UUID.js.md)|3.2|BackboneモデルのID生成||
+|[uuid.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/oss/uuid.js.md)|3.2|BackboneモデルのID生成||
 |[pageslider.js](https://github.com/ccoenraets/PageSlider)|-|ページ遷移管理||
 |[cordova.js](http://phonegap.com/)|2.5.0|PhoneGap基本機能||
 
@@ -29,9 +29,9 @@ PhoneGapアプリ開発に合わせたOSSライブラリの拡張や、オリジ
 
 |ライブラリ|役割|備考|
 |:----|:------|:------|
-|[CommonModel.js / 各Model.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/common-model.js.md)|MVCのモデル|Backbone.Model拡張|
-|[CommonCollection.js / 各Collection.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/common-collection.js.md)|MVCのモデル|Backbone.Collection拡張|
-|[CommonView.js / 各View.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/common-view.js.md)|MVCのビュー/コントローラ|Backbone.View拡張|
+|[model.js / 各model.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/model.js.md)|MVCのモデル|Backbone.Model拡張|
+|[collection.js / 各collection.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/collection.js.md)|MVCのモデル|Backbone.Collection拡張|
+|[view.js / 各view.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/view.js.md)|MVCのビュー/コントローラ|Backbone.View拡張|
 |[router.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/router.js.md)|コントローラへのルーティング|Backbone.Router拡張|
 |[handlebars-helper.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/handlebars-helper.js.md)|Handlerbarsファンクション||
 |[forcetk-extend.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/forcetk-extend.js.md)|OAuth認証|forcetkの拡張|

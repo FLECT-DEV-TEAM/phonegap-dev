@@ -1,5 +1,5 @@
 /**
- * UUID.js: The RFC-compliant UUID generator for JavaScript.
+ * uuid.js: The RFC-compliant UUID generator for JavaScript.
  *
  * @fileOverview
  * @author  LiosK
