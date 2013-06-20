@@ -1,4 +1,4 @@
-# view.jsおよび各ビュー/コントローラの実装
+# view.js
 
 `view.js`はMVCのビューおよびコントローラの共通処理を実装したモジュールです。各ビュー/コントローラは`CommonView`を継承して実装します。
 
@@ -31,6 +31,10 @@ var CommonView = Backbone.View.extend({
 ```
 
 各ビュー/コントローラ定義の例
+
+https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/blank/www/js/view/hello-view.js
+
+hello-view.js
 
 ```javascript
 define(['view'], function(CommonView) {

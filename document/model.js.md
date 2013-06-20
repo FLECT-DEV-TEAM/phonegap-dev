@@ -1,4 +1,4 @@
-# model.jsおよび各モデルの実装
+# model.js
 
 `model.js`はMVCのモデルの共通処理を実装したモジュールです。各モデルは`CommonModel`を継承したモデルを実装します。
 
