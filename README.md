@@ -41,4 +41,6 @@ Docs
 Release Notes
 --------------------
 
+*[リリース一覧](https://github.com/FLECT-DEV-TEAM/phonegap-dev/tags)*
+
 v0.1.0をリリースしました。(2013/6/23)
