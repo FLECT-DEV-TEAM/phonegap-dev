@@ -78,17 +78,26 @@ define(['forcetk'], function(forcetk) {
             var oauthResponse = {};
 
             var fragment = loc.split("#")[1];
-
-            if (fragment) {
-                var nvps = fragment.split("&");
-                for (var nvp in nvps) {
-                    var parts = nvps[nvp].split("=");
-                    oauthResponse[parts[0]] = unescape(parts[1]);
-                }
+            if (!fragment) {
+                throw new Error("OAuthのレスポンスが正しくありません");
             }
 
-            this.setSessionToken(oauthResponse.access_token, null, oauthResponse.instance_url);
-            this.setRefreshToken(oauthResponse.refresh_token);
+            var nvps = fragment.split("&");
+            for (var nvp in nvps) {
+                var parts = nvps[nvp].split("=");
+                oauthResponse[parts[0]] = unescape(parts[1]);
+            }
+
+            var accessToken = oauthResponse.access_token;
+            var instanceUrl = oauthResponse.instance_url;
+            var refreshToken = oauthResponse.refresh_token;
+
+            if (!accessToken || !instanceUrl || !refreshToken) {
+                throw new Error("OAuthのレスポンスが正しくありません");
+            }
+
+            this.setSessionToken(accessToken, null, instanceUrl);
+            this.setRefreshToken(refreshToken);
             callback.call(this);
         };
 

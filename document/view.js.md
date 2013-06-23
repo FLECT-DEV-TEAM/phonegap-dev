@@ -172,10 +172,8 @@ Router: common.extend({
       client: function() {
          ....
          // view関数内でnew ListView()　=> ListView#initialize()が呼び出される
-         this.view("ListView", {
-                        client: new collection.Clients()
-                    }
-                  );
+         this.view(ListView, "ListView");
+
       }
 }
 ```
@@ -191,5 +189,3 @@ Router: common.extend({
 * HTMLをjQueryオブジェクト化して$.slide();を呼び出し画面遷移させる
 
 ---------------------------------------------------------
-
-```
