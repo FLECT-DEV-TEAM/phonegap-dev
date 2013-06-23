@@ -29,9 +29,9 @@ PhoneGapアプリ開発に合わせたOSSライブラリの拡張や、オリジ
 
 |ライブラリ|役割|備考|
 |:----|:------|:------|
-|[model.js / 各model.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/model.js.md)|MVCのモデル|Backbone.Model拡張|
-|[collection.js / 各collection.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/collection.js.md)|MVCのモデル|Backbone.Collection拡張|
-|[view.js / 各view.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/view.js.md)|MVCのビュー/コントローラ|Backbone.View拡張|
+|[model.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/model.js.md)|MVCのモデル|Backbone.Model拡張|
+|[collection.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/collection.js.md)|MVCのモデル|Backbone.Collection拡張|
+|[view.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/view.js.md)|MVCのビュー/コントローラ|Backbone.View拡張|
 |[router.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/router.js.md)|コントローラへのルーティング|Backbone.Router拡張|
 |[handlebars-helper.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/handlebars-helper.js.md)|Handlerbarsファンクション||
 |[forcetk-extend.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/forcetk-extend.js.md)|OAuth認証|forcetkの拡張|
