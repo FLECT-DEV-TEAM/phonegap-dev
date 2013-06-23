@@ -37,3 +37,8 @@ Docs
 1. その他わからないことはWikiを読みましょう。
 
   *[PhoneGap開発基盤 Wiki](https://flt.backlog.jp/wiki/219TECPTL/PhoneGap%E9%96%8B%E7%99%BA%E5%9F%BA%E7%9B%A4)*
+
+Release Notes
+--------------------
+
+v0.1.0をリリースしました。(2013/6/23)
