@@ -22,7 +22,6 @@ require.config({
     'forcetk-extend': '../www/js/forcetk-extend',
     'db': '../www/js/db',
     'router': '../www/js/router',
-    'transition': '../www/js/transition',
     'model': '../www/js/model',
     'view': '../www/js/view',
     'collection': '../www/js/collection',
@@ -82,6 +81,7 @@ require(['jquery', 'jasmine-html'], function($, jasmine){
   var specs = [];
   specs.push('spec/db-spec');
   specs.push('spec/router-spec');
+  specs.push('spec/forcetk-extend-spec');
   specs.push('spec/view/view-spec');
   specs.push('spec/model/model-spec');
   specs.push('spec/model/collection-spec');
