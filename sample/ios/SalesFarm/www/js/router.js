@@ -1,4 +1,4 @@
-define(['backbone', 'view/hello-view'], function(Backbone, HelloView) {
+define(['backbone', 'view/index-view', 'view/menu-view'], function(Backbone, IndexView, MenuView) {
 
     /** 
     * Backbone.Routerを拡張した共通ルータです。
@@ -38,12 +38,17 @@ define(['backbone', 'view/hello-view'], function(Backbone, HelloView) {
 
     var Router = common.extend({
         routes: {
-            "hello": "hello"
+            "index": "index",
+            "menu": "menu"
         },
 
-        hello: function() {
-            this.view(HelloView, "Hello");
+        index: function() {
+            this.view(IndexView, "Index");
+        },
+        menu: function() {
+            this.view(MenuView, "Menu");
         }
+
     });
 
     return new Router();

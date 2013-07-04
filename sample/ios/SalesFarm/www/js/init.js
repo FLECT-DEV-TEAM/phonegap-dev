@@ -33,7 +33,7 @@ function(router, Backbone, HelloModel, db, PageSlider, $) {
                 }
             });
             Backbone.history.start();
-            router.navigate("hello", {trigger: true});
+            router.navigate("index", {trigger: true});
         }
     };
 

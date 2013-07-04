@@ -1,17 +1,18 @@
+
 define(['view', 'jquery'],
 
 function(CommonView, $) {
 
     return CommonView.extend({
 
-        el: "#top-page",
+        el: "#menu-view",
 
         initialize: function() {
             this.render();
         },
 
         render: function(params) {
-            $(this.template('#top-page-template')).slide();
+            $(this.template('#menu-template')).slide();
         }
     });
 
