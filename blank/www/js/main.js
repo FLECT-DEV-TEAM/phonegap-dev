@@ -9,7 +9,8 @@ requirejs.config({
         backbone: 'lib/backbone',
         forcetk: 'lib/forcetk',
         uuid: 'lib/uuid',
-        pageslider: 'lib/pageslider'
+        pageslider: 'lib/pageslider',
+        fastclick: 'lib/fastclick'
     },
 
     shim: {
@@ -36,10 +37,16 @@ requirejs.config({
         "pageslider": {
             deps: ["jquery"],
             exports: "PageSlider"
+        },
+        "fastclick": {
+            exports: "FastClick"
         }
     }
 });
 
-require( ['init'], function(init) {
+require(['init', 'jquery', 'fastclick'], function(init, $, FastClick) {
     document.addEventListener('deviceready', init.onDeviceReady, false);
+    $(function() {
+        FastClick.attach(document.body);
+    });
 });
