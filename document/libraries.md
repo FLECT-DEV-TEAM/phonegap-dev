@@ -21,6 +21,7 @@ PhoneGapアプリで利用するOSSライブラリです。
 |[forcetk.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/oss/forcetk.js.md)|-|SalesforceAPIクライアント|jQueryに依存|
 |[uuid.js](https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/oss/uuid.js.md)|3.2|BackboneモデルのID生成||
 |[pageslider.js](https://github.com/ccoenraets/PageSlider)|-|ページ遷移管理||
+|[fastclick.js](https://github.com/ftlabs/fastclick)|-|クリック操作イベントの高速化||
 |[cordova.js](http://phonegap.com/)|2.5.0|PhoneGap基本機能||
 
 ## FlectPhoneGapライブラリ
