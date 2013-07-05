@@ -28,6 +28,9 @@ define(['backbone', 'jquery', 'handlebars'], function(Backbone, $, Handlebars) {
                 return _cache(params);
             } else {
                 var source = $(selector).html();
+                if(source) {
+                    source = source.replace(/^\s+/, "");
+                }
                 var template = Handlebars.compile(source);
                 this._cache.template[selector] = template;
                 return template(params);
