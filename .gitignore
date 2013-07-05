@@ -43,4 +43,4 @@ profile
 IOS/www/
 
 # cordova.js
-cordova.js
+blank/*/cordova.js
