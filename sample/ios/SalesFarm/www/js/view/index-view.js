@@ -10,7 +10,9 @@ function(CommonView, $) {
             this.render();
         },
 
-        render: function(params) {
+        render: function() {
+            $(".title").html("牛久農場");
+            $(".ribbon").css("visibility", "visible");
             $(this.template('#index-template')).slide();
         }
     });

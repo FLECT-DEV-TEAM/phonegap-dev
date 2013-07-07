@@ -1,4 +1,3 @@
-
 define(['view', 'jquery'],
 
 function(CommonView, $) {
@@ -11,10 +10,10 @@ function(CommonView, $) {
             this.render();
         },
 
-        render: function(params) {
+        render: function() {
+            $(".title").html("nishinaka_s");
+            $(".ribbon").css("visibility", "hidden");
             $(this.template('#menu-template')).slide();
         }
     });
-
 });
-
