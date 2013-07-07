@@ -12,7 +12,8 @@ function(CommonView, $) {
 
         render: function() {
             $(".title").html("nishinaka_s");
-            $(".ribbon").css("visibility", "hidden");
+            $(".header-left").css("visibility", "visible");
+            $(".header-right").css("visibility", "hidden");
             $(this.template('#menu-template')).slide();
         }
     });

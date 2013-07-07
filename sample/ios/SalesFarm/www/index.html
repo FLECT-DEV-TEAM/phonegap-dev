@@ -12,19 +12,26 @@
         </meta>
     </head>
     <body>
+        
         <!-- header -->
         <div class="header pure-u-1" style="margin-bottom:50px;">
-            <div class="pure-menu pure-menu-open pure-menu-fixed pure-menu-horizontal">
-                <p class="title"></p>
-            </div>
-            <div style="position:fixed;top:5px;right:-10px;z-index:100;" class="ribbon">
-                <a href="#menu"><img src="35.png" width="90%" height="90%"></a>
+            <div class="pure-menu pure-menu-open pure-menu-fixed">
+                <div class="header-left" style="display: inline-block;">
+                    <a href="#index"><span class="typcn typcn-arrow-left-outline"></span></a>
+                </div>
+                <div class="header-center" style="display: inline-block; width: 230px;">
+                    <p class="title" style="text-align: center;  color: #000;"></p>
+                </div>
+                <div class="header-right" style="display: inline-block;" >
+                    <a href="#menu"><span class="typcn typcn-th-menu" style="color: #d00;"></span></a>
+                </div>
             </div>
         </div>
+
         <div id="container">
         </div>
 
-        <!-- top page -->
+        <!-- index-->
         <script id="index-template" type="text/x-handlebars-template">
             <div class="content pure-g">
                 <div class="pure-u-1-4 photo-box">
@@ -48,7 +55,7 @@
             </div>
         </script>
 
-        <!-- menu top page -->
+        <!-- menu -->
         <script id="menu-template" type="text/x-handlebars-template">
             <div class="content pure-g">
                 <ul>

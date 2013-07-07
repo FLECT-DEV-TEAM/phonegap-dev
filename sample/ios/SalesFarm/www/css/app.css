@@ -27,6 +27,30 @@ li {
     padding-bottom: 12px;
 }
 
+.header-left {
+    font-size: 32px;
+    float: left;
+    margin-left: 10px;
+}
+
+.header-left a {
+    padding: 0;
+}
+
+.header-center {
+    font-size: 16px;
+}
+
+.header-right {
+    font-size:32px;
+    margin-right: 10px;
+    float: right;
+}
+
+.header-right a {
+    padding: 0;
+}
+
 .pure-menu p {
     font-size: 16px;    
     margin: 12px;    
