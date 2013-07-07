@@ -10,7 +10,7 @@ function(CommonView, $) {
         },
 
         render: function() {
-            $(".title").html("牛久農場");
+            $(".title").html("My Farm");
             $(".header-left").css("visibility", "hidden");
             $(".header-right").css("visibility", "visible");
             $(this.template('#index-template')).slide();
