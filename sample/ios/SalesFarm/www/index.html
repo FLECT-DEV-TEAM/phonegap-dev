@@ -117,13 +117,17 @@
 
         <!-- new report -->
         <script id="new-report-template" type="text/x-handlebars-template">
-            <div class="content">
+            <div id="new-report" class="content">
                 <form class="pure-form pure-form-stacked" style="margin-left: 10px;">
                     <fieldset>
-                        <label for="title">タイトル</label>
-                        <input id="title" type="text">
+                        <label for="camera">写真を撮影</label>
+                            <i class="icon-camera" style="font-size: 45px;"></i>
+                        <label for="memo">どんな気持ち？</label>
+                            <i class="icon-emo-laugh" style="font-size: 45px;"></i>
+                            <i class="icon-emo-happy" style="font-size: 45px;"></i>
+                            <i class="icon-emo-unhappy" style="font-size: 45px;"></i>
                         <label for="memo">メモ</label>
-                        <textarea id="memo" rows="4" cols="20"></textarea>
+                        <textarea id="memo" rows="3" cols="30"></textarea>
                     </fieldset>
                     <button type="submit" class="pure-button notice">保存</button>
                 </form>

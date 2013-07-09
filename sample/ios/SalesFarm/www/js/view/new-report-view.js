@@ -4,6 +4,8 @@ function(CommonView, $) {
 
     return CommonView.extend({
 
+        el: "#container",
+
         initialize: function() {
             this.render();
         },
@@ -12,8 +14,7 @@ function(CommonView, $) {
             // header            
             var header = this.template("#new-report-header-template");
             $(".header").empty().append(header);
-            $(".title").html("");
-
+            $(".title").html("新しい登録");
             // contents
             $(this.template('#new-report-template')).slide();
         }
