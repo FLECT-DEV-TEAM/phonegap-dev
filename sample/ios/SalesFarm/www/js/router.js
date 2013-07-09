@@ -1,4 +1,5 @@
-define(['backbone', 'view/index-view', 'view/menu-view'], function(Backbone, IndexView, MenuView) {
+define(['backbone', 'view/index-view', 'view/menu-view', 'view/new-report-view'],
+    function(Backbone, IndexView, MenuView, NewReportView) {
 
     /** 
     * Backbone.Routerを拡張した共通ルータです。
@@ -39,7 +40,9 @@ define(['backbone', 'view/index-view', 'view/menu-view'], function(Backbone, Ind
     var Router = common.extend({
         routes: {
             "index": "index",
-            "menu": "menu"
+            "menu": "menu",
+            "report/new": "newReport"
+
         },
 
         index: function() {
@@ -47,6 +50,9 @@ define(['backbone', 'view/index-view', 'view/menu-view'], function(Backbone, Ind
         },
         menu: function() {
             this.view(MenuView, "Menu");
+        },
+        newReport: function() {
+            this.view(NewReportView, "NewReport");
         }
 
     });

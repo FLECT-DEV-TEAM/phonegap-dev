@@ -4,21 +4,18 @@ function(CommonView, $) {
 
     return CommonView.extend({
 
-        pointY: 0,
-
         initialize: function() {
             this.render();
         },
 
         render: function() {
-
             // header            
-            var header = this.template("#index-header-template");
+            var header = this.template("#new-report-header-template");
             $(".header").empty().append(header);
-            $(".title").html("マイファーム");
+            $(".title").html("");
 
             // contents
-            $(this.template('#index-template')).slide();
+            $(this.template('#new-report-template')).slide();
         }
     });
 
