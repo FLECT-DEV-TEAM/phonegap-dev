@@ -7,7 +7,7 @@
             <title>SalesFarm</title>
             <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.0/pure-min.css" />
             <link rel="stylesheet" href="css/pageslider.css" />
-            <link rel="stylesheet" href="css/typicons.css" />
+            <link rel="stylesheet" href="css/fontello.css" />
             <link rel="stylesheet" href="css/app.css" />
         </meta>
     </head>
@@ -25,13 +25,13 @@
         <script id="index-header-template" type="text/x-handlebars-template">
             <div class="pure-menu pure-menu-open pure-menu-fixed">
                 <div class="header-left" style="display: inline-block; visibility: hidden">
-                    <a href=""><span class="typcn typcn-arrow-left-outline"></span></a>
+                    <a href=""><i class="icon-left-outline"></i></a>
                 </div>
                 <div class="header-center" style="display: inline-block; width: 230px;">
                     <p class="title" style="text-align: center;  color: #000;"></p>
                 </div>
                 <div class="header-right" style="display: inline-block;" >
-                    <a href="#menu"><span class="typcn typcn-th-menu" style="color: #d00;"></span></a>
+                    <a href="#menu"><i class="icon-menu-outline" style="color: #d00;"></i></a>
                 </div>
             </div>
         </script>
@@ -82,13 +82,13 @@
         <script id="menu-header-template" type="text/x-handlebars-template">
             <div class="pure-menu pure-menu-open pure-menu-fixed">
                 <div class="header-left" style="display: inline-block;">
-                    <a href="#index"><span class="typcn typcn-arrow-left-outline" style="color: #000;"></span></a>
+                    <a href="#index"><i class="icon-left-outline" style="color: #000;"></i></a>
                 </div>
                 <div class="header-center" style="display: inline-block; width: 230px;">
                     <p class="title" style="text-align: center;  color: #000;"></p>
                 </div>
                 <div class="header-right" style="display: inline-block;" >
-                    <a href="#report/new"><span class="typcn typcn-edit" style="color: #000;"></span></a>
+                    <a href="#report/new"><i class="icon-edit" style="color: #000;"></i></a>
                 </div>
             </div>
         </script>
@@ -97,8 +97,8 @@
         <script id="menu-template" type="text/x-handlebars-template">
             <div class="content pure-g">
                 <ul>
-                    <a href="#index"><li>他の農場<span class="typcn typcn-chevron-right-outline" style="float: right"></li></a>
-                    <a href="#index"><li>マイファーム設定<span class="typcn typcn-chevron-right-outline" style="float: right"></li></a>
+                    <a href="#index"><li>他の農場<i class="icon-right-open-outline" style="float: right"></i></li></a>
+                    <a href="#index"><li>マイファーム設定<i class="icon-right-open-outline" style="float: right"></i></li></a>
                 </ul>
             </div>
         </script>
@@ -107,7 +107,7 @@
         <script id="new-report-header-template" type="text/x-handlebars-template">
             <div class="pure-menu pure-menu-open pure-menu-fixed">
                 <div class="header-left" style="display: inline-block;">
-                    <a href="#menu"><span class="typcn typcn-arrow-left-outline" style="color: #000;"></span></a>
+                    <a href="#menu"><i class="icon-left-outline" style="color: #000;"></i></a>
                 </div>
                 <div class="header-center" style="display: inline-block; width: 230px;">
                     <p class="title" style="text-align: center;  color: #000;"></p>
@@ -118,12 +118,12 @@
         <!-- new report -->
         <script id="new-report-template" type="text/x-handlebars-template">
             <div class="content">
-                <form class="pure-form pure-form-stacked">
+                <form class="pure-form pure-form-stacked" style="margin-left: 10px;">
                     <fieldset>
                         <label for="title">タイトル</label>
-                        <input id="title" class="pure-input-1" type="text">
+                        <input id="title" type="text">
                         <label for="memo">メモ</label>
-                        <textarea id="memo" rows="4" cols="38"></textarea>
+                        <textarea id="memo" rows="4" cols="20"></textarea>
                     </fieldset>
                     <button type="submit" class="pure-button notice">保存</button>
                 </form>
