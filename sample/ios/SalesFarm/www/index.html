@@ -117,11 +117,13 @@
 
         <!-- new report -->
         <script id="new-report-template" type="text/x-handlebars-template">
-            <div id="new-report" class="content">
-                <form class="pure-form pure-form-stacked" style="margin-left: 10px;">
+            <div class="content">
+                <form id="new-report" class="pure-form pure-form-stacked" style="margin-left: 10px;">
                     <fieldset>
-                        <label for="camera">写真を撮影</label>
+                        <div id="camera">
+                            <label for="camera">写真を撮影</label>
                             <i class="icon-camera" style="font-size: 45px;"></i>
+                        </div>
                         <label for="memo">どんな気持ち？</label>
                             <i class="icon-emo-laugh" style="font-size: 45px;"></i>
                             <i class="icon-emo-happy" style="font-size: 45px;"></i>

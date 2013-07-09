@@ -27,6 +27,11 @@ li {
     padding-bottom: 12px;
 }
 
+.notice {
+    background-color: #61B842;
+    color: white;
+}
+
 .header-left {
     font-size: 24px;
     margin-top: 5px;
