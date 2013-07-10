@@ -4,8 +4,6 @@ function(CommonView, $) {
 
     return CommonView.extend({
 
-        pointY: 0,
-
         initialize: function() {
             this.render();
         },

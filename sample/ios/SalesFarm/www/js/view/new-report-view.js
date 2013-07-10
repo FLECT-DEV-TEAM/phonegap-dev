@@ -52,7 +52,18 @@ function(CommonView, $) {
         },
 
         touchCameraIcon: function() {
-            alert("カメラを起動");
+            navigator.camera.getPicture(
+                function(imageUri) {
+                    $("#camera").empty().append('<img src="' + imageUri + '" />');
+                },
+                function() {},
+                {
+                    allowEdit : true,
+                    targetWidth: 100,
+                    targetHeight: 100,
+                    saveToPhotoAlbum: true
+                }
+            );
         }
     });
 
