@@ -11,55 +11,47 @@ Webフォントを利用して文字をアイコンとして利用する方法�
 
 ## サンプル
 
-_WebSymbols Typeface_ というWebフォントのサンプルが以下にあります。
+ブランク/サンプルでは _fontello_ というサービスを利用します。
 
-[http://kudakurage.com/test/safari_on_ios5/websymbols/](http://kudakurage.com/test/safari_on_ios5/websymbols/)
+[http://fontello.com/](http://fontello.com/)
 
-しかし公式サイトは最近ロシア語化されてしまって、コンテンツがあるのかどうかすらわからない状況になってしまいました。
-そんなこともあって他の有力なWebフォントも探しています。いいのがあったら教えてください。
+このサービスの特徴は有名どころのWebフォントのアイコンを選り取ってひとまとめにしてダウンロードできる所です。
 
-[http://www.justbenicestudio.com/studio/websymbols/](http://kudakurage.com/test/safari_on_ios5/websymbols/)
+メリットとしては
+* いろんなサービスのアイコンを一つにまとめて利用できる
+* 実際に使用するアイコンに厳選できるのでファイルサイズが小さくなる
+
+というところです。
 
 ## 使い方
 
-### フォントファイルの配置
+### アイコンの選択
 
-wwwディレクトリ直下にfontsディレクトリを作ります。fontsディレクトリの中に以下のファイルを配置します。
+[http://fontello.com/](http://fontello.com/)
+にアクセスして、利用したいアイコンを選択、ダウンロードしてください。
 
-* websymbols-regular-webfont.eot
-* websymbols-regular-webfont.svg
-* websymbols-regular-webfont.ttf
-* websymbols-regular-webfont.woff
+<img src="https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/tips/webfont_icon_img02.png?raw=true">
 
-ファイルは[ __こちら__ ](https://github.com/FLECT-DEV-TEAM/phonegap-dev/tree/master/blank/www/fonts)にあります。
+ダウンロードしたファイルは解凍します。`demo.html`を開けば後はだいたいわかると思います。
 
-### CSS
+### フォントファイルとcssの配置
 
-CSSに以下設定してください。
+解凍したファイルのうち`css`と`font`をwww以下に配置してください。
 
-```css
-.icon {
-    font-family: 'WebSymbolsRegular';
-}
-
-@font-face {
-    font-family: 'WebSymbolsRegular';
-    src: url('../fonts/websymbols-regular-webfont.eot');
-    src: url('../fonts/websymbols-regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/websymbols-regular-webfont.woff') format('woff'),
-         url('../fonts/websymbols-regular-webfont.ttf') format('truetype'),
-         url('../fonts/websymbols-regular-webfont.svg#WebSymbolsRegular') format('svg');
-}
-```
+なお`css`の中にはiOS/Andoroidで利用する場合には不要なcssもあります(fontello-ie7.cssなど)。実際必要なのは`fontello.css`だけなので不要なのものは消してしまってもかまいません。
 
 ### HTML
 
-`&gt;`、`+`といった文字がアイコンとして表示されます。
+cssを読み込みます。
+
+```css
+<link href="css/fontello.css" rel="stylesheet">
+```
+
+`<i>`タグの`class`で表示するアイコンを指定します（アイコン名は`demo.html`を見ればわかります）
 
 ```html
-<!-- 「日付リスト」のやじるしアイコン -->
-<div class="icon"><span>&gt;</span></div>
-
-<!-- 「あたらしいレポート」のプラスアイコン -->
-<div class="icon"><span>+</span></div>
+ <h1>Hello phonegap-dev blank <i class="icon-emo-happy"></i></h1>
 ```
+
+<img src="https://github.com/FLECT-DEV-TEAM/phonegap-dev/blob/master/document/tips/webfont_icon_img03.png?raw=true">
