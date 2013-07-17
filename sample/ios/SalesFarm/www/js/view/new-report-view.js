@@ -19,39 +19,11 @@ function(CommonView, $) {
         },
 
         event: function() {
-
-            $(".camera-icon").on("touchend", this.touchCameraIcon);
-
-            var laughIcon = $(".icon-emo-laugh");
-            var happyIcon = $(".icon-emo-happy");
-            var unhappyIcon = $(".icon-emo-unhappy");
-            var iconDefaultColor = "#666";
-
-            var form = $("#new-report");
-
-            laughIcon.on("touchstart", function() {
-                $(this).css("color", "#d00");
-                happyIcon.css("color", iconDefaultColor);
-                unhappyIcon.css("color", iconDefaultColor);
-                form.data("emotion", "laugh");
-            });
-
-            happyIcon.on("touchstart", function() {
-                $(this).css("color", "#fa0");
-                laughIcon.css("color", iconDefaultColor);
-                unhappyIcon.css("color", iconDefaultColor);
-                form.data("emotion", "happy");
-            });
-
-            unhappyIcon.on("touchstart", function() {
-                $(this).css("color", "#0ff");
-                laughIcon.css("color", iconDefaultColor);
-                happyIcon.css("color", iconDefaultColor);
-                form.data("emotion", "unhappy");
-            });
+            $(".camera-icon").on("touchend", this.camera);
+            $("button").on("click", this.save);
         },
 
-        touchCameraIcon: function() {
+        camera: function() {
             navigator.camera.getPicture(
                 function(imageUri) {
                     $("#camera").empty().append('<img src="' + imageUri + '" width="300" height="300" />');
@@ -64,6 +36,10 @@ function(CommonView, $) {
                     saveToPhotoAlbum: true
                 }
             );
+        },
+
+        save: function() {
+            alert("ほぞんした");
         }
     });
 

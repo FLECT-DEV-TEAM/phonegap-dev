@@ -1,6 +1,6 @@
-define(['router', 'backbone', 'model/hello-model', 'db', 'pageslider', 'jquery'],
+define(['router', 'backbone', 'model/report-model', 'db', 'pageslider', 'jquery'],
 
-function(router, Backbone, HelloModel, db, PageSlider, $) {
+function(router, Backbone, ReportModel, db, PageSlider, $) {
 
     var init = {
 
@@ -12,7 +12,7 @@ function(router, Backbone, HelloModel, db, PageSlider, $) {
             db.getConn().transaction(
                 // create table.
                 function(tx) {
-                    tx.executeSql(HelloModel.ddl);
+                    tx.executeSql(ReportModel.ddl);
                 },
                 // if create on error.
                 function(err) {
