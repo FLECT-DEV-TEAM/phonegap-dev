@@ -99,11 +99,8 @@
              <div class="pure-u-1">
               <img src="img/02.png" width="300" height="300"/>
             </div>
-             <div class="pure-u-4-5" style="color: #000; padding-bottom:0;">
-               <p style="margin-bottom:0;"><i class="icon-emo-laugh" style="color: #d00;"></i>最終工程</p>
-            </div>
             <div class="pure-u-7-8">
-                <p  style="color: #000; font-size: 18px;">無事に収穫が済み最終工程に入りました。収穫量は目算ですが例年通りとなりそうです。</p>
+                <p  style="color: #000;">無事に収穫が済み最終工程に入りました。収穫量は目算ですが例年通りとなりそうです。</p>
                 <hr/>
                 <p>2013/6/20 13:25:15 @nishinaka_s</p>
              </div>
@@ -129,8 +126,8 @@
         <script id="menu-template" type="text/x-handlebars-template">
             <div class="content pure-g">
                 <ul>
-                    <a href="#index"><li>他の農場<i class="icon-right-open-outline" style="float: right"></i></li></a>
-                    <a href="#index"><li>マイファーム設定<i class="icon-right-open-outline" style="float: right"></i></li></a>
+                    <a href="#"><li>他の農場<i class="icon-right-open-outline" style="float: right"></i></li></a>
+                    <a href="#"><li>マイファーム設定<i class="icon-right-open-outline" style="float: right"></i></li></a>
                 </ul>
             </div>
         </script>
@@ -155,16 +152,10 @@
             <div class="content">
                 <form id="new-report" class="pure-form pure-form-stacked" style="margin-left: 10px;">
                     <fieldset>
-                        <label for="camera">写真を撮影</label>
                         <div id="camera">
-                            <i class="icon-camera" style="font-size: 45px;"></i>
+                          <img class="camera-icon" src="img/04.png" width="300" height="300" style="border:1px; border-style: dashed;"/>
                         </div>
-                        <label for="memo">どんな気持ち？</label>
-                            <i class="icon-emo-laugh" style="font-size: 45px;"></i>
-                            <i class="icon-emo-happy" style="font-size: 45px;"></i>
-                            <i class="icon-emo-unhappy" style="font-size: 45px;"></i>
-                        <label for="memo">メモ</label>
-                        <textarea id="memo" rows="3" cols="30"></textarea>
+                        <textarea id="memo" rows="3" cols="31" placeholder="どんな状況？"></textarea>
                     </fieldset>
                 </form>
             </div>

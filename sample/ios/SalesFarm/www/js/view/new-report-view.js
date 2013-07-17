@@ -20,7 +20,7 @@ function(CommonView, $) {
 
         event: function() {
 
-            $(".icon-camera").on("touchstart", this.touchCameraIcon);
+            $(".camera-icon").on("touchend", this.touchCameraIcon);
 
             var laughIcon = $(".icon-emo-laugh");
             var happyIcon = $(".icon-emo-happy");
@@ -54,13 +54,13 @@ function(CommonView, $) {
         touchCameraIcon: function() {
             navigator.camera.getPicture(
                 function(imageUri) {
-                    $("#camera").empty().append('<img src="' + imageUri + '" />');
+                    $("#camera").empty().append('<img src="' + imageUri + '" width="300" height="300" />');
                 },
                 function() {},
                 {
                     allowEdit : true,
-                    targetWidth: 100,
-                    targetHeight: 100,
+                    targetWidth: 600,
+                    targetHeight: 600,
                     saveToPhotoAlbum: true
                 }
             );
