@@ -1,14 +1,16 @@
 define(['view', 'jquery'], function(CommonView, $) {
 
+  'use strict';
+
   return CommonView.extend({
 
-    el: "#top-page",
+    el: '#top-page',
 
     initialize: function() {
       this.render();
     },
 
-    render: function(params) {
+    render: function() {
       $(this.template('#top-page-template')).slide();
     }
   });

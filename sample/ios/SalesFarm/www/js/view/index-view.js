@@ -1,5 +1,7 @@
 define(['view', 'jquery'], function(CommonView, $) {
 
+  'use strict';
+
   return CommonView.extend({
 
     initialize: function() {
@@ -9,9 +11,9 @@ define(['view', 'jquery'], function(CommonView, $) {
     render: function() {
 
       // header
-      var header = this.template("#index-header-template");
-      $(".header").empty().append(header);
-      $(".title").html("マイファーム");
+      var header = this.template('#index-header-template');
+      $('.header').empty().append(header);
+      $('.title').html('マイファーム');
 
       // contents
       $(this.template('#index-template')).slide();

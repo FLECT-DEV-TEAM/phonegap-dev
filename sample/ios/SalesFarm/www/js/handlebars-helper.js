@@ -1,3 +1,3 @@
-Handlebars.registerHelper('xxx', function(param) {
+Handlebars.registerHelper('xxx', function(/*param*/) {
   // Implement helper.
 });

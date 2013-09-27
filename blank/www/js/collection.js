@@ -1,5 +1,6 @@
-define(['forcetk-extend', 'model', 'db'], function(forcetk, CommonModel, db) {
+define(['backbone', 'forcetk-extend', 'model', 'db'], function(Backbone, forcetk, CommonModel, db) {
 
+  'use strict';
   /**
    * Backbone.Collectionを拡張した共通モデルです。
    *
@@ -14,8 +15,8 @@ define(['forcetk-extend', 'model', 'db'], function(forcetk, CommonModel, db) {
      * SalesforceがHTTPステータス200以外の結果を返却したときはfailイベントが発生します。
      *
      * Salesforceから返却されたデータは以下の法則でモデルにバインドされます。
-     * ・Idはsfidという属性になる Id -> model.set({"sfid" : value})
-     * ・その他は__cを削除した属性になる xyz__c -> model.set({"xyz" : value})
+     * ・Idはsfidという属性になる Id -> model.set({'sfid' : value})
+     * ・その他は__cを削除した属性になる xyz__c -> model.set({'xyz' : value})
      *
      * @param {String} soql SalesforceにリクエストするSOQL
      * @param {Object} options
@@ -29,7 +30,7 @@ define(['forcetk-extend', 'model', 'db'], function(forcetk, CommonModel, db) {
           var records = response.records;
           len = records.length;
           if (len < 1) {
-            that.trigger("notfound");
+            that.trigger('notfound');
             return;
           }
           var models = [];
@@ -37,23 +38,23 @@ define(['forcetk-extend', 'model', 'db'], function(forcetk, CommonModel, db) {
             var modelAttr = {};
             var model = new that.model(null, {noId: true});
             for (var attr in records[i]) {
-              if (attr === "attributes") {
+              if (attr === 'attributes') {
                 continue;
-              } else if (attr === "Id") {
-                modelAttr["sfid"] = records[i][attr];
-              } else if (attr === "lid__c") {
-                modelAttr["id"] = records[i][attr];
-              } else if (attr === "Name") {
+              } else if (attr === 'Id') {
+                modelAttr.sfid = records[i][attr];
+              } else if (attr === 'lid__c') {
+                modelAttr.id = records[i][attr];
+              } else if (attr === 'Name') {
                 modelAttr[that.sfRecordName] = records[i][attr];
               } else {
-                var renamed = attr.replace("__c", "");
+                var renamed = attr.replace('__c', '');
                 modelAttr[renamed] = records[i][attr];
               }
             }
             models.push(model.set(modelAttr));
           }
           that.add(models);
-          that.trigger("add:all");
+          that.trigger('add:all');
           if (options && options.save) {
             len = that.size();
             for (i = 0; i < len; i++) {
@@ -61,8 +62,8 @@ define(['forcetk-extend', 'model', 'db'], function(forcetk, CommonModel, db) {
             }
           }
         },
-        function(request) {
-          that.trigger("failure");
+        function() {
+          that.trigger('failure');
         }
       );
     },
@@ -80,33 +81,33 @@ define(['forcetk-extend', 'model', 'db'], function(forcetk, CommonModel, db) {
      */
     query: function(sql, params) {
       if (params && !(params instanceof Array)) {
-        throw new Error("paramsは配列である必要があります。");
+        throw new Error('paramsは配列である必要があります。');
       }
       var that = this;
       db.getConn().transaction(
         function(tx) {
-          console.log("[SQL]" + sql + "[Params]" + params);
+          console.log('[SQL]' + sql + '[Params]' + params);
           tx.executeSql(sql, params,
             function(tx, results) {
               var len = results.rows.length;
               var models = [];
               if (len < 1) {
-                that.trigger("notfound");
+                that.trigger('notfound');
               } else {
                 for (var i = 0; i < len; i++) {
                   models.push(new that.model(results.rows.item(i)));
                 }
                 that.add(models);
-                that.trigger("add:all");
+                that.trigger('add:all');
               }
             },
             function(err) {
-              throw new Error("ErrorCode:[" + err.code + "] " + err.message);
+              throw new Error('ErrorCode:[' + err.code + '] ' + err.message);
             }
           );
         },
         function(err) {
-          throw new Error("ErrorCode:[" + err.code + "] " + err.message);
+          throw new Error('ErrorCode:[' + err.code + '] ' + err.message);
         }
       );
     },
@@ -122,7 +123,7 @@ define(['forcetk-extend', 'model', 'db'], function(forcetk, CommonModel, db) {
      */
     findAll: function() {
       if (this.tableName === undefined) {
-        throw new Error("モデルにtableNameが設定されていません。");
+        throw new Error('モデルにtableNameが設定されていません。');
       }
       var that = this;
       db.getConn().transaction(
@@ -134,23 +135,23 @@ define(['forcetk-extend', 'model', 'db'], function(forcetk, CommonModel, db) {
               var len = results.rows.length;
               var models = [];
               if (len < 1) {
-                that.trigger("notfound");
+                that.trigger('notfound');
                 return;
               } else {
                 for (var i = 0; i < len; i++) {
                   models.push(new that.model(results.rows.item(i)));
                 }
                 that.add(models);
-                that.trigger("add:all");
+                that.trigger('add:all');
               }
             },
             function(err) {
-              throw new Error("ErrorCode:[" + err.code + "] " + err.message);
+              throw new Error('ErrorCode:[' + err.code + '] ' + err.message);
             }
           );
         },
         function(err) {
-          throw new Error("ErrorCode:[" + err.code + "] " + err.message);
+          throw new Error('ErrorCode:[' + err.code + '] ' + err.message);
         }
       );
     }

@@ -1,5 +1,7 @@
 define(['router', 'backbone', 'model/report-model', 'db', 'pageslider', 'jquery'], function(router, Backbone, ReportModel, db, PageSlider, $) {
 
+  'use strict';
+
   var init = {
 
     onDeviceReady: function() {
@@ -25,14 +27,14 @@ define(['router', 'backbone', 'model/report-model', 'db', 'pageslider', 'jquery'
     },
 
     _startApp: function() {
-      var slider = new PageSlider($("#container"));
+      var slider = new PageSlider($('#container'));
       $.fn.extend({
         slide: function() {
           slider.slidePage(this);
         }
       });
       Backbone.history.start();
-      router.navigate("index", {trigger: true});
+      router.navigate('index', {trigger: true});
     }
   };
 

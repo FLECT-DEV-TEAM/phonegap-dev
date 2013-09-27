@@ -1,5 +1,7 @@
 define(['router', 'backbone', 'model/hello-model', 'db', 'pageslider', 'jquery'], function(router, Backbone, HelloModel, db, PageSlider, $) {
 
+  'use strict';
+
   var init = {
 
     onDeviceReady: function() {
@@ -25,14 +27,14 @@ define(['router', 'backbone', 'model/hello-model', 'db', 'pageslider', 'jquery']
     },
 
     _startApp: function() {
-      var slider = new PageSlider($("#container"));
+      var slider = new PageSlider($('#container'));
       $.fn.extend({
         slide: function() {
           slider.slidePage(this);
         }
       });
       Backbone.history.start();
-      router.navigate("hello", {trigger: true});
+      router.navigate('hello', {trigger: true});
     }
   };
   return init;

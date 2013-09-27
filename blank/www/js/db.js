@@ -1,4 +1,7 @@
 define([], function() {
+
+  'use strict';
+
   return {
     _cache: {},
     getConn: function() {
@@ -6,9 +9,9 @@ define([], function() {
         return this._cache.db;
       } else {
         this._cache.db = window.openDatabase(
-            "hello",
-            "1.0",
-            "Hello",
+            'hello',
+            '1.0',
+            'Hello',
             100000
         );
         return this._cache.db;

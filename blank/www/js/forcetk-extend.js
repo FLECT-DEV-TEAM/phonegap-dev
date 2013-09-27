@@ -1,13 +1,16 @@
+/* global unescape */
 define(['forcetk'], function(forcetk) {
+
+  'use strict';
 
   if (forcetk.Client) {
 
-    var PERSISTENCE_KEY = "jp.co.flect.oauth";
+    var PERSISTENCE_KEY = 'jp.co.flect.oauth';
 
     var config = {
-      loginUrl: "https://login.salesforce.com/",
-      clientId: "xxx", //YOUR CLIENT ID
-      redirectUri: "https://login.salesforce.com/services/oauth2/success"
+      loginUrl: 'https://login.salesforce.com/',
+      clientId: 'xxx', //YOUR CLIENT ID
+      redirectUri: 'https://login.salesforce.com/services/oauth2/success'
     };
 
     forcetk.Client.prototype.setSessionToken = function(sessionId, apiVersion, instanceUrl) {
@@ -17,9 +20,9 @@ define(['forcetk'], function(forcetk) {
         // location.hostname can be of the form 'abc.na1.visual.force.com' or
         // 'na1.salesforce.com'. Split on '.', and take the [1] or [0] element
         // as appropriate
-        var elements = location.hostname.split(".");
-        var instance = (elements.length == 3) ? elements[0] : elements[1];
-        this.instanceUrl = "https://" + instance + ".salesforce.com";
+        var elements = location.hostname.split('.');
+        var instance = (elements.length === 3) ? elements[0] : elements[1];
+        this.instanceUrl = 'https://' + instance + '.salesforce.com';
       } else {
         this.instanceUrl = instanceUrl;
       }
@@ -34,7 +37,6 @@ define(['forcetk'], function(forcetk) {
 
       if (item !== null) {
         var oauth = JSON.parse(item);
-        var accessToken = oauth.accessToken;
         self.setRefreshToken(oauth.refreshToken);
         self.setSessionToken(oauth.accessToken, null, oauth.instanceUrl);
         if (callback) {
@@ -62,9 +64,9 @@ define(['forcetk'], function(forcetk) {
     };
 
     forcetk.Client.prototype._getAuthUrl = function() {
-      return this.loginUrl + "services/oauth2/authorize?display=touch" +
-          "&response_type=token&client_id=" + this.clientId +
-          "&redirect_uri=" + config.redirectUri;
+      return this.loginUrl + 'services/oauth2/authorize?display=touch' +
+          '&response_type=token&client_id=' + this.clientId +
+          '&redirect_uri=' + config.redirectUri;
     };
 
     forcetk.Client.prototype._isRedirectUri = function(uri) {
@@ -74,23 +76,24 @@ define(['forcetk'], function(forcetk) {
     forcetk.Client.prototype._sessionCallback = function(loc, callback) {
       var oauthResponse = {};
 
-      var fragment = loc.split("#")[1];
+      var fragment = loc.split('#')[1];
       if (!fragment) {
-        throw new Error("OAuthのレスポンスが正しくありません");
+        throw new Error('OAuthのレスポンスが正しくありません');
       }
 
-      var nvps = fragment.split("&");
+      var nvps = fragment.split('&');
       for (var nvp in nvps) {
-        var parts = nvps[nvp].split("=");
+        var parts = nvps[nvp].split('=');
         oauthResponse[parts[0]] = unescape(parts[1]);
       }
 
+      /* jshint camelcase: false */
       var accessToken = oauthResponse.access_token;
       var instanceUrl = oauthResponse.instance_url;
       var refreshToken = oauthResponse.refresh_token;
 
       if (!accessToken || !instanceUrl || !refreshToken) {
-        throw new Error("OAuthのレスポンスが正しくありません");
+        throw new Error('OAuthのレスポンスが正しくありません');
       }
 
       this.setSessionToken(accessToken, null, instanceUrl);
@@ -103,9 +106,9 @@ define(['forcetk'], function(forcetk) {
       window.localStorage.setItem(
         PERSISTENCE_KEY,
         JSON.stringify({
-          "accessToken": sessionId,
-          "refreshToken": refreshToken,
-          "instanceUrl": instanceUrl
+          accessToken: sessionId,
+          refreshToken: refreshToken,
+          instanceUrl: instanceUrl
         })
       );
     };

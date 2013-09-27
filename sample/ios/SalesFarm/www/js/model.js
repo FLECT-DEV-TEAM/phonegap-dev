@@ -1,4 +1,7 @@
+/* global Connection*/
 define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk, UUID, db) {
+
+  'use strict';
 
   /**
    * Backbone.Modelを拡張した共通モデルです。
@@ -50,7 +53,7 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
 
       // テーブル名が設定されていない場合は保存できない
       if (this.tableName === undefined) {
-        throw new Error("モデルにtableNameが設定されていません。");
+        throw new Error('モデルにtableNameが設定されていません。');
       }
       // 成功時のコールバックが設定されていない場合は空ファンクション
       if (callback === undefined || callback === null) {
@@ -60,35 +63,35 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
       var param = [];
       var attributes = this.attributes;
       var tableName = this.tableName;
-      var columns = "";
-      var preparedStatement = "";
+      var columns = '';
+      var preparedStatement = '';
 
       for (var attribute in attributes) {
         param.push(this.get(attribute));
-        columns = columns + attribute + ",";
-        preparedStatement = preparedStatement + "?,";
+        columns = columns + attribute + ',';
+        preparedStatement = preparedStatement + '?,';
       }
 
       columns = columns.substr(0, columns.length - 1);
       preparedStatement = preparedStatement.substr(0, preparedStatement.length - 1);
 
-      var insertSql = "INSERT INTO ";
+      var insertSql = 'INSERT INTO ';
 
       // upsertオプション
       if (options && options.upsert) {
-        insertSql = "INSERT OR REPLACE INTO ";
+        insertSql = 'INSERT OR REPLACE INTO ';
       }
 
       db.getConn().transaction(
         // SQL発行
         function(tx) {
           var sql = insertSql + tableName + '(' + columns + ') ' + 'VALUES (' + preparedStatement + ')';
-          console.log("[SQL]" + sql + "[Params]" + param);
+          console.log('[SQL]' + sql + '[Params]' + param);
           tx.executeSql(sql, param);
         },
         // 実行に失敗
         function(err) {
-          throw new Error("ErrorCode:[" + err.code + "] " + err.message);
+          throw new Error('ErrorCode:[' + err.code + '] ' + err.message);
         },
         // 実行に成功
         callback()
@@ -113,30 +116,31 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
 
       // SFオブジェクト名が設定されていない場合はsyncできない
       if (this.sfObjectName === undefined) {
-        throw new Error("モデルにsfObjectNameが設定されていません。");
+        throw new Error('モデルにsfObjectNameが設定されていません。');
       }
       // SFレコード名が設定されていない場合はsyncできない
       if (this.sfRecordName === undefined) {
-        throw new Error("モデルにsfRecordNameが設定されていません。");
+        throw new Error('モデルにsfRecordNameが設定されていません。');
       }
 
       // 必ずNameが必要な前提で一旦よしとする
       // 問題が出たら対応する
       var name = this.get(this.sfRecordName);
       if (name === undefined) {
-        throw new Error("レコード名を取得することができませんでした。");
+        throw new Error('レコード名を取得することができませんでした。');
       }
-      var obj = {"Name": name};
+      var obj = {'Name': name};
 
       var attributes = this.attributes;
       for (var attribute in attributes) {
         // sync_statusとNameとして指定した属性は除外する
-        if (attribute !== "sync_status" &&
+        if (attribute !== 'sync_status' &&
             attribute !== this.sfRecordName) {
-          if (attribute === "id") {
-            obj["lid__c"] = this.get("id");
+          if (attribute === 'id') {
+            /* jshint camelcase: false*/
+            obj.lid__c = this.get('id');
           } else {
-            obj[attribute + "__c"] = this.get(attribute);
+            obj[attribute + '__c'] = this.get(attribute);
           }
         }
       }
@@ -144,21 +148,21 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
       var that = this;
       // ネットワークがオフラインの場合は同期しない
       if (_isOffline()) {
-        // 同期ステータスを"2"(非同期)にしてデータベースを更新
-        that.set({"sync_status": "2"});
+        // 同期ステータスを'2'(非同期)にしてデータベースを更新
+        that.set({'sync_status': '2'});
         that.save(null, {upsert: true});
         if (failure !== undefined) {
           failure();
         }
         // ネットワークがオンラインの場合のみ同期処理を行う
       } else {
-        console.log("[SYNC]" + this.sfObjectName + "[DATA]" + JSON.stringify(obj));
+        console.log('[SYNC]' + this.sfObjectName + '[DATA]' + JSON.stringify(obj));
         forcetk.create(
           this.sfObjectName,
           obj,
           function() {
             // update sync_status (it means already sync to salesforce).
-            that.set({"sync_status": "1"});
+            that.set({'sync_status': '1'});
             that.save(null, {upsert: true});
             if (success !== undefined) {
               success();
@@ -166,7 +170,7 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
           },
           function(jqXHR) {
             // update sync_status (it means has not yet sync to salesforce).
-            that.set({"sync_status": "2"});
+            that.set({'sync_status': '2'});
             that.save(null, {upsert: true});
             console.log(jqXHR.responseText);
             if (failure !== undefined) {
@@ -203,12 +207,12 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
      */
     query: function(sql, params) {
       if (params && !(params instanceof Array)) {
-        throw new Error("paramsは配列である必要があります。");
+        throw new Error('paramsは配列である必要があります。');
       }
       var that = this;
       db.getConn().transaction(
         function(tx) {
-          console.log("[SQL]" + sql + "[Params]" + params);
+          console.log('[SQL]' + sql + '[Params]' + params);
           tx.executeSql(
             sql,
             params,
@@ -216,16 +220,16 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
               if (results.rows.length > 0) {
                 that.set(results.rows.item(0));
               } else {
-                that.trigger("notfound");
+                that.trigger('notfound');
               }
             },
             function(err) {
-              throw new Error("ErrorCode:[" + err.code + "] " + err.message);
+              throw new Error('ErrorCode:[' + err.code + '] ' + err.message);
             }
           );
         },
         function(err) {
-          throw new Error("ErrorCode:[" + err.code + "] " + err.message);
+          throw new Error('ErrorCode:[' + err.code + '] ' + err.message);
         }
       );
     }
@@ -240,12 +244,12 @@ define(['backbone', 'forcetk-extend', 'uuid', 'db'], function(Backbone, forcetk,
             params,
             callback,
             function(err) {
-              throw new Error("ErrorCode:[" + err.code + "] " + err.message);
+              throw new Error('ErrorCode:[' + err.code + '] ' + err.message);
             }
           );
         },
         function(err) {
-          throw new Error("ErrorCode:[" + err.code + "] " + err.message);
+          throw new Error('ErrorCode:[' + err.code + '] ' + err.message);
         }
       );
     }

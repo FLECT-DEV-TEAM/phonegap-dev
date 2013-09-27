@@ -1,3 +1,5 @@
+'use strict';
+
 requirejs.config({
 
   baseUrl: 'js',
@@ -14,32 +16,32 @@ requirejs.config({
   },
 
   shim: {
-    "jquery": {
-      exports: "jQuery"
+    'jquery': {
+      exports: 'jQuery'
     },
-    "handlebars": {
-      exports: "Handlebars"
+    'handlebars': {
+      exports: 'Handlebars'
     },
-    "underscore": {
-      exports: "_"
+    'underscore': {
+      exports: '_'
     },
-    "backbone": {
-      deps: ["jquery", "underscore"],
-      exports: "Backbone"
+    'backbone': {
+      deps: ['jquery', 'underscore'],
+      exports: 'Backbone'
     },
-    "forcetk": {
-      deps: ["jquery"],
-      exports: "forcetk"
+    'forcetk': {
+      deps: ['jquery'],
+      exports: 'forcetk'
     },
-    "uuid": {
-      exports: "UUID"
+    'uuid': {
+      exports: 'UUID'
     },
-    "pageslider": {
-      deps: ["jquery"],
-      exports: "PageSlider"
+    'pageslider': {
+      deps: ['jquery'],
+      exports: 'PageSlider'
     },
-    "fastclick": {
-      exports: "FastClick"
+    'fastclick': {
+      exports: 'FastClick'
     }
   }
 });

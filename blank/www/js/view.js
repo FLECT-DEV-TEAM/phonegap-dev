@@ -1,6 +1,8 @@
 // Application Common View.
 define(['backbone', 'jquery', 'handlebars'], function(Backbone, $, Handlebars) {
 
+  'use strict';
+
   /**
    * Backbone.Viewを拡張した共通ビューです。
    *
@@ -21,7 +23,7 @@ define(['backbone', 'jquery', 'handlebars'], function(Backbone, $, Handlebars) {
      */
     template: function(selector, params) {
       if (selector === undefined || selector === null) {
-        throw new Error("selectorが指定されていません");
+        throw new Error('selectorが指定されていません');
       }
       var _cache = this._cache.template[selector];
       if (_cache) {
@@ -29,7 +31,7 @@ define(['backbone', 'jquery', 'handlebars'], function(Backbone, $, Handlebars) {
       } else {
         var source = $(selector).html();
         if (source) {
-          source = source.replace(/^\s+/, "");
+          source = source.replace(/^\s+/, '');
         }
         var template = Handlebars.compile(source);
         this._cache.template[selector] = template;
