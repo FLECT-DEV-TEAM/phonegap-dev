@@ -1,6 +1,6 @@
 define([], function() {
   return {
-    _cache : {},
+    _cache: {},
     getConn: function() {
       if (this._cache.db) {
         return this._cache.db;

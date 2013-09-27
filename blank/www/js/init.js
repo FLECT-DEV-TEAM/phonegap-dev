@@ -1,42 +1,39 @@
-define(['router', 'backbone', 'model/hello-model', 'db', 'pageslider', 'jquery'],
+define(['router', 'backbone', 'model/hello-model', 'db', 'pageslider', 'jquery'], function(router, Backbone, HelloModel, db, PageSlider, $) {
 
-function(router, Backbone, HelloModel, db, PageSlider, $) {
+  var init = {
 
-    var init = {
+    onDeviceReady: function() {
+      init._createTable();
+    },
 
-        onDeviceReady: function() {
-            init._createTable();
+    _createTable: function() {
+      db.getConn().transaction(
+        // create table.
+        function(tx) {
+          tx.executeSql(HelloModel.ddl);
         },
-
-        _createTable: function() {
-            db.getConn().transaction(
-                // create table.
-                function(tx) {
-                    tx.executeSql(HelloModel.ddl);
-                },
-                // if create on error.
-                function(err) {
-                    alert(err.code);
-                    alert(err.message);
-                },
-                // if create on success.
-                function() {
-                    init._startApp();
-                });
+        // if create on error.
+        function(err) {
+          alert(err.code);
+          alert(err.message);
         },
-
-        _startApp: function() {
-            var slider = new PageSlider($("#container"));
-            $.fn.extend( {
-                slide: function() {
-                    slider.slidePage(this);
-                }
-            });
-            Backbone.history.start();
-            router.navigate("hello", {trigger: true});
+        // if create on success.
+        function() {
+          init._startApp();
         }
-    };
+      );
+    },
 
-    return init;
-
+    _startApp: function() {
+      var slider = new PageSlider($("#container"));
+      $.fn.extend({
+        slide: function() {
+          slider.slidePage(this);
+        }
+      });
+      Backbone.history.start();
+      router.navigate("hello", {trigger: true});
+    }
+  };
+  return init;
 });

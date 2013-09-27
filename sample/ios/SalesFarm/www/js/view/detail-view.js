@@ -1,24 +1,21 @@
-define(['view', 'jquery'],
+define(['view', 'jquery'], function(CommonView, $) {
 
-function(CommonView, $) {
+  return CommonView.extend({
 
-    return CommonView.extend({
+    initialize: function() {
+      this.render();
+    },
 
-        initialize: function() {
-            this.render();
-        },
+    render: function() {
 
-        render: function() {
+      // header
+      var header = this.template("#detail-header-template");
+      $(".header").empty().append(header);
+      $(".title").html("");
 
-            // header            
-            var header = this.template("#detail-header-template");
-            $(".header").empty().append(header);
-            $(".title").html("");
-
-            // contents
-            $(this.template('#detail-template')).slide();
-        }
-    });
+      // contents
+      $(this.template('#detail-template')).slide();
+    }
+  });
 
 });
-

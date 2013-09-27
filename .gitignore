@@ -44,3 +44,6 @@ IOS/www/
 
 # cordova.js
 blank/*/cordova.js
+
+# IDE
+.idea

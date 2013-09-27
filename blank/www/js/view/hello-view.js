@@ -1,19 +1,16 @@
-define(['view', 'jquery'],
+define(['view', 'jquery'], function(CommonView, $) {
 
-function(CommonView, $) {
+  return CommonView.extend({
 
-    return CommonView.extend({
+    el: "#top-page",
 
-        el: "#top-page",
+    initialize: function() {
+      this.render();
+    },
 
-        initialize: function() {
-            this.render();
-        },
-
-        render: function(params) {
-            $(this.template('#top-page-template')).slide();
-        }
-    });
+    render: function(params) {
+      $(this.template('#top-page-template')).slide();
+    }
+  });
 
 });
-
