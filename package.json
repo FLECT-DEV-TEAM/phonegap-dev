@@ -1,0 +1,10 @@
+{
+  "name": "phonegap-dev",
+  "description": "PhoneGap Development Base.",
+  "version": "0.2.0",
+  "private": true,
+  "devDependencies": {
+    "grunt": "0.4.1",
+    "grunt-contrib-jshint": "0.6.4"
+  }
+}

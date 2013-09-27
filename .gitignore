@@ -47,3 +47,6 @@ blank/*/cordova.js
 
 # IDE
 .idea
+
+# node
+node_modules
