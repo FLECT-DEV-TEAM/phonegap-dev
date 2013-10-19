@@ -83,10 +83,10 @@ define(['forcetk'], function(forcetk) {
       }
 
       var nvps = fragment.split('&');
-      for (var nvp in nvps) {
+      Object.keys(nvps).forEach(function(nvp) {
         var parts = nvps[nvp].split('=');
         oauthResponse[parts[0]] = unescape(parts[1]);
-      }
+      });
       /* jshint camelcase: false*/
       var accessToken = oauthResponse.access_token;
       var instanceUrl = oauthResponse.instance_url;
